@@ -1,193 +1,99 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Cloud,
-  Cpu,
-  Workflow,
-  Layers,
-  Settings,
-} from "lucide-react";
-
 export default function Home() {
-  const [status, setStatus] = useState("Checking...");
-
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.message))
-      .catch(() => setStatus("Offline"));
-  }, []);
-
-  const services = [
-    {
-      title: "Cloud Infrastructure",
-      desc: "Scalable cloud environments built for performance and reliability.",
-      icon: Cloud,
-    },
-    {
-      title: "AI Automation",
-      desc: "Intelligent systems that automate workflows and decision-making.",
-      icon: Cpu,
-    },
-    {
-      title: "DevOps Engineering",
-      desc: "CI/CD pipelines that accelerate delivery and reduce risk.",
-      icon: Workflow,
-    },
-    {
-      title: "Platform Engineering",
-      desc: "Internal platforms that scale development teams efficiently.",
-      icon: Layers,
-    },
-    {
-      title: "Managed IT Services",
-      desc: "End-to-end infrastructure and system management.",
-      icon: Settings,
-    },
-  ];
-
   return (
-    <main className="font-sans text-gray-900">
+    <main className="bg-white text-gray-900 font-sans">
 
       {/* HERO */}
-      <section className="bg-[#020617] text-white py-32 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-7xl font-bold leading-tight"
-          >
-            Build and Scale Modern Cloud & AI Platforms
-          </motion.h1>
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          
+          {/* LEFT */}
+          <div>
+            <h1 className="text-5xl font-bold leading-tight">
+              Build scalable digital platforms that drive real business outcomes
+            </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto"
-          >
-            We design, deploy, and optimize systems that drive performance,
-            automation, and business growth.
-          </motion.p>
+            <p className="mt-6 text-lg text-gray-600">
+              We help organizations design, deploy, and optimize cloud, AI, and
+              data systems that improve performance and unlock growth.
+            </p>
 
-          <div className="mt-10 flex justify-center gap-4 flex-wrap">
-            <button className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition">
-              Start Your Transformation
-            </button>
-            <button className="border border-gray-500 hover:border-white px-8 py-4 rounded-lg text-lg transition">
-              View Services
-            </button>
+            <div className="mt-8 flex gap-4">
+              <button className="bg-black text-white px-6 py-3 rounded-lg">
+                Get Started
+              </button>
+              <button className="border px-6 py-3 rounded-lg">
+                Learn More
+              </button>
+            </div>
           </div>
+
+          {/* RIGHT (visual placeholder) */}
+          <div className="h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400">
+            Visual / Graphic Area
+          </div>
+
         </div>
       </section>
 
-      {/* TRUST */}
-      <section className="bg-white py-10 border-b text-center text-gray-500">
-        Trusted by organizations building modern digital platforms
-      </section>
-
       {/* SERVICES */}
-      <section className="bg-white py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16">
-            Core Services
-          </h2>
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-          <div className="grid md:grid-cols-3 gap-10">
-            {services.map((service, i) => {
-              const Icon = service.icon;
-              return (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -5 }}
-                  className="border rounded-xl p-8 hover:shadow-xl transition bg-white"
-                >
-                  <Icon className="w-10 h-10 text-blue-600 mb-4" />
-                  <h3 className="text-xl font-semibold mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600">{service.desc}</p>
-                </motion.div>
-              );
-            })}
+          {/* LEFT VISUAL */}
+          <div className="h-[400px] bg-white rounded-2xl border flex items-center justify-center text-gray-400">
+            Platform Visualization
           </div>
+
+          {/* RIGHT TEXT */}
+          <div>
+            <h2 className="text-3xl font-bold">
+              End-to-end platform engineering and cloud solutions
+            </h2>
+
+            <p className="mt-6 text-gray-600">
+              We deliver scalable infrastructure, intelligent automation, and
+              modern engineering practices that transform how businesses operate.
+            </p>
+
+            <ul className="mt-8 space-y-4">
+              <li>Cloud Infrastructure</li>
+              <li>AI Automation</li>
+              <li>DevOps Engineering</li>
+              <li>Platform Engineering</li>
+              <li>Managed IT Services</li>
+            </ul>
+          </div>
+
         </div>
       </section>
 
       {/* VALUE */}
-      <section className="bg-gray-50 py-24 px-6">
+      <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Driving Real Business Outcomes
+          <h2 className="text-3xl font-bold">
+            We focus on outcomes, not just technology
           </h2>
 
-          <p className="text-lg text-gray-600">
-            We combine cloud engineering, AI systems, and platform expertise to
-            help organizations scale faster, reduce complexity, and unlock value.
+          <p className="mt-6 text-gray-600">
+            Our approach combines engineering excellence with business strategy
+            to deliver measurable impact.
           </p>
-
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            {["Scalable Architecture", "Automation", "Efficiency"].map(
-              (item, i) => (
-                <div
-                  key={i}
-                  className="bg-white p-6 rounded-xl border shadow-sm"
-                >
-                  {item}
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="bg-white py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-16">
-            How We Work
-          </h2>
-
-          <div className="grid md:grid-cols-4 gap-10">
-            {[
-              { title: "Discover", desc: "Understand systems and needs." },
-              { title: "Design", desc: "Architect scalable solutions." },
-              { title: "Build", desc: "Implement efficiently." },
-              { title: "Optimize", desc: "Continuously improve." },
-            ].map((step, i) => (
-              <motion.div key={i} whileHover={{ scale: 1.05 }}>
-                <h3 className="text-xl font-semibold mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-500">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#020617] text-white py-24 px-6 text-center">
-        <h2 className="text-4xl font-bold mb-4">
-          Start Your Transformation
+      <section className="py-24 px-6 bg-black text-white text-center">
+        <h2 className="text-3xl font-bold">
+          Start building your next-generation platform
         </h2>
 
-        <p className="text-gray-400 mb-8">
-          Build scalable, intelligent systems with AISEL Technologies.
-        </p>
-
-        <button className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition">
+        <button className="mt-6 bg-white text-black px-8 py-3 rounded-lg">
           Contact Us
         </button>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-white py-6 text-center text-gray-500 text-sm border-t">
-        API Status: {status}
-      </footer>
     </main>
   );
 }
