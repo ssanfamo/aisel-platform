@@ -8,15 +8,12 @@ services:
       - "8000:8000"
 
   web:
-    build:
-      context: ./apps/web
-      args:
-        RESEND_API_KEY: re_UMSsqhur_KzsdwAQnjdbHZ1MQfAEqwTUw 
+    build: ./apps/web
     container_name: aisel-web
     ports:
       - "3000:3000"
     depends_on:
       - api
+
     environment:
       - RESEND_API_KEY=re_UMSsqhur_KzsdwAQnjdbHZ1MQfAEqwTUw
-
