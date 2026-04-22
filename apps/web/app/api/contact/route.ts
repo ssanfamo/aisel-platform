@@ -1,10 +1,11 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
     const { name, email, message } = await req.json();
+
+    // ✅ Initialize INSIDE function
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
       from: "AISEL <noreply@aiseltechnologies.com>",
@@ -17,16 +18,10 @@ export async function POST(req: Request) {
       `,
     });
 
-    return Response.json({
-      success: true,
-      message: "Message sent successfully",
-    });
+    return Response.json({ success: true });
 
   } catch (error) {
-    console.error(error);
-    return Response.json({
-      success: false,
-      message: "Email failed",
-    });
+    console.error("EMAIL ERROR:", error);
+    return Response.json({ success: false });
   }
 }
