@@ -1,12 +1,34 @@
+"use client";
+
 import "./globals.css";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+
+  const navLink = (href, label) => {
+    const isActive = pathname === href;
+
+    return (
+      <Link
+        href={href}
+        className={`transition ${
+          isActive
+            ? "text-blue-600 font-semibold"
+            : "text-gray-600 hover:text-black"
+        }`}
+      >
+        {label}
+      </Link>
+    );
+  };
+
   return (
     <html lang="en">
       <body className="bg-white text-gray-900">
 
-        {/* HEADER (GLOBAL) */}
+        {/* HEADER */}
         <header className="bg-white border-b sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
@@ -15,17 +37,11 @@ export default function RootLayout({ children }) {
               AISEL Technologies
             </Link>
 
-            {/* NAV */}
-            <nav className="hidden md:flex gap-8 text-sm text-gray-600">
-              <Link href="/services" className="hover:text-black">
-                Services
-              </Link>
-              <Link href="/about" className="hover:text-black">
-                About
-              </Link>
-              <Link href="/contact" className="hover:text-black">
-                Contact
-              </Link>
+            {/* NAVIGATION */}
+            <nav className="hidden md:flex gap-8 text-sm">
+              {navLink("/services", "Services")}
+              {navLink("/about", "About")}
+              {navLink("/contact", "Contact")}
             </nav>
 
             {/* CTA */}
@@ -39,11 +55,11 @@ export default function RootLayout({ children }) {
         </header>
 
         {/* PAGE CONTENT */}
-        {children}
+        <main>{children}</main>
 
-        {/* FOOTER (GLOBAL) */}
+        {/* FOOTER */}
         <footer className="bg-white py-12 border-t mt-20">
-          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-sm text-gray-500">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-sm text-gray-500">
 
             <div>
               <div className="font-semibold text-gray-900 mb-2">
@@ -53,24 +69,25 @@ export default function RootLayout({ children }) {
             </div>
 
             <div>
-              <div className="font-semibold text-gray-900 mb-2">Services</div>
-              <p>Cloud</p>
-              <p>AI</p>
-              <p>DevOps</p>
-            </div>
-
-            <div>
-              <div className="font-semibold text-gray-900 mb-2">Company</div>
+              <div className="font-semibold text-gray-900 mb-2">
+                Navigation
+              </div>
+              <p>Services</p>
               <p>About</p>
-              <p>Careers</p>
               <p>Contact</p>
             </div>
 
             <div>
-              <div className="font-semibold text-gray-900 mb-2">Contact</div>
+              <div className="font-semibold text-gray-900 mb-2">
+                Contact
+              </div>
               <p>info@aiseltechnologies.com</p>
             </div>
 
+          </div>
+
+          <div className="text-center text-xs text-gray-400 mt-6">
+            © {new Date().getFullYear()} AISEL Technologies. All rights reserved.
           </div>
         </footer>
 
