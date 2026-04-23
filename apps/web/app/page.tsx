@@ -13,38 +13,65 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="bg-white text-gray-900">
+
+      {/* HEADER */}
+      <header className="bg-white border-b">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          
+          <div className="text-xl font-semibold tracking-tight">
+            AISEL Technologies
+          </div>
+
+          <nav className="hidden md:flex gap-8 text-sm text-gray-600">
+            <a href="#" className="hover:text-black">Services</a>
+            <a href="#" className="hover:text-black">About</a>
+            <a href="#" className="hover:text-black">Contact</a>
+          </nav>
+
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+            Get Started
+          </button>
+        </div>
+      </header>
 
       {/* HERO */}
       <section className="relative bg-slate-950 text-white py-32 px-6 overflow-hidden">
+
+        {/* Background glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-indigo-600/10 to-transparent blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          
+
           {/* LEFT */}
           <div>
-            <h1 className="text-5xl md:text-6xl font-semibold leading-tight">
-              Build Scalable Cloud & AI Platforms
+            <p className="text-sm uppercase tracking-wider text-blue-400">
+              AISEL Technologies
+            </p>
+
+            <h1 className="mt-4 text-5xl md:text-6xl font-semibold leading-tight">
+              Engineering Scalable Cloud & AI Platforms
             </h1>
 
-            <p className="mt-6 text-lg text-gray-300">
-              We design, deploy, and optimize systems that drive performance,
-              automation, and business growth.
+            <p className="mt-6 text-lg text-gray-300 max-w-xl">
+              We partner with organizations to design, build, and optimize systems
+              that drive performance, automation, and measurable growth.
             </p>
 
             <div className="mt-8 flex gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md font-medium shadow-lg transition">
-                Get Started
+              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md font-medium shadow-lg">
+                Start a Project
               </button>
 
               <button className="border border-gray-500 px-6 py-3 rounded-md">
-                Learn More
+                Explore Services
               </button>
             </div>
           </div>
 
           {/* RIGHT VISUAL */}
-          <div className="h-[400px] bg-gradient-to-br from-blue-600/20 to-indigo-600/10 rounded-2xl" />
+          <div className="relative h-[400px] rounded-2xl bg-gradient-to-br from-blue-600/30 via-indigo-600/20 to-transparent border border-white/10 backdrop-blur-sm" />
+
         </div>
       </section>
 
@@ -85,12 +112,12 @@ export default function Home() {
             ].map((service, i) => (
               <div
                 key={i}
-                className="border border-gray-200 p-8 rounded-xl hover:shadow-lg transition bg-white"
+                className="border border-gray-200 p-8 rounded-xl hover:shadow-xl hover:-translate-y-1 transition bg-white"
               >
                 <h3 className="text-xl font-semibold mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600">{service.desc}</p>
+                <p className="text-gray-500">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -104,7 +131,7 @@ export default function Home() {
             Driving Real Business Outcomes
           </h2>
 
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-500">
             We combine cloud engineering, AI systems, and platform expertise to
             help organizations scale faster, reduce complexity, and unlock value.
           </p>
@@ -159,7 +186,7 @@ export default function Home() {
           Build scalable, intelligent systems with AISEL Technologies.
         </p>
 
-        <button className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-md font-medium shadow-lg transition">
+        <button className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-md font-medium shadow-lg">
           Contact Us
         </button>
       </section>
