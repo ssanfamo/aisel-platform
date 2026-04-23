@@ -4,6 +4,8 @@ import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import PageTransition from "../components/PageTransition";
+import { AnimatePresence } from "framer-motion";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -83,7 +85,11 @@ export default function RootLayout({ children }) {
         </header>
 
         {/* CONTENT */}
-        <main>{children}</main>
+        <AnimatePresence mode="wait">
+          <PageTransition routeKey={pathname}>
+            <main>{children}</main>
+          </PageTransition>
+        </AnimatePresence>
 
         {/* FOOTER */}
         <footer className="bg-white py-12 border-t mt-20">
