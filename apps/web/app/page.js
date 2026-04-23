@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
+import FadeIn from "../components/FadeIn";
 
 export default function Home() {
   const [status, setStatus] = useState("Checking...");
@@ -48,46 +49,60 @@ export default function Home() {
       <section className="bg-slate-950 text-white py-32 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-          <div>
-            <p className="text-sm text-blue-400 uppercase tracking-wider">
-              Enterprise Cloud & AI Consulting
-            </p>
+          <FadeIn>
+            <div>
+              <p className="text-sm text-blue-400 uppercase tracking-wider">
+                Enterprise Cloud & AI Consulting
+              </p>
 
-            <h1 className="mt-4 text-5xl md:text-6xl font-semibold">
-              Transforming Technology Into Business Advantage
-            </h1>
+              <h1 className="mt-4 text-5xl md:text-6xl font-semibold">
+                Transforming Technology Into Business Advantage
+              </h1>
 
-            <p className="mt-6 text-gray-300 max-w-xl">
-              We design, build, and scale cloud and AI systems that deliver
-              measurable business impact.
-            </p>
-          </div>
+              <p className="mt-6 text-gray-300 max-w-xl">
+                We design, build, and scale cloud and AI systems that deliver
+                measurable business impact.
+              </p>
 
-          <div className="h-[400px] rounded-2xl bg-gradient-to-br from-blue-600/30 to-indigo-600/20" />
+              <div className="mt-8">
+                <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition transform hover:scale-105">
+                  Start a Project
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <div className="h-[400px] rounded-2xl bg-gradient-to-br from-blue-600/30 to-indigo-600/20" />
+          </FadeIn>
+
         </div>
       </section>
 
       {/* SERVICES */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-semibold text-center mb-16">
-            Core Capabilities
-          </h2>
+
+          <FadeIn>
+            <h2 className="text-4xl font-semibold text-center mb-16">
+              Core Capabilities
+            </h2>
+          </FadeIn>
 
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((service, i) => {
               const Icon = service.icon;
+
               return (
-                <div
-                  key={i}
-                  className="border p-8 rounded-xl hover:shadow-lg transition"
-                >
-                  <Icon className="w-8 h-8 text-blue-600 mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-500">{service.desc}</p>
-                </div>
+                <FadeIn key={i} delay={i * 0.1}>
+                  <div className="border p-8 rounded-xl hover:shadow-lg transition transform hover:-translate-y-1">
+                    <Icon className="w-8 h-8 text-blue-600 mb-4" />
+                    <h3 className="text-xl font-semibold mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-500">{service.desc}</p>
+                  </div>
+                </FadeIn>
               );
             })}
           </div>
