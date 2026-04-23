@@ -16,12 +16,12 @@ export default function Home() {
   const services = [
     {
       title: "Cloud Infrastructure",
-      desc: "Scalable cloud environments built for performance and reliability.",
+      desc: "Scalable, secure cloud environments built for enterprise performance.",
       icon: Cloud,
     },
     {
       title: "AI Automation",
-      desc: "Intelligent systems that automate workflows and decision-making.",
+      desc: "Intelligent systems that automate operations and decision-making.",
       icon: Cpu,
     },
     {
@@ -31,12 +31,12 @@ export default function Home() {
     },
     {
       title: "Platform Engineering",
-      desc: "Internal platforms that scale development teams.",
+      desc: "Internal platforms that enable scalable engineering teams.",
       icon: Layers,
     },
     {
       title: "Managed IT Services",
-      desc: "End-to-end infrastructure and system management.",
+      desc: "End-to-end infrastructure and operational support.",
       icon: Settings,
     },
   ];
@@ -45,14 +45,15 @@ export default function Home() {
     <main className="bg-white text-gray-900">
 
       {/* HEADER */}
-      <header className="bg-white border-b">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <header className="bg-white border-b sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="text-xl font-semibold tracking-tight">
             AISEL Technologies
           </div>
 
           <nav className="hidden md:flex gap-8 text-sm text-gray-600">
             <a href="#">Services</a>
+            <a href="#">Case Studies</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
           </nav>
@@ -67,20 +68,20 @@ export default function Home() {
       <section className="relative bg-slate-950 text-white py-32 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-indigo-600/10 to-transparent blur-3xl" />
 
-        <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
           <div>
             <p className="text-sm uppercase tracking-wider text-blue-400">
-              AISEL Technologies
+              Enterprise Cloud & AI Consulting
             </p>
 
             <h1 className="mt-4 text-5xl md:text-6xl font-semibold leading-tight">
-              Engineering Scalable Cloud & AI Platforms
+              Transforming Technology Into Business Advantage
             </h1>
 
             <p className="mt-6 text-lg text-gray-300 max-w-xl">
-              We help organizations design, build, and optimize systems that
-              drive performance, automation, and measurable growth.
+              We partner with organizations to design, build, and scale
+              cloud, AI, and platform solutions that deliver measurable impact.
             </p>
 
             <div className="mt-8 flex gap-4">
@@ -88,19 +89,34 @@ export default function Home() {
                 Start a Project
               </button>
               <button className="border border-gray-500 px-6 py-3 rounded-md">
-                Explore Services
+                View Services
               </button>
             </div>
           </div>
 
-          <div className="relative h-[400px] rounded-2xl bg-gradient-to-br from-blue-600/30 via-indigo-600/20 to-transparent border border-white/10 backdrop-blur-sm" />
+          <div className="h-[420px] rounded-2xl bg-gradient-to-br from-blue-600/30 via-indigo-600/20 to-transparent border border-white/10 backdrop-blur-sm" />
+        </div>
+      </section>
+
+      {/* TRUST LOGOS */}
+      <section className="bg-white py-16 px-6 border-b">
+        <div className="max-w-7xl mx-auto text-center text-gray-500 text-sm">
+          Trusted by forward-thinking organizations
+          <div className="mt-8 flex justify-center gap-10 opacity-60 text-gray-400">
+            <span>Enterprise Co.</span>
+            <span>Global Tech</span>
+            <span>FinTech Group</span>
+            <span>Data Systems</span>
+          </div>
         </div>
       </section>
 
       {/* SERVICES */}
       <section className="bg-white py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-semibold mb-16">Core Services</h2>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-semibold text-center mb-16">
+            Core Capabilities
+          </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((service, i) => {
@@ -108,7 +124,7 @@ export default function Home() {
               return (
                 <div
                   key={i}
-                  className="border border-gray-200 p-8 rounded-xl hover:shadow-xl hover:-translate-y-1 transition bg-white text-left"
+                  className="border border-gray-200 p-8 rounded-xl hover:shadow-xl hover:-translate-y-1 transition bg-white"
                 >
                   <Icon className="w-8 h-8 text-blue-600 mb-4" />
                   <h3 className="text-xl font-semibold mb-3">
@@ -124,22 +140,34 @@ export default function Home() {
 
       {/* CASE STUDIES */}
       <section className="bg-gray-50 py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-semibold text-center mb-16">
-            Case Studies
+            Proven Results
           </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              "Cloud migration for enterprise systems",
-              "AI automation for business operations",
-              "Platform engineering for scale",
-            ].map((item, i) => (
+              {
+                title: "Cloud Transformation",
+                desc: "Reduced infrastructure cost by 35% while improving scalability.",
+              },
+              {
+                title: "AI Automation",
+                desc: "Automated core workflows, increasing efficiency by 50%.",
+              },
+              {
+                title: "Platform Engineering",
+                desc: "Enabled rapid deployment across multiple engineering teams.",
+              },
+            ].map((caseItem, i) => (
               <div
                 key={i}
                 className="bg-white p-8 rounded-xl border shadow-sm hover:shadow-md transition"
               >
-                {item}
+                <h3 className="font-semibold text-lg mb-3">
+                  {caseItem.title}
+                </h3>
+                <p className="text-gray-500">{caseItem.desc}</p>
               </div>
             ))}
           </div>
@@ -149,11 +177,11 @@ export default function Home() {
       {/* CTA */}
       <section className="bg-slate-950 text-white py-24 px-6 text-center">
         <h2 className="text-4xl font-semibold mb-4">
-          Start Your Transformation
+          Ready to Transform Your Technology?
         </h2>
 
         <p className="text-gray-400 mb-8">
-          Build scalable, intelligent systems with AISEL Technologies.
+          Let’s build scalable systems that drive real business outcomes.
         </p>
 
         <button className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-md shadow-lg">
@@ -162,19 +190,27 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-white py-10 border-t">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-sm text-gray-500">
+      <footer className="bg-white py-12 border-t">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-sm text-gray-500">
+
           <div>
             <div className="font-semibold text-gray-900 mb-2">
               AISEL Technologies
             </div>
-            Building scalable cloud and AI platforms.
+            Enterprise cloud, AI, and platform engineering solutions.
+          </div>
+
+          <div>
+            <div className="font-semibold text-gray-900 mb-2">Services</div>
+            <p>Cloud</p>
+            <p>AI</p>
+            <p>DevOps</p>
           </div>
 
           <div>
             <div className="font-semibold text-gray-900 mb-2">Company</div>
             <p>About</p>
-            <p>Services</p>
+            <p>Careers</p>
             <p>Contact</p>
           </div>
 
