@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -22,15 +21,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="bg-white text-gray-900">
-
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <Link href="/" className="text-xl font-semibold">
-            AISEL Technologies
-          </Link>
-        </div>
-      </header>
+    <main className="bg-white text-gray-900 pt-20">
 
       <section className="py-24 px-6 max-w-xl mx-auto">
         <h1 className="text-5xl font-semibold mb-6">
