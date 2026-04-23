@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
 import FadeIn from "../components/FadeIn";
+import Image from "next/image";
 
 export default function Home() {
   const [status, setStatus] = useState("Checking...");
@@ -45,9 +46,22 @@ export default function Home() {
   return (
     <main className="bg-white text-gray-900 pt-10">
 
-      {/* HERO */}
-      <section className="bg-slate-950 text-white py-32 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      {/* HERO WITH REAL IMAGE */}
+      <section className="relative text-white py-32 px-6">
+
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/hero.jpg"
+            alt="Cloud infrastructure"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
           <FadeIn>
             <div>
@@ -59,7 +73,7 @@ export default function Home() {
                 Transforming Technology Into Business Advantage
               </h1>
 
-              <p className="mt-6 text-gray-300 max-w-xl">
+              <p className="mt-6 text-gray-200 max-w-xl">
                 We design, build, and scale cloud and AI systems that deliver
                 measurable business impact.
               </p>
@@ -70,10 +84,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <div className="h-[400px] rounded-2xl bg-gradient-to-br from-blue-600/30 to-indigo-600/20" />
           </FadeIn>
 
         </div>
@@ -87,6 +97,19 @@ export default function Home() {
             <h2 className="text-4xl font-semibold text-center mb-16">
               Core Capabilities
             </h2>
+          </FadeIn>
+
+          {/* Services Image */}
+          <FadeIn>
+            <div className="mb-16 rounded-xl overflow-hidden">
+              <Image
+                src="/images/services.jpg"
+                alt="Technology services"
+                width={1200}
+                height={500}
+                className="rounded-xl object-cover"
+              />
+            </div>
           </FadeIn>
 
           <div className="grid md:grid-cols-3 gap-10">
