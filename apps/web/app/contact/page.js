@@ -10,7 +10,7 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     await fetch("/api/contact", {
