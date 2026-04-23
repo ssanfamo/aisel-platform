@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
 
 export default function Home() {
@@ -47,17 +48,26 @@ export default function Home() {
       {/* HEADER */}
       <header className="bg-white border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-xl font-semibold tracking-tight">
-            AISEL Technologies
-          </div>
 
+          {/* LOGO */}
+          <Link href="/" className="text-xl font-semibold tracking-tight">
+            AISEL Technologies
+          </Link>
+
+          {/* NAV */}
           <nav className="hidden md:flex gap-8 text-sm text-gray-600">
-            <a href="#">Services</a>
-            <a href="#">Case Studies</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
+            <Link href="/services" className="hover:text-black">
+              Services
+            </Link>
+            <Link href="/about" className="hover:text-black">
+              About
+            </Link>
+            <Link href="/contact" className="hover:text-black">
+              Contact
+            </Link>
           </nav>
 
+          {/* CTA */}
           <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
             Get Started
           </button>
@@ -98,7 +108,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TRUST LOGOS */}
+      {/* TRUST */}
       <section className="bg-white py-16 px-6 border-b">
         <div className="max-w-7xl mx-auto text-center text-gray-500 text-sm">
           Trusted by forward-thinking organizations
@@ -153,11 +163,11 @@ export default function Home() {
               },
               {
                 title: "AI Automation",
-                desc: "Automated core workflows, increasing efficiency by 50%.",
+                desc: "Automated workflows, increasing efficiency by 50%.",
               },
               {
                 title: "Platform Engineering",
-                desc: "Enabled rapid deployment across multiple engineering teams.",
+                desc: "Enabled rapid deployment across engineering teams.",
               },
             ].map((caseItem, i) => (
               <div
