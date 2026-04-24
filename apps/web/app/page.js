@@ -118,18 +118,13 @@ export default function Home() {
 
               return (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <div className="border rounded-xl overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1">
-
-                    {/* IMAGE */}
-                    <div className="h-48 w-full overflow-hidden">
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        width={400}
-                        height={200}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  <div className="h-48 w-full overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
                     {/* CONTENT */}
                     <div className="p-6">
