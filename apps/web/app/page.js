@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
+import { Cloud, Cpu, Workflow, Layers } from "lucide-react";
 import FadeIn from "../components/FadeIn";
 import Image from "next/image";
 
@@ -20,33 +20,32 @@ export default function Home() {
       title: "Cloud Infrastructure",
       desc: "Scalable, secure cloud environments built for enterprise performance.",
       icon: Cloud,
+      image: "/images/cloud.jpg",
     },
     {
       title: "AI Automation",
       desc: "Intelligent systems that automate operations and decision-making.",
       icon: Cpu,
+      image: "/images/ai.jpg",
     },
     {
       title: "DevOps Engineering",
       desc: "CI/CD pipelines that accelerate delivery and reduce risk.",
       icon: Workflow,
+      image: "/images/devops.jpg",
     },
     {
       title: "Platform Engineering",
       desc: "Internal platforms that enable scalable engineering teams.",
       icon: Layers,
-    },
-    {
-      title: "Managed IT Services",
-      desc: "End-to-end infrastructure and operational support.",
-      icon: Settings,
+      image: "/images/operations.jpg",
     },
   ];
 
   return (
     <main className="bg-white text-gray-900 pt-10">
 
-      {/* HERO WITH REAL IMAGE */}
+      {/* HERO */}
       <section className="relative text-white py-32 px-6">
 
         {/* Background Image */}
@@ -99,7 +98,7 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          {/* Services Image */}
+          {/* Services Banner Image */}
           <FadeIn>
             <div className="mb-16 rounded-xl overflow-hidden">
               <Image
@@ -112,18 +111,35 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          {/* Service Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
             {services.map((service, i) => {
               const Icon = service.icon;
 
               return (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <div className="border p-8 rounded-xl hover:shadow-lg transition transform hover:-translate-y-1">
-                    <Icon className="w-8 h-8 text-blue-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-500">{service.desc}</p>
+                  <div className="border rounded-xl overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1">
+
+                    {/* IMAGE */}
+                    <div className="h-48 w-full overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        width={400}
+                        height={200}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-6">
+                      <Icon className="w-8 h-8 text-blue-600 mb-3" />
+                      <h3 className="text-xl font-semibold mb-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-500">{service.desc}</p>
+                    </div>
+
                   </div>
                 </FadeIn>
               );
