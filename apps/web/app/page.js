@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Cloud, Cpu, Workflow, Layers } from "lucide-react";
+import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
 import FadeIn from "../components/FadeIn";
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
       title: "Managed IT Services (MSP)",
       desc: "End-to-end monitoring, support, and infrastructure management.",
       icon: Settings,
-      image: "/images/operations.jpg", // reuse or add a new one
+      image: "/images/operations.jpg",
     },
   ];
 
@@ -51,32 +51,28 @@ export default function Home() {
     <main className="bg-white text-gray-900 pt-10">
 
       {/* HERO */}
-      <section className="relative text-white py-32 px-6 bg-slate-950">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-
+      <section className="bg-slate-950 text-white py-32 px-6">
+        <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <div>
-              <p className="text-sm text-blue-400 uppercase tracking-wider">
-                Enterprise Cloud & AI Consulting
-              </p>
+            <p className="text-sm text-blue-400 uppercase tracking-wider">
+              Enterprise Cloud & AI Consulting
+            </p>
 
-              <h1 className="mt-4 text-5xl md:text-6xl font-semibold">
-                Transforming Technology Into Business Advantage
-              </h1>
+            <h1 className="mt-4 text-5xl md:text-6xl font-semibold max-w-3xl">
+              Transforming Technology Into Business Advantage
+            </h1>
 
-              <p className="mt-6 text-gray-300 max-w-xl">
-                We design, build, and scale cloud and AI systems that deliver
-                measurable business impact.
-              </p>
+            <p className="mt-6 text-gray-300 max-w-xl">
+              We design, build, and scale cloud and AI systems that deliver
+              measurable business impact.
+            </p>
 
-              <div className="mt-8">
-                <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition transform hover:scale-105">
-                  Start a Project
-                </button>
-              </div>
+            <div className="mt-8">
+              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition transform hover:scale-105">
+                Start a Project
+              </button>
             </div>
           </FadeIn>
-
         </div>
       </section>
 
@@ -90,37 +86,47 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          {/* SERVICE CARDS */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
             {services.map((service, i) => {
               const Icon = service.icon;
 
               return (
-                <div
-                  key={i}
-                  className="border rounded-xl overflow-hidden shadow-sm bg-white"
-                >
+                <FadeIn key={i} delay={i * 0.1}>
+                  <div className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2">
 
-                  {/* IMAGE (FORCED VISIBLE) */}
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    style={{ width: "100%", height: "180px", objectFit: "cover" }}
-                  />
+                    {/* IMAGE */}
+                    <div className="h-48 overflow-hidden">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+                      />
+                    </div>
 
-                  {/* CONTENT */}
-                  <div className="p-6">
-                    <Icon className="w-8 h-8 text-blue-600 mb-3" />
-                    <h3 className="text-xl font-semibold mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-500">{service.desc}</p>
+                    {/* CONTENT */}
+                    <div className="p-6">
+                      <Icon className="w-8 h-8 text-blue-600 mb-4" />
+
+                      <h3 className="text-xl font-semibold mb-2 transition group-hover:text-blue-600">
+                        {service.title}
+                      </h3>
+
+                      <p className="text-gray-500 text-sm leading-relaxed">
+                        {service.desc}
+                      </p>
+
+                      <div className="mt-4 text-blue-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition">
+                        Learn more →
+                      </div>
+                    </div>
+
                   </div>
-
-                </div>
+                </FadeIn>
               );
             })}
           </div>
+
+        </div>
       </section>
 
       {/* STATUS */}
