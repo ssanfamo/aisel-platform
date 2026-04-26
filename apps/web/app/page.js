@@ -112,36 +112,37 @@ export default function Home() {
           </FadeIn>
 
           {/* Service Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-            {services.map((service, i) => {
-              const Icon = service.icon;
+<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+  {services.map((service, i) => {
+    const Icon = service.icon;
 
-              return (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <div className="h-48 w-full overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+    return (
+      <FadeIn key={i} delay={i * 0.1}>
+        <div className="border rounded-xl overflow-hidden hover:shadow-lg transition">
 
-                    {/* CONTENT */}
-                    <div className="p-6">
-                      <Icon className="w-8 h-8 text-blue-600 mb-3" />
-                      <h3 className="text-xl font-semibold mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-500">{service.desc}</p>
-                    </div>
-
-                  </div>
-                </FadeIn>
-              );
-            })}
+          {/* IMAGE */}
+          <div className="h-48 w-full overflow-hidden">
+            <img
+              src={service.image}
+              alt={service.title}
+              className="w-full h-full object-cover"
+            />
           </div>
+
+          {/* CONTENT */}
+          <div className="p-6">
+            <Icon className="w-8 h-8 text-blue-600 mb-3" />
+            <h3 className="text-xl font-semibold mb-2">
+              {service.title}
+            </h3>
+            <p className="text-gray-500">{service.desc}</p>
+          </div>
+
         </div>
-      </section>
+      </FadeIn>
+    );
+  })}
+</div>
 
       {/* STATUS */}
       <section className="text-center text-sm text-gray-500 pb-10">
