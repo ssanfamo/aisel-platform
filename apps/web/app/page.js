@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Cloud, Cpu, Workflow, Layers } from "lucide-react";
 import FadeIn from "../components/FadeIn";
-import Image from "next/image";
 
 export default function Home() {
   const [status, setStatus] = useState("Checking...");
@@ -46,21 +45,8 @@ export default function Home() {
     <main className="bg-white text-gray-900 pt-10">
 
       {/* HERO */}
-      <section className="relative text-white py-32 px-6">
-
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero.jpg"
-            alt="Cloud infrastructure"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      <section className="relative text-white py-32 px-6 bg-slate-950">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
           <FadeIn>
             <div>
@@ -72,7 +58,7 @@ export default function Home() {
                 Transforming Technology Into Business Advantage
               </h1>
 
-              <p className="mt-6 text-gray-200 max-w-xl">
+              <p className="mt-6 text-gray-300 max-w-xl">
                 We design, build, and scale cloud and AI systems that deliver
                 measurable business impact.
               </p>
@@ -98,51 +84,41 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          {/* Services Banner Image */}
-          <FadeIn>
-            <div className="mb-16 rounded-xl overflow-hidden">
-              <Image
-                src="/images/services.jpg"
-                alt="Technology services"
-                width={1200}
-                height={500}
-                className="rounded-xl object-cover"
-              />
-            </div>
-          </FadeIn>
+          {/* SERVICE CARDS */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+            {services.map((service, i) => {
+              const Icon = service.icon;
 
-{/* Service Cards */}
-<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-  {services.map((service, i) => {
-    const Icon = service.icon;
+              return (
+                <FadeIn key={i} delay={i * 0.1}>
+                  <div className="border rounded-xl overflow-hidden hover:shadow-lg transition">
 
-    return (
-      <FadeIn key={i} delay={i * 0.1}>
-        <div className="border rounded-xl overflow-hidden hover:shadow-lg transition">
+                    {/* IMAGE */}
+                    <div className="h-48 w-full overflow-hidden">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
 
-          {/* IMAGE */}
-          <div className="h-48 w-full overflow-hidden">
-            <img
-              src={service.image}
-              alt={service.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
+                    {/* CONTENT */}
+                    <div className="p-6">
+                      <Icon className="w-8 h-8 text-blue-600 mb-3" />
+                      <h3 className="text-xl font-semibold mb-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-500">{service.desc}</p>
+                    </div>
 
-          {/* CONTENT */}
-          <div className="p-6">
-            <Icon className="w-8 h-8 text-blue-600 mb-3" />
-            <h3 className="text-xl font-semibold mb-2">
-              {service.title}
-            </h3>
-            <p className="text-gray-500">{service.desc}</p>
+                  </div>
+                </FadeIn>
+              );
+            })}
           </div>
 
         </div>
-      </FadeIn>
-    );
-  })}
-</div>
+      </section>
 
       {/* STATUS */}
       <section className="text-center text-sm text-gray-500 pb-10">
