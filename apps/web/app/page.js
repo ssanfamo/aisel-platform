@@ -39,6 +39,12 @@ export default function Home() {
       icon: Layers,
       image: "/images/operations.jpg",
     },
+    {
+      title: "Managed IT Services (MSP)",
+      desc: "End-to-end monitoring, support, and infrastructure management.",
+      icon: Settings,
+      image: "/images/operations.jpg", // reuse or add a new one
+    },
   ];
 
   return (
