@@ -111,7 +111,7 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          {/* Service Cards */}
+{/* Service Cards */}
 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
   {services.map((service, i) => {
     const Icon = service.icon;
