@@ -90,34 +90,31 @@ export default function Home() {
               const Icon = service.icon;
 
               return (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <div className="border rounded-xl overflow-hidden hover:shadow-lg transition">
+                <div
+                  key={i}
+                  className="border rounded-xl overflow-hidden shadow-sm bg-white"
+                >
 
-                    {/* IMAGE */}
-                    <div className="h-48 w-full overflow-hidden">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  {/* IMAGE (FORCED VISIBLE) */}
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    style={{ width: "100%", height: "180px", objectFit: "cover" }}
+                  />
 
-                    {/* CONTENT */}
-                    <div className="p-6">
-                      <Icon className="w-8 h-8 text-blue-600 mb-3" />
-                      <h3 className="text-xl font-semibold mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-500">{service.desc}</p>
-                    </div>
-
+                  {/* CONTENT */}
+                  <div className="p-6">
+                    <Icon className="w-8 h-8 text-blue-600 mb-3" />
+                    <h3 className="text-xl font-semibold mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-500">{service.desc}</p>
                   </div>
-                </FadeIn>
+
+                </div>
               );
             })}
           </div>
-
-        </div>
       </section>
 
       {/* STATUS */}
