@@ -25,6 +25,7 @@ export default function Navbar() {
           <Link href="/services" className={linkClass("/services")}>Services</Link>
           <Link href="/about" className={linkClass("/about")}>About</Link>
           <Link href="/contact" className={linkClass("/contact")}>Contact</Link>
+          <Link href="/case-studies">Case Studies</Link>
         </nav>
 
         {/* Mobile Button */}
