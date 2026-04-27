@@ -1,27 +1,37 @@
-import { Resend } from "resend";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json();
+    const body = await req.json();
 
-    // ✅ Initialize INSIDE function
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const { name, email, company, service, message } = body;
 
-    await resend.emails.send({
-      from: "AISEL <noreply@aiseltechnologies.com>",
-      to: ["info@aiseltechnologies.com"],
-      subject: "New Contact Form Message",
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong><br/>${message}</p>
-      `,
+    // Basic validation
+    if (!name || !email || !service || !message) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    // 🔹 For now: log the lead (replace later with DB/email)
+    console.log("New Lead Received:", {
+      name,
+      email,
+      company,
+      service,
+      message,
+      timestamp: new Date().toISOString(),
     });
 
-    return Response.json({ success: true });
+    return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error("EMAIL ERROR:", error);
-    return Response.json({ success: false });
+    console.error("Contact API Error:", error);
+
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 }
+    );
   }
 }
