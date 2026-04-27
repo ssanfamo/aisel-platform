@@ -1,128 +1,46 @@
-"use client";
-
-import "./globals.css";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import PageTransition from "../components/PageTransition";
-import { AnimatePresence } from "framer-motion";
+import "./globals.css";
 
-export default function RootLayout({ children }) {
-  const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+export const metadata = {
+  title: "AISEL Technologies",
+  description: "Enterprise Cloud & AI Consulting",
+};
 
-  const navLink = (href, label) => {
-    const isActive = pathname === href;
-
-    return (
-      <Link
-        href={href}
-        onClick={() => setMenuOpen(false)}
-        className={`block py-2 transition ${
-          isActive
-            ? "text-blue-600 font-semibold"
-            : "text-gray-600 hover:text-black"
-        }`}
-      >
-        {label}
-      </Link>
-    );
-  };
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className="bg-white text-gray-900">
 
-        {/* HEADER */}
-        <header className="bg-white border-b sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* NAVBAR */}
+        <header className="fixed top-0 w-full bg-white border-b z-50">
+          <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-            {/* LOGO */}
-            <Link href="/" className="text-xl font-semibold tracking-tight">
+            <h1 className="font-semibold text-lg">
               AISEL Technologies
-            </Link>
+            </h1>
 
-            {/* DESKTOP NAV */}
-            <nav className="hidden md:flex gap-8 text-sm">
-              {navLink("/services", "Services")}
-              {navLink("/about", "About")}
-              {navLink("/contact", "Contact")}
+            <nav className="flex gap-6 text-sm">
+              <Link href="/">Home</Link>
+              <Link href="/services">Services</Link>
+              <Link href="/about">About</Link>
+              <Link href="/contact">Contact</Link>
             </nav>
 
-            {/* MOBILE BUTTON */}
-            <button
-              className="md:hidden text-gray-700"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              ☰
-            </button>
-
-            {/* CTA */}
-            <Link
-              href="/contact"
-              className="hidden md:inline bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
-            >
-              Get Started
-            </Link>
           </div>
-
-          {/* MOBILE MENU */}
-          {menuOpen && (
-            <div className="md:hidden border-t px-6 pb-4 bg-white">
-              {navLink("/services", "Services")}
-              {navLink("/about", "About")}
-              {navLink("/contact", "Contact")}
-
-              <Link
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
-                className="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-md text-center"
-              >
-                Get Started
-              </Link>
-            </div>
-          )}
         </header>
 
-        {/* CONTENT */}
-        <AnimatePresence mode="wait">
-          <PageTransition routeKey={pathname}>
-            <main>{children}</main>
-          </PageTransition>
-        </AnimatePresence>
+        {/* PAGE CONTENT */}
+        <main className="pt-20">
+          {children}
+        </main>
 
         {/* FOOTER */}
-        <footer className="bg-white py-12 border-t mt-20">
-          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-sm text-gray-500">
-
-            <div>
-              <div className="font-semibold text-gray-900 mb-2">
-                AISEL Technologies
-              </div>
-              Enterprise cloud, AI, and platform engineering solutions.
-            </div>
-
-            <div>
-              <div className="font-semibold text-gray-900 mb-2">
-                Navigation
-              </div>
-              <p>Services</p>
-              <p>About</p>
-              <p>Contact</p>
-            </div>
-
-            <div>
-              <div className="font-semibold text-gray-900 mb-2">
-                Contact
-              </div>
-              <p>info@aiseltechnologies.com</p>
-            </div>
-
-          </div>
-
-          <div className="text-center text-xs text-gray-400 mt-6">
-            © {new Date().getFullYear()} AISEL Technologies
-          </div>
+        <footer className="bg-gray-100 text-center py-10 mt-20 text-sm text-gray-500">
+          © {new Date().getFullYear()} AISEL Technologies. All rights reserved.
         </footer>
 
       </body>

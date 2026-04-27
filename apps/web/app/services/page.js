@@ -1,29 +1,31 @@
+"use client";
+
+import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
+
 export default function Services() {
+  const services = [
+    { title: "Cloud Infrastructure", icon: Cloud },
+    { title: "AI Automation", icon: Cpu },
+    { title: "DevOps Engineering", icon: Workflow },
+    { title: "Platform Engineering", icon: Layers },
+    { title: "Managed IT Services", icon: Settings },
+  ];
+
   return (
-    <main className="bg-white text-gray-900 pt-20">
+    <section className="py-24 px-6 max-w-7xl mx-auto">
+      <h1 className="text-4xl font-semibold mb-12">Services</h1>
 
-      <section className="py-24 px-6 max-w-6xl mx-auto">
-        <h1 className="text-5xl font-semibold mb-6">Services</h1>
-
-        <p className="text-lg text-gray-500 max-w-2xl">
-          We provide enterprise cloud, AI, and platform engineering solutions.
-        </p>
-
-        <div className="mt-16 grid md:grid-cols-2 gap-10">
-          {[
-            "Cloud Infrastructure",
-            "AI Automation",
-            "DevOps Engineering",
-            "Platform Engineering",
-            "Managed IT Services",
-          ].map((service, i) => (
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {services.map((s, i) => {
+          const Icon = s.icon;
+          return (
             <div key={i} className="border p-8 rounded-xl">
-              {service}
+              <Icon className="w-8 h-8 text-blue-600 mb-4" />
+              <h3 className="text-xl font-semibold">{s.title}</h3>
             </div>
-          ))}
-        </div>
-      </section>
-
-    </main>
+          );
+        })}
+      </div>
+    </section>
   );
 }

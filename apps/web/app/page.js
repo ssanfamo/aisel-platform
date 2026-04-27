@@ -51,37 +51,38 @@ export default function Home() {
     <main className="bg-white text-gray-900 pt-10">
 
       {/* HERO */}
-      <section className="relative text-white py-32 px-6">
+      <section className="relative text-white py-40 px-6">
 
-        {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src="/images/hero.jpg"
             alt="Cloud infrastructure"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
         </div>
 
-        {/* Content */}
         <div className="relative max-w-7xl mx-auto">
           <FadeIn>
             <p className="text-sm text-blue-400 uppercase tracking-wider">
               Enterprise Cloud & AI Consulting
             </p>
 
-            <h1 className="mt-4 text-5xl md:text-6xl font-semibold max-w-3xl">
-              Transforming Technology Into Business Advantage
+            <h1 className="mt-6 text-5xl md:text-7xl font-semibold leading-tight max-w-4xl">
+              Transforming Technology Into Competitive Advantage
             </h1>
 
-            <p className="mt-6 text-gray-200 max-w-xl">
-              We design, build, and scale cloud and AI systems that deliver
-              measurable business impact.
+            <p className="mt-6 text-gray-200 max-w-xl text-lg">
+              We design, build, and scale cloud and AI systems that deliver measurable business outcomes.
             </p>
 
-            <div className="mt-8">
-              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition transform hover:scale-105">
+            <div className="mt-10 flex gap-4">
+              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition">
                 Start a Project
+              </button>
+
+              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition">
+                View Services
               </button>
             </div>
           </FadeIn>
@@ -105,9 +106,8 @@ export default function Home() {
 
               return (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <div className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 transform hover:-translate-y-2">
+                  <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-blue-500 shadow-sm hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
 
-                    {/* IMAGE */}
                     <div className="h-48 overflow-hidden">
                       <img
                         src={service.image}
@@ -116,7 +116,6 @@ export default function Home() {
                       />
                     </div>
 
-                    {/* CONTENT */}
                     <div className="p-6">
                       <Icon className="w-8 h-8 text-blue-600 mb-4" />
 
@@ -137,6 +136,56 @@ export default function Home() {
                 </FadeIn>
               );
             })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US */}
+      <section className="bg-gray-50 py-24 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+
+          <FadeIn>
+            <h2 className="text-4xl font-semibold mb-12">
+              Why Choose AISEL Technologies
+            </h2>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-10 text-left">
+
+            <FadeIn>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">
+                  Enterprise Expertise
+                </h3>
+                <p className="text-gray-600">
+                  Deep experience in cloud, DevOps, and AI systems across industries.
+                </p>
+              </div>
+            </FadeIn>
+
+            <FadeIn>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">
+                  Scalable Solutions
+                </h3>
+                <p className="text-gray-600">
+                  Architectures designed to grow with your business and demand.
+                </p>
+              </div>
+            </FadeIn>
+
+            <FadeIn>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">
+                  Measurable Impact
+                </h3>
+                <p className="text-gray-600">
+                  Focused on delivering outcomes, not just technology implementations.
+                </p>
+              </div>
+            </FadeIn>
+
           </div>
 
         </div>
