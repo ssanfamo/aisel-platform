@@ -1,5 +1,5 @@
-import Link from "next/link";
 import "./globals.css";
+import Navbar from "../components/Navbar";
 
 export const metadata = {
   title: "AISEL Technologies",
@@ -15,25 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-white text-gray-900">
 
-        {/* NAVBAR */}
-        <header className="fixed top-0 w-full bg-white border-b z-50">
-          <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
+        {/* NAVBAR (Client Component) */}
+        <Navbar />
 
-            <h1 className="font-semibold text-lg">
-              AISEL Technologies
-            </h1>
-
-            <nav className="flex gap-6 text-sm">
-              <Link href="/">Home</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/about">About</Link>
-              <Link href="/contact">Contact</Link>
-            </nav>
-
-          </div>
-        </header>
-
-        {/* PAGE CONTENT */}
+        {/* CONTENT */}
         <main className="pt-20">
           {children}
         </main>

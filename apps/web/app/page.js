@@ -48,7 +48,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="bg-white text-gray-900 pt-10">
+    <main className="bg-white text-gray-900">
 
       {/* HERO */}
       <section className="relative text-white py-40 px-6">
@@ -77,11 +77,11 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg transition">
+              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg">
                 Start a Project
               </button>
 
-              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition">
+              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10">
                 View Services
               </button>
             </div>
@@ -119,15 +119,15 @@ export default function Home() {
                     <div className="p-6">
                       <Icon className="w-8 h-8 text-blue-600 mb-4" />
 
-                      <h3 className="text-xl font-semibold mb-2 transition group-hover:text-blue-600">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">
                         {service.title}
                       </h3>
 
-                      <p className="text-gray-500 text-sm leading-relaxed">
+                      <p className="text-gray-500 text-sm">
                         {service.desc}
                       </p>
 
-                      <div className="mt-4 text-blue-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition">
+                      <div className="mt-4 text-blue-600 text-sm opacity-0 group-hover:opacity-100">
                         Learn more →
                       </div>
                     </div>
@@ -170,7 +170,7 @@ export default function Home() {
                   Scalable Solutions
                 </h3>
                 <p className="text-gray-600">
-                  Architectures designed to grow with your business and demand.
+                  Architectures designed to grow with your business.
                 </p>
               </div>
             </FadeIn>
@@ -181,7 +181,7 @@ export default function Home() {
                   Measurable Impact
                 </h3>
                 <p className="text-gray-600">
-                  Focused on delivering outcomes, not just technology implementations.
+                  Focused on delivering outcomes, not just implementations.
                 </p>
               </div>
             </FadeIn>
@@ -191,8 +191,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA */}
+      <section className="bg-slate-950 text-white py-20 text-center">
+        <h2 className="text-3xl font-semibold mb-4">
+          Ready to Transform Your Business?
+        </h2>
+
+        <p className="text-gray-300 mb-6">
+          Let’s build scalable, intelligent systems together.
+        </p>
+
+        <button className="bg-blue-600 px-6 py-3 rounded-md">
+          Contact Us
+        </button>
+      </section>
+
       {/* STATUS */}
-      <section className="text-center text-sm text-gray-500 pb-10">
+      <section className="text-center text-sm text-gray-500 py-10">
         API Status: {status}
       </section>
 
