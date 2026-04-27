@@ -51,8 +51,20 @@ export default function Home() {
     <main className="bg-white text-gray-900 pt-10">
 
       {/* HERO */}
-      <section className="bg-slate-950 text-white py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative text-white py-32 px-6">
+
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/hero.jpg"
+            alt="Cloud infrastructure"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative max-w-7xl mx-auto">
           <FadeIn>
             <p className="text-sm text-blue-400 uppercase tracking-wider">
               Enterprise Cloud & AI Consulting
@@ -62,7 +74,7 @@ export default function Home() {
               Transforming Technology Into Business Advantage
             </h1>
 
-            <p className="mt-6 text-gray-300 max-w-xl">
+            <p className="mt-6 text-gray-200 max-w-xl">
               We design, build, and scale cloud and AI systems that deliver
               measurable business impact.
             </p>
@@ -74,6 +86,7 @@ export default function Home() {
             </div>
           </FadeIn>
         </div>
+
       </section>
 
       {/* SERVICES */}
