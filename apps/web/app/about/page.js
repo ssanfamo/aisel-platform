@@ -7,7 +7,7 @@ export default function About() {
     <main className="bg-white text-gray-900">
 
       {/* HERO */}
-      <section className="bg-slate-950 text-white py-32 px-6 text-center">
+      <section className="bg-brand-dark text-white py-32 px-6 text-center">
         <FadeIn>
           <h1 className="text-5xl font-semibold mb-4">
             About AISEL Technologies
@@ -41,7 +41,7 @@ export default function About() {
       </section>
 
       {/* MISSION / VISION */}
-      <section className="bg-gray-50 py-24 px-6">
+      <section className="bg-brand-light py-24 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
 
           <FadeIn>
@@ -122,7 +122,7 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-950 text-white py-20 text-center">
+      <section className="bg-brand-dark text-white py-20 text-center">
         <FadeIn>
           <h2 className="text-3xl font-semibold mb-4">
             Let’s Build Something Great Together
@@ -134,7 +134,7 @@ export default function About() {
 
           <a
             href="/contact"
-            className="bg-blue-600 px-6 py-3 rounded-md inline-block"
+            className="bg-brand-primary px-6 py-3 rounded-md inline-block"
           >
             Contact Us
           </a>

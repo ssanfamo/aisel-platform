@@ -52,19 +52,18 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative text-white py-40 px-6">
-
         <div className="absolute inset-0">
           <img
             src="/images/hero.jpg"
             alt="Cloud infrastructure"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+          <div className="absolute inset-0 bg-brand-dark/80"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto">
           <FadeIn>
-            <p className="text-sm text-blue-400 uppercase tracking-wider">
+            <p className="text-sm text-brand-primary uppercase tracking-wider">
               Enterprise Cloud & AI Consulting
             </p>
 
@@ -77,21 +76,20 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md shadow-lg">
+              <button className="bg-brand-primary hover:opacity-90 text-white px-6 py-3 rounded-md shadow-md transition">
                 Start a Project
               </button>
 
-              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10">
+              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition">
                 View Services
               </button>
             </div>
           </FadeIn>
         </div>
-
       </section>
 
       {/* SERVICES */}
-      <section className="py-24 px-6">
+      <section className="py-28 px-6">
         <div className="max-w-7xl mx-auto">
 
           <FadeIn>
@@ -106,7 +104,7 @@ export default function Home() {
 
               return (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-blue-500 shadow-sm hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
+                  <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-brand-primary shadow-sm hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
 
                     <div className="h-48 overflow-hidden">
                       <img
@@ -117,17 +115,17 @@ export default function Home() {
                     </div>
 
                     <div className="p-6">
-                      <Icon className="w-8 h-8 text-blue-600 mb-4" />
+                      <Icon className="w-8 h-8 text-brand-primary mb-4" />
 
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary">
                         {service.title}
                       </h3>
 
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-gray-500 text-sm leading-relaxed">
                         {service.desc}
                       </p>
 
-                      <div className="mt-4 text-blue-600 text-sm opacity-0 group-hover:opacity-100">
+                      <div className="mt-4 text-brand-primary text-sm opacity-0 group-hover:opacity-100 transition">
                         Learn more →
                       </div>
                     </div>
@@ -142,7 +140,7 @@ export default function Home() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="bg-gray-50 py-24 px-6">
+      <section className="bg-brand-light py-28 px-6">
         <div className="max-w-7xl mx-auto text-center">
 
           <FadeIn>
@@ -192,18 +190,20 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-950 text-white py-20 text-center">
-        <h2 className="text-3xl font-semibold mb-4">
-          Ready to Transform Your Business?
-        </h2>
+      <section className="bg-brand-dark text-white py-24 text-center">
+        <FadeIn>
+          <h2 className="text-3xl font-semibold mb-4">
+            Ready to Transform Your Business?
+          </h2>
 
-        <p className="text-gray-300 mb-6">
-          Let’s build scalable, intelligent systems together.
-        </p>
+          <p className="text-gray-300 mb-6">
+            Let’s build scalable, intelligent systems together.
+          </p>
 
-        <button className="bg-blue-600 px-6 py-3 rounded-md">
-          Contact Us
-        </button>
+          <button className="bg-brand-primary px-6 py-3 rounded-md">
+            Contact Us
+          </button>
+        </FadeIn>
       </section>
 
       {/* STATUS */}

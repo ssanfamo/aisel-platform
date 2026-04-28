@@ -41,7 +41,7 @@ export default function Services() {
     <main className="bg-white text-gray-900">
 
       {/* HERO */}
-      <section className="bg-slate-950 text-white py-32 px-6 text-center">
+      <section className="bg-brand-dark text-white py-32 px-6 text-center">
         <FadeIn>
           <h1 className="text-5xl font-semibold mb-4">
             Our Services
@@ -98,7 +98,7 @@ export default function Services() {
       </section>
 
       {/* VALUE SECTION */}
-      <section className="bg-gray-50 py-24 px-6 text-center">
+      <section className="bg-brand-light py-24 px-6 text-center">
         <div className="max-w-4xl mx-auto">
 
           <FadeIn>
@@ -116,7 +116,7 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-950 text-white py-20 text-center">
+      <section className="bg-brand-dark text-white py-20 text-center">
         <FadeIn>
           <h2 className="text-3xl font-semibold mb-4">
             Let’s Build Your Next Solution
@@ -126,7 +126,7 @@ export default function Services() {
             Partner with us to design and implement systems that scale.
           </p>
 
-          <button className="bg-blue-600 px-6 py-3 rounded-md">
+          <button className="bg-brand-primary px-6 py-3 rounded-md">
             Contact Us
           </button>
         </FadeIn>

@@ -1,5 +1,11 @@
 import "./globals.css";
+import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata = {
   title: "AISEL Technologies",
@@ -13,12 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-900">
+      <body className={`${inter.variable} font-sans bg-white text-gray-900`}>
 
         {/* NAVBAR (Client Component) */}
         <Navbar />
 
-        {/* CONTENT */}
+        {/* MAIN CONTENT */}
         <main className="pt-20">
           {children}
         </main>

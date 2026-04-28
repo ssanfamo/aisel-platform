@@ -41,7 +41,7 @@ export default function Contact() {
     <main className="bg-white text-gray-900">
 
       {/* HERO */}
-      <section className="bg-slate-950 text-white py-32 px-6 text-center">
+      <section className="bg-brand-dark text-white py-32 px-6 text-center">
         <FadeIn>
           <h1 className="text-5xl font-semibold mb-4">
             Contact Us
@@ -124,7 +124,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="bg-blue-600 text-white py-3 rounded-md"
+                className="bg-brand-primary text-white py-3 rounded-md"
               >
                 {loading ? "Sending..." : "Submit Inquiry"}
               </button>
@@ -142,7 +142,7 @@ export default function Contact() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gray-50 py-20 text-center">
+      <section className="bg-brand-light py-20 text-center">
         <FadeIn>
           <h2 className="text-2xl font-semibold mb-4">
             Prefer direct contact?
