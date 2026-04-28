@@ -40,7 +40,7 @@ export default function Home() {
       image: "/images/operations.jpg",
     },
     {
-      title: "Managed IT Services (MSP)",
+      title: "Managed IT Services",
       desc: "End-to-end monitoring, support, and infrastructure management.",
       icon: Settings,
       image: "/images/operations.jpg",
@@ -51,37 +51,38 @@ export default function Home() {
     <main className="bg-white text-gray-900">
 
       {/* HERO */}
-      <section className="relative text-white py-40 px-6">
+      <section className="relative text-white py-48 px-6">
         <div className="absolute inset-0">
           <img
             src="/images/hero.jpg"
-            alt="Cloud infrastructure"
+            alt=""
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-brand-dark/80"></div>
+          <div className="absolute inset-0 bg-brand-dark/80" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           <FadeIn>
-            <p className="text-sm text-brand-primary uppercase tracking-wider">
-              Enterprise Cloud & AI Consulting
+            <p className="text-sm text-brand-primary uppercase tracking-widest">
+              AISEL Technologies
             </p>
 
-            <h1 className="mt-6 text-5xl md:text-7xl font-semibold leading-tight max-w-4xl">
-              Transforming Technology Into Competitive Advantage
+            <h1 className="mt-6 text-6xl md:text-7xl font-semibold tracking-tight">
+              Building Scalable Systems for Modern Businesses
             </h1>
 
-            <p className="mt-6 text-gray-200 max-w-xl text-lg">
-              We design, build, and scale cloud and AI systems that deliver measurable business outcomes.
+            <p className="mt-6 text-lg text-gray-200 max-w-xl leading-relaxed">
+              We design and implement cloud, AI, and platform solutions that
+              deliver measurable performance and long-term scalability.
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="bg-brand-primary hover:opacity-90 text-white px-6 py-3 rounded-md shadow-md transition">
+              <button className="bg-brand-primary text-white px-6 py-3 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
                 Start a Project
               </button>
 
-              <button className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition">
-                View Services
+              <button className="border border-white/30 px-6 py-3 rounded-md transition-all duration-300 hover:bg-white/10">
+                Explore Services
               </button>
             </div>
           </FadeIn>
@@ -89,46 +90,40 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
 
           <FadeIn>
-            <h2 className="text-4xl font-semibold text-center mb-16">
+            <h2 className="text-5xl font-semibold mb-16 tracking-tight">
               Core Capabilities
             </h2>
           </FadeIn>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {services.map((service, i) => {
               const Icon = service.icon;
 
               return (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-brand-primary shadow-sm hover:shadow-xl transition duration-500 transform hover:-translate-y-2">
+                <FadeIn key={i} delay={i * 0.08}>
+                  <div className="group">
 
-                    <div className="h-48 overflow-hidden">
+                    <div className="h-52 overflow-hidden rounded-lg mb-5">
                       <img
                         src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+                        alt=""
+                        className="w-full h-full object-cover transition duration-700 ease-out group-hover:scale-105"
                       />
                     </div>
 
-                    <div className="p-6">
-                      <Icon className="w-8 h-8 text-brand-primary mb-4" />
+                    <Icon className="w-7 h-7 text-brand-primary mb-3" />
 
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary">
-                        {service.title}
-                      </h3>
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary transition-colors duration-300">
+                      {service.title}
+                    </h3>
 
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                        {service.desc}
-                      </p>
-
-                      <div className="mt-4 text-brand-primary text-sm opacity-0 group-hover:opacity-100 transition">
-                        Learn more →
-                      </div>
-                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {service.desc}
+                    </p>
 
                   </div>
                 </FadeIn>
@@ -139,75 +134,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="bg-brand-light py-28 px-6">
-        <div className="max-w-7xl mx-auto text-center">
+      {/* WHY */}
+      <section className="bg-brand-light py-32 px-6">
+        <div className="max-w-6xl mx-auto">
 
           <FadeIn>
-            <h2 className="text-4xl font-semibold mb-12">
-              Why Choose AISEL Technologies
+            <h2 className="text-5xl font-semibold mb-16 tracking-tight">
+              Why AISEL Technologies
             </h2>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-10 text-left">
+          <div className="grid md:grid-cols-3 gap-12 text-sm">
 
             <FadeIn>
               <div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Enterprise Expertise
-                </h3>
+                <h3 className="text-lg font-semibold mb-3">Proven Expertise</h3>
                 <p className="text-gray-600">
-                  Deep experience in cloud, DevOps, and AI systems across industries.
+                  Deep experience across cloud infrastructure, DevOps, and AI systems.
                 </p>
               </div>
             </FadeIn>
 
             <FadeIn>
               <div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Scalable Solutions
-                </h3>
+                <h3 className="text-lg font-semibold mb-3">Scalable Architecture</h3>
                 <p className="text-gray-600">
-                  Architectures designed to grow with your business.
+                  Systems designed to grow with your business without compromise.
                 </p>
               </div>
             </FadeIn>
 
             <FadeIn>
               <div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Measurable Impact
-                </h3>
+                <h3 className="text-lg font-semibold mb-3">Business Impact</h3>
                 <p className="text-gray-600">
-                  Focused on delivering outcomes, not just implementations.
+                  Focused on outcomes that improve efficiency and reduce cost.
                 </p>
               </div>
             </FadeIn>
 
           </div>
-
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-brand-dark text-white py-24 text-center">
+      <section className="bg-brand-dark text-white py-28 text-center px-6">
         <FadeIn>
-          <h2 className="text-3xl font-semibold mb-4">
-            Ready to Transform Your Business?
+          <h2 className="text-4xl font-semibold mb-4">
+            Let’s Build Your Next Platform
           </h2>
 
-          <p className="text-gray-300 mb-6">
-            Let’s build scalable, intelligent systems together.
+          <p className="text-gray-300 mb-8">
+            Partner with us to design systems that scale.
           </p>
 
-          <button className="bg-brand-primary px-6 py-3 rounded-md">
+          <button className="bg-brand-primary px-6 py-3 rounded-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
             Contact Us
           </button>
         </FadeIn>
       </section>
 
       {/* STATUS */}
-      <section className="text-center text-sm text-gray-500 py-10">
+      <section className="text-center text-sm text-gray-400 py-8">
         API Status: {status}
       </section>
 
