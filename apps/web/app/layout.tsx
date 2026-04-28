@@ -19,19 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans bg-white text-gray-900`}>
+      <body className={`${inter.variable} font-sans bg-white text-gray-900 antialiased`}>
 
-        {/* NAVBAR (Client Component) */}
         <Navbar />
 
-        {/* MAIN CONTENT */}
         <main className="pt-20">
           {children}
         </main>
 
-        {/* FOOTER */}
-        <footer className="bg-gray-100 text-center py-10 mt-20 text-sm text-gray-500">
-          © {new Date().getFullYear()} AISEL Technologies. All rights reserved.
+        <footer className="bg-gray-100 mt-32">
+          <div className="max-w-6xl mx-auto px-6 py-10 text-center text-sm text-gray-500">
+            © {new Date().getFullYear()} AISEL Technologies. All rights reserved.
+          </div>
         </footer>
 
       </body>

@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
 import FadeIn from "../components/FadeIn";
+import Container from "../components/Container";
+import Section from "../components/Section";
 
 export default function Home() {
   const [status, setStatus] = useState("Checking...");
@@ -17,82 +19,82 @@ export default function Home() {
   const services = [
     {
       title: "Cloud Infrastructure",
-      desc: "Scalable, secure cloud environments built for enterprise performance.",
+      desc: "Secure, scalable environments engineered for reliability.",
       icon: Cloud,
       image: "/images/cloud.jpg",
     },
     {
       title: "AI Automation",
-      desc: "Intelligent systems that automate operations and decision-making.",
+      desc: "Intelligent systems that streamline operations.",
       icon: Cpu,
       image: "/images/ai.jpg",
     },
     {
       title: "DevOps Engineering",
-      desc: "CI/CD pipelines that accelerate delivery and reduce risk.",
+      desc: "CI/CD pipelines that accelerate delivery.",
       icon: Workflow,
       image: "/images/devops.jpg",
     },
     {
       title: "Platform Engineering",
-      desc: "Internal platforms that enable scalable engineering teams.",
+      desc: "Platforms that scale developer productivity.",
       icon: Layers,
       image: "/images/operations.jpg",
     },
     {
       title: "Managed IT Services",
-      desc: "End-to-end monitoring, support, and infrastructure management.",
+      desc: "Monitoring, support, and infrastructure management.",
       icon: Settings,
       image: "/images/operations.jpg",
     },
   ];
 
   return (
-    <main className="bg-white text-gray-900">
+    <main>
 
       {/* HERO */}
-      <section className="relative text-white py-48 px-6">
+      <section className="relative text-white py-44">
         <div className="absolute inset-0">
-          <img
-            src="/images/hero.jpg"
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-brand-dark/80" />
+          <img src="/images/hero.jpg" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-brand-dark/85" />
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
+        <Container className="relative text-center">
           <FadeIn>
             <p className="text-sm text-brand-primary uppercase tracking-widest">
               AISEL Technologies
             </p>
 
             <h1 className="mt-6 text-6xl md:text-7xl font-semibold tracking-tight">
-              Building Scalable Systems for Modern Businesses
+              Engineering Scalable Systems for Modern Businesses
             </h1>
 
-            <p className="mt-6 text-lg text-gray-200 max-w-xl leading-relaxed">
-              We design and implement cloud, AI, and platform solutions that
-              deliver measurable performance and long-term scalability.
+            <p className="mt-6 text-lg text-gray-200 max-w-2xl mx-auto">
+              We design cloud, AI, and platform solutions that deliver measurable results.
             </p>
 
-            <div className="mt-10 flex gap-4">
-              <button className="bg-brand-primary text-white px-6 py-3 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
-                Start a Project
-              </button>
+            <div className="mt-10 flex justify-center gap-4">
+              <a
+                href="/contact"
+                className="bg-brand-primary px-6 py-3 rounded-md hover:shadow-lg hover:-translate-y-0.5 transition"
+              >
+                Get a Free Consultation
+              </a>
 
-              <button className="border border-white/30 px-6 py-3 rounded-md transition-all duration-300 hover:bg-white/10">
-                Explore Services
-              </button>
+              <a
+                href="/case-studies"
+                className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition"
+              >
+                View Case Studies
+              </a>
             </div>
           </FadeIn>
-        </div>
+        </Container>
       </section>
 
       {/* SERVICES */}
-      <section className="py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-
+      <Section>
+        <Container>
           <FadeIn>
             <h2 className="text-5xl font-semibold mb-16 tracking-tight">
               Core Capabilities
@@ -110,18 +112,17 @@ export default function Home() {
                     <div className="h-52 overflow-hidden rounded-lg mb-5">
                       <img
                         src={service.image}
-                        alt=""
-                        className="w-full h-full object-cover transition duration-700 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition group-hover:scale-105"
                       />
                     </div>
 
                     <Icon className="w-7 h-7 text-brand-primary mb-3" />
 
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary transition-colors duration-300">
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary">
                       {service.title}
                     </h3>
 
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-sm">
                       {service.desc}
                     </p>
 
@@ -130,74 +131,99 @@ export default function Home() {
               );
             })}
           </div>
+        </Container>
+      </Section>
 
-        </div>
-      </section>
-
-      {/* WHY */}
-      <section className="bg-brand-light py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-
+      {/* INLINE CTA */}
+      <Section className="bg-brand-light text-center">
+        <Container>
           <FadeIn>
-            <h2 className="text-5xl font-semibold mb-16 tracking-tight">
-              Why AISEL Technologies
+            <h3 className="text-2xl font-semibold mb-4">
+              Need help choosing the right solution?
+            </h3>
+
+            <p className="text-brand-muted mb-6">
+              We’ll assess your needs and recommend the best approach.
+            </p>
+
+            <a
+              href="/contact"
+              className="bg-brand-primary text-white px-6 py-3 rounded-md hover:shadow-lg"
+            >
+              Talk to an Expert
+            </a>
+          </FadeIn>
+        </Container>
+      </Section>
+
+      {/* METRICS */}
+      <Section className="bg-brand-light">
+        <Container className="text-center">
+          <FadeIn>
+            <h2 className="text-4xl font-semibold mb-4">
+              Proven Results Across Projects
             </h2>
+
+            <p className="text-brand-muted mb-12">
+              Our solutions deliver measurable improvements in performance, reliability, and efficiency.
+            </p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-12 text-sm">
-
+          <div className="grid md:grid-cols-3 gap-10">
             <FadeIn>
               <div>
-                <h3 className="text-lg font-semibold mb-3">Proven Expertise</h3>
-                <p className="text-gray-600">
-                  Deep experience across cloud infrastructure, DevOps, and AI systems.
-                </p>
+                <p className="text-4xl font-semibold text-brand-primary">70%</p>
+                <p className="text-gray-600 mt-2 text-sm">Downtime Reduction</p>
               </div>
             </FadeIn>
 
             <FadeIn>
               <div>
-                <h3 className="text-lg font-semibold mb-3">Scalable Architecture</h3>
-                <p className="text-gray-600">
-                  Systems designed to grow with your business without compromise.
-                </p>
+                <p className="text-4xl font-semibold text-brand-primary">3x</p>
+                <p className="text-gray-600 mt-2 text-sm">Faster Deployments</p>
               </div>
             </FadeIn>
 
             <FadeIn>
               <div>
-                <h3 className="text-lg font-semibold mb-3">Business Impact</h3>
-                <p className="text-gray-600">
-                  Focused on outcomes that improve efficiency and reduce cost.
-                </p>
+                <p className="text-4xl font-semibold text-brand-primary">50%</p>
+                <p className="text-gray-600 mt-2 text-sm">Efficiency Increase</p>
               </div>
             </FadeIn>
-
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA */}
-      <section className="bg-brand-dark text-white py-28 text-center px-6">
-        <FadeIn>
-          <h2 className="text-4xl font-semibold mb-4">
-            Let’s Build Your Next Platform
-          </h2>
+      <Section className="bg-brand-dark text-white text-center">
+        <Container>
+          <FadeIn>
+            <h2 className="text-4xl font-semibold mb-4">
+              Let’s Talk About Your Project
+            </h2>
 
-          <p className="text-gray-300 mb-8">
-            Partner with us to design systems that scale.
-          </p>
+            <p className="text-gray-300 mb-2">
+              No commitment. No pressure.
+            </p>
 
-          <button className="bg-brand-primary px-6 py-3 rounded-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-            Contact Us
-          </button>
-        </FadeIn>
-      </section>
+            <p className="text-gray-400 mb-8 text-sm">
+              Just a quick conversation to explore how we can help.
+            </p>
+
+            <a
+              href="/contact"
+              className="bg-brand-primary px-6 py-3 rounded-md hover:shadow-lg"
+            >
+              Schedule a Free Call
+            </a>
+          </FadeIn>
+        </Container>
+      </Section>
 
       {/* STATUS */}
-      <section className="text-center text-sm text-gray-400 py-8">
+      <div className="text-center text-sm text-gray-400 py-8">
         API Status: {status}
-      </section>
+      </div>
 
     </main>
   );
