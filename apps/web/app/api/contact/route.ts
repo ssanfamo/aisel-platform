@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import fs from "fs";
+import path from "path";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY!);
+
+// File storage (temporary CRM)
+const filePath = path.join(process.cwd(), "leads.json");
 
 export async function POST(req: Request) {
   try {
@@ -9,6 +14,7 @@ export async function POST(req: Request) {
 
     const { name, email, company, service, message } = body;
 
+    // 🔒 Basic validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -16,20 +22,33 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1️⃣ Log lead (temporary storage)
-    console.log("New Lead:", {
+    const newLead = {
       name,
       email,
-      company,
-      service,
+      company: company || "",
+      service: service || "",
       message,
       createdAt: new Date().toISOString(),
-    });
+    };
 
-    // 2️⃣ Send email to YOU
+    // 📦 Load existing leads
+    let leads: any[] = [];
+
+    if (fs.existsSync(filePath)) {
+      const fileData = fs.readFileSync(filePath, "utf-8");
+      leads = JSON.parse(fileData || "[]");
+    }
+
+    // ➕ Add new lead (latest first)
+    leads.unshift(newLead);
+
+    // 💾 Save back to file
+    fs.writeFileSync(filePath, JSON.stringify(leads, null, 2));
+
+    // 📧 1. Notify YOU
     await resend.emails.send({
       from: "AISEL <onboarding@resend.dev>",
-      to: "your-email@example.com", // 🔴 CHANGE THIS
+      to: "info@aiseltechnologies.com", // 🔴 CHANGE THIS
       subject: "New Website Lead",
       html: `
         <h2>New Lead Received</h2>
@@ -38,20 +57,29 @@ export async function POST(req: Request) {
         <p><strong>Company:</strong> ${company || "-"}</p>
         <p><strong>Service:</strong> ${service || "-"}</p>
         <p><strong>Message:</strong><br/>${message}</p>
+        <hr/>
+        <p><small>Submitted at ${new Date().toLocaleString()}</small></p>
       `,
     });
 
-    // 3️⃣ Send auto-reply to USER
+    // 📧 2. Auto-reply to USER
     await resend.emails.send({
       from: "AISEL <onboarding@resend.dev>",
       to: email,
       subject: "We received your message",
       html: `
         <p>Hi ${name},</p>
-        <p>Thanks for reaching out to AISEL Technologies.</p>
-        <p>We’ve received your message and will get back to you within 24 hours.</p>
+
+        <p>Thank you for contacting <strong>AISEL Technologies</strong>.</p>
+
+        <p>We’ve received your message and will review your request carefully.</p>
+
+        <p>You can expect a response within <strong>24 hours</strong>.</p>
+
         <br/>
-        <p>Best regards,<br/>AISEL Technologies</p>
+
+        <p>Best regards,<br/>
+        AISEL Technologies</p>
       `,
     });
 
