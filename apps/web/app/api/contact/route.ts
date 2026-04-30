@@ -1,20 +1,29 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import fs from "fs";
-import path from "path";
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
-// File storage (temporary CRM)
-const filePath = path.join(process.cwd(), "leads.json");
+// ✅ Initialize once
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
+  console.log("🔥 CONTACT API HIT");
+
   try {
+    // ✅ Ensure API key exists
+    if (!process.env.RESEND_API_KEY) {
+      console.error("❌ Missing RESEND_API_KEY");
+      return NextResponse.json(
+        { error: "Server misconfigured" },
+        { status: 500 }
+      );
+    }
+
+    // ✅ Parse request body
     const body = await req.json();
+    const { name, email, message, company, service } = body;
 
-    const { name, email, company, service, message } = body;
+    console.log("📩 Incoming:", { name, email });
 
-    // 🔒 Basic validation
+    // ✅ Validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -22,74 +31,73 @@ export async function POST(req: Request) {
       );
     }
 
-    const newLead = {
-      name,
-      email,
-      company: company || "",
-      service: service || "",
-      message,
-      createdAt: new Date().toISOString(),
-    };
-
-    // 📦 Load existing leads
-    let leads: any[] = [];
-
-    if (fs.existsSync(filePath)) {
-      const fileData = fs.readFileSync(filePath, "utf-8");
-      leads = JSON.parse(fileData || "[]");
+    // ✅ Basic spam protection
+    if (message.length < 10) {
+      return NextResponse.json(
+        { error: "Message too short" },
+        { status: 400 }
+      );
     }
 
-    // ➕ Add new lead (latest first)
-    leads.unshift(newLead);
+    // =========================
+    // 📧 1. SEND TO YOU
+    // =========================
+    const { data: adminData, error: adminError } =
+      await resend.emails.send({
+        from: "AISEL <info@aiseltechnologies.com>", // ✅ production sender
+        to: "info@aiseltechnologies.com",
+        subject: "New Contact Form Submission",
+        html: `
+          <h2>New Message</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Company:</strong> ${company || "-"}</p>
+          <p><strong>Service:</strong> ${service || "-"}</p>
+          <p><strong>Message:</strong><br/>${message}</p>
+        `,
+      });
 
-    // 💾 Save back to file
-    fs.writeFileSync(filePath, JSON.stringify(leads, null, 2));
+    if (adminError) {
+      console.error("❌ Admin email failed:", adminError);
+      return NextResponse.json(
+        { error: "Failed to send email" },
+        { status: 500 }
+      );
+    }
 
-    // 📧 1. Notify YOU
-    await resend.emails.send({
-      from: "AISEL <onboarding@resend.dev>",
-      to: "info@aiseltechnologies.com", // 🔴 CHANGE THIS
-      subject: "New Website Lead",
-      html: `
-        <h2>New Lead Received</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company || "-"}</p>
-        <p><strong>Service:</strong> ${service || "-"}</p>
-        <p><strong>Message:</strong><br/>${message}</p>
-        <hr/>
-        <p><small>Submitted at ${new Date().toLocaleString()}</small></p>
-      `,
-    });
+    console.log("✅ Admin email sent:", adminData);
 
-    // 📧 2. Auto-reply to USER
-    await resend.emails.send({
-      from: "AISEL <onboarding@resend.dev>",
+    // =========================
+    // 📧 2. AUTO-REPLY TO USER
+    // =========================
+    const { error: userError } = await resend.emails.send({
+      from: "AISEL <info@aiseltechnologies.com>",
       to: email,
       subject: "We received your message",
       html: `
         <p>Hi ${name},</p>
-
-        <p>Thank you for contacting <strong>AISEL Technologies</strong>.</p>
-
-        <p>We’ve received your message and will review your request carefully.</p>
-
-        <p>You can expect a response within <strong>24 hours</strong>.</p>
-
+        <p>Thanks for reaching out to AISEL Technologies.</p>
+        <p>We’ve received your message and will get back to you within 24 hours.</p>
         <br/>
-
-        <p>Best regards,<br/>
-        AISEL Technologies</p>
+        <p>Best regards,</p>
+        <p><strong>AISEL Technologies</strong></p>
       `,
     });
+
+    if (userError) {
+      console.error("⚠️ Auto-reply failed:", userError);
+      // ❗ Do NOT fail request because of this
+    }
+
+    console.log("✅ Contact flow completed");
 
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error("Contact API Error:", error);
+    console.error("💥 API ERROR:", error);
 
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: "Server error" },
       { status: 500 }
     );
   }
