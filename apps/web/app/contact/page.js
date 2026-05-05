@@ -16,8 +16,15 @@ export default function Contact() {
 
     const form = e.target;
 
+    // ✅ Clean duplicate words (e.g. "John John Doe" → "John Doe")
+    const cleanName = form.name.value
+      .trim()
+      .split(/\s+/)
+      .filter((word, index, arr) => arr.indexOf(word) === index)
+      .join(" ");
+
     const payload = {
-      name: form.name.value,
+      name: cleanName,
       email: form.email.value,
       company: form.company.value,
       service: form.service.value,
@@ -28,7 +35,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
