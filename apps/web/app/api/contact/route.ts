@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export async function POST(req: Request) {
   try {
     console.log("🔥 CONTACT API HIT");
 
-    // ✅ Ensure API key exists
     if (!process.env.RESEND_API_KEY) {
       console.error("❌ Missing RESEND_API_KEY");
 
@@ -15,21 +13,20 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Initialize Resend at runtime
+    // ✅ CRITICAL: dynamic import (prevents build-time execution)
+    const { Resend } = await import("resend");
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // ✅ Parse request body
     const body = await req.json();
     const { name, email, message, company, service } = body;
 
-    // ✅ Final backend cleanup (safety net)
+    // ✅ Clean name
     const cleanName = name
       .trim()
       .split(/\s+/)
       .filter((word: string, index: number, arr: string[]) => arr.indexOf(word) === index)
       .join(" ");
 
-    // ✅ Validate input
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -37,15 +34,16 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Send email
     const { data, error } = await resend.emails.send({
       from: "AISEL <contact@aiseltechnologies.com>",
-      to: "info@aiseltechnologies.com", // 🔴 replace with your email
-      subject: `New Contact Form Submission from ${name}`,
+      to: "info@aiseltechnologies.com",
+      subject: `New Contact Form Submission from ${cleanName}`,
       html: `
         <h2>New Message</h2>
-        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Name:</strong> ${cleanName}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Company:</strong> ${company || "-"}</p>
+        <p><strong>Service:</strong> ${service || "-"}</p>
         <p><strong>Message:</strong><br/>${message}</p>
       `,
     });
@@ -53,7 +51,6 @@ export async function POST(req: Request) {
     console.log("📨 DATA:", data);
     console.log("❌ ERROR:", error);
 
-    // ✅ Handle resend error properly
     if (error) {
       return NextResponse.json(
         { error: JSON.stringify(error) },
