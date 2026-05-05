@@ -1,54 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Cloud, Cpu, Workflow, Layers, Settings } from "lucide-react";
-import FadeIn from "../components/FadeIn";
 import Container from "../components/Container";
 import Section from "../components/Section";
+import FadeIn from "../components/FadeIn";
 
 export default function Home() {
-  const [status, setStatus] = useState("Checking...");
-
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.message))
-      .catch(() => setStatus("Offline"));
-  }, []);
-
-  const services = [
-    {
-      title: "Cloud Infrastructure",
-      desc: "Secure, scalable environments engineered for reliability.",
-      icon: Cloud,
-      image: "/images/cloud.jpg",
-    },
-    {
-      title: "AI Automation",
-      desc: "Intelligent systems that streamline operations.",
-      icon: Cpu,
-      image: "/images/ai.jpg",
-    },
-    {
-      title: "DevOps Engineering",
-      desc: "CI/CD pipelines that accelerate delivery.",
-      icon: Workflow,
-      image: "/images/devops.jpg",
-    },
-    {
-      title: "Platform Engineering",
-      desc: "Platforms that scale developer productivity.",
-      icon: Layers,
-      image: "/images/operations.jpg",
-    },
-    {
-      title: "Managed IT Services",
-      desc: "Monitoring, support, and infrastructure management.",
-      icon: Settings,
-      image: "/images/operations.jpg",
-    },
-  ];
-
   return (
     <main>
 
@@ -66,33 +22,28 @@ export default function Home() {
             </p>
 
             <h1 className="mt-6 text-6xl md:text-7xl font-semibold tracking-tight">
-              Engineering Scalable Systems for Modern Businesses
+              Build. Automate. Scale.
             </h1>
 
             <p className="mt-6 text-lg text-gray-200 max-w-2xl mx-auto">
-              We design cloud, AI, and platform solutions that deliver measurable results.
+              We design and manage cloud, on-prem, and hybrid infrastructure—
+              powered by automation to help your business scale reliably.
             </p>
 
             <div className="mt-10 flex justify-center gap-4">
-              <a
-                href="/contact"
-                className="bg-brand-primary px-6 py-3 rounded-md hover:shadow-lg hover:-translate-y-0.5 transition"
-              >
+              <a href="/contact" className="bg-brand-primary px-6 py-3 rounded-md hover:shadow-lg">
                 Get a Free Consultation
               </a>
 
-              <a
-                href="/case-studies"
-                className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10 transition"
-              >
-                View Case Studies
+              <a href="/services" className="border border-white/30 px-6 py-3 rounded-md hover:bg-white/10">
+                View Services
               </a>
             </div>
           </FadeIn>
         </Container>
       </section>
 
-      {/* SERVICES */}
+      {/* SERVICES OVERVIEW */}
       <Section>
         <Container>
           <FadeIn>
@@ -101,95 +52,79 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {services.map((service, i) => {
-              const Icon = service.icon;
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
 
-              return (
-                <FadeIn key={i} delay={i * 0.08}>
-                  <div className="group">
+            <div>
+              <h3 className="font-semibold mb-2">Cloud Infrastructure</h3>
+              <p className="text-gray-600 text-sm">
+                Scalable, secure environments on AWS, Azure, and more.
+              </p>
+            </div>
 
-                    <div className="h-52 overflow-hidden rounded-lg mb-5">
-                      <img
-                        src={service.image}
-                        className="w-full h-full object-cover transition group-hover:scale-105"
-                      />
-                    </div>
+            <div>
+              <h3 className="font-semibold mb-2">On-Prem Infrastructure</h3>
+              <p className="text-gray-600 text-sm">
+                Server, network, and local system design & management.
+              </p>
+            </div>
 
-                    <Icon className="w-7 h-7 text-brand-primary mb-3" />
+            <div>
+              <h3 className="font-semibold mb-2">Automation & DevOps</h3>
+              <p className="text-gray-600 text-sm">
+                CI/CD pipelines and infrastructure automation.
+              </p>
+            </div>
 
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-brand-primary">
-                      {service.title}
-                    </h3>
+            <div>
+              <h3 className="font-semibold mb-2">Managed Services (MSP)</h3>
+              <p className="text-gray-600 text-sm">
+                Monitoring, support, and ongoing system optimization.
+              </p>
+            </div>
 
-                    <p className="text-gray-600 text-sm">
-                      {service.desc}
-                    </p>
-
-                  </div>
-                </FadeIn>
-              );
-            })}
           </div>
         </Container>
       </Section>
 
-      {/* INLINE CTA */}
-      <Section className="bg-brand-light text-center">
+      {/* HOW IT WORKS */}
+      <Section className="bg-brand-light">
         <Container>
           <FadeIn>
-            <h3 className="text-2xl font-semibold mb-4">
-              Need help choosing the right solution?
-            </h3>
-
-            <p className="text-brand-muted mb-6">
-              We’ll assess your needs and recommend the best approach.
-            </p>
-
-            <a
-              href="/contact"
-              className="bg-brand-primary text-white px-6 py-3 rounded-md hover:shadow-lg"
-            >
-              Talk to an Expert
-            </a>
-          </FadeIn>
-        </Container>
-      </Section>
-
-      {/* METRICS */}
-      <Section className="bg-brand-light">
-        <Container className="text-center">
-          <FadeIn>
-            <h2 className="text-4xl font-semibold mb-4">
-              Proven Results Across Projects
+            <h2 className="text-4xl font-semibold mb-12 text-center">
+              How We Work
             </h2>
-
-            <p className="text-brand-muted mb-12">
-              Our solutions deliver measurable improvements in performance, reliability, and efficiency.
-            </p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-10">
-            <FadeIn>
-              <div>
-                <p className="text-4xl font-semibold text-brand-primary">70%</p>
-                <p className="text-gray-600 mt-2 text-sm">Downtime Reduction</p>
-              </div>
-            </FadeIn>
+          <div className="grid md:grid-cols-4 gap-8 text-center">
 
-            <FadeIn>
-              <div>
-                <p className="text-4xl font-semibold text-brand-primary">3x</p>
-                <p className="text-gray-600 mt-2 text-sm">Faster Deployments</p>
-              </div>
-            </FadeIn>
+            <div>
+              <h4 className="font-semibold mb-2">1. Discovery</h4>
+              <p className="text-sm text-gray-600">
+                We assess your infrastructure and business needs.
+              </p>
+            </div>
 
-            <FadeIn>
-              <div>
-                <p className="text-4xl font-semibold text-brand-primary">50%</p>
-                <p className="text-gray-600 mt-2 text-sm">Efficiency Increase</p>
-              </div>
-            </FadeIn>
+            <div>
+              <h4 className="font-semibold mb-2">2. Design</h4>
+              <p className="text-sm text-gray-600">
+                We design cloud, on-prem, or hybrid solutions.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2">3. Implementation</h4>
+              <p className="text-sm text-gray-600">
+                We deploy infrastructure and automation systems.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2">4. Management</h4>
+              <p className="text-sm text-gray-600">
+                We monitor, maintain, and optimize continuously.
+              </p>
+            </div>
+
           </div>
         </Container>
       </Section>
@@ -199,31 +134,19 @@ export default function Home() {
         <Container>
           <FadeIn>
             <h2 className="text-4xl font-semibold mb-4">
-              Let’s Talk About Your Project
+              Let’s Build Your Infrastructure
             </h2>
 
-            <p className="text-gray-300 mb-2">
-              No commitment. No pressure.
+            <p className="text-gray-300 mb-8">
+              Cloud, on-prem, or hybrid—we’ll design the right system for you.
             </p>
 
-            <p className="text-gray-400 mb-8 text-sm">
-              Just a quick conversation to explore how we can help.
-            </p>
-
-            <a
-              href="/contact"
-              className="bg-brand-primary px-6 py-3 rounded-md hover:shadow-lg"
-            >
-              Schedule a Free Call
+            <a href="/contact" className="bg-brand-primary px-6 py-3 rounded-md">
+              Talk to an Expert
             </a>
           </FadeIn>
         </Container>
       </Section>
-
-      {/* STATUS */}
-      <div className="text-center text-sm text-gray-400 py-8">
-        API Status: {status}
-      </div>
 
     </main>
   );
