@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+    container_name: aisel-api
+    ports:
+      - "8000:8000"
+    restart: always
+
+  web:
+    build:
+      context: ./apps/web
+    container_name: aisel-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    env_file:
+      - ./apps/web/.env
+    restart: always

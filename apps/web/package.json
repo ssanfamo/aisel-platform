@@ -11,7 +11,7 @@
   "dependencies": {
     "autoprefixer": "^8.4.19",
     "framer-motion": "^12.38.0",
-    "lucide-react": "^1.8.0",
+    "lucide-react": "^1.14.0",
     "next": "16.2.3",
     "nodemailer": "^8.0.5",
     "postcss": "^8.4.38",

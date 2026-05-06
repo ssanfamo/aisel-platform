@@ -4,6 +4,8 @@ export async function POST(req: Request) {
   try {
     console.log("🔥 CONTACT API HIT");
 
+    console.log("ENV CHECK:", process.env.RESEND_API_KEY ? "OK" : "MISSING");
+
     if (!process.env.RESEND_API_KEY) {
       console.error("❌ Missing RESEND_API_KEY");
 
