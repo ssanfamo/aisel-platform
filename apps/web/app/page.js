@@ -1,453 +1,503 @@
 "use client";
 
+import Link from "next/link";
+
 import Container from "../components/Container";
 import Section from "../components/Section";
 import FadeIn from "../components/FadeIn";
 
 import {
-  Server,
+  ArrowRight,
+  CheckCircle2,
   Activity,
+  Server,
   Workflow,
   ShieldCheck,
 } from "lucide-react";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main>
 
       {/* HERO */}
-      <section className="relative overflow-hidden py-44 text-white">
-        <div className="absolute inset-0">
-          <img
-            src="/images/hero.jpg"
-            alt="AISEL Technologies Infrastructure"
-            className="h-full w-full object-cover"
-          />
+      <section className="relative overflow-hidden bg-brand-dark py-40 text-white">
 
-          <div className="absolute inset-0 bg-brand-dark/85" />
-        </div>
+        <Container>
 
-        <Container className="relative z-10 text-center">
           <FadeIn>
 
-            <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
-              AISEL Technologies
-            </p>
+            <div className="max-w-5xl">
 
-            <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
-              Build Stable, Scalable Infrastructure for Modern Operations.
-            </h1>
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Infrastructure Engineering & Operational Systems
+              </p>
 
-            <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-200">
-              We help growing businesses engineer reliable infrastructure,
-              implement operational visibility, and automate critical systems
-              for scale, uptime, and operational efficiency.
-            </p>
+              <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
+                Scalable Infrastructure Engineering & Operational Excellence
+              </h1>
 
-            <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
+              <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-300">
+                AISEL Technologies delivers infrastructure engineering,
+                monitoring & observability, systems automation, and managed
+                infrastructure services focused on reliability, scalability,
+                operational visibility, and automation.
+              </p>
 
-              <a
-                href="/contact"
-                className="rounded-md bg-brand-primary px-8 py-4 transition-all duration-300 hover:translate-y-[-1px] hover:shadow-lg"
-              >
-                Schedule Infrastructure Assessment
-              </a>
+              <div className="mt-12 flex flex-col gap-4 sm:flex-row">
 
-              <a
-                href="/services"
-                className="rounded-md border border-white/20 px-8 py-4 transition-all duration-300 hover:bg-white/10"
-              >
-                Explore Services
-              </a>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
+                  Schedule Infrastructure Assessment
+
+                  <ArrowRight className="h-5 w-5" />
+
+                </Link>
+
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center justify-center gap-3 rounded-md border border-white/10 bg-white/5 px-8 py-4 text-white transition-all duration-300 hover:bg-white/10"
+                >
+                  View Case Studies
+                </Link>
+
+              </div>
 
             </div>
 
           </FadeIn>
+
         </Container>
+
       </section>
 
       {/* CORE SERVICES */}
-      <Section className="py-28">
+      <Section className="bg-white py-32">
+
         <Container>
 
+          {/* SECTION INTRO */}
           <FadeIn>
-            <div className="max-w-3xl">
 
-              <h2 className="mb-6 text-5xl font-semibold tracking-tight">
-                Infrastructure & Operational Engineering
-              </h2>
-
-              <p className="text-lg leading-8 text-gray-600">
-                AISEL Technologies helps organizations build reliable,
-                observable, and automated operational environments that support
-                long-term business growth and infrastructure scalability.
-              </p>
-
-            </div>
-          </FadeIn>
-
-          <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-
-            {/* Infrastructure Engineering */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-
-              <Server className="mb-5 h-10 w-10 text-brand-primary" />
-
-              <h3 className="mb-4 text-xl font-semibold">
-                Infrastructure Engineering
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Design and deployment of scalable cloud, hybrid, and on-prem
-                infrastructure environments built for reliability, performance,
-                and operational growth.
-              </p>
-
-            </div>
-
-            {/* Monitoring */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-
-              <Activity className="mb-5 h-10 w-10 text-brand-primary" />
-
-              <h3 className="mb-4 text-xl font-semibold">
-                Monitoring & Observability
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Real-time visibility into infrastructure health, uptime, logs,
-                metrics, and system performance through modern monitoring and
-                observability solutions.
-              </p>
-
-            </div>
-
-            {/* Automation */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-
-              <Workflow className="mb-5 h-10 w-10 text-brand-primary" />
-
-              <h3 className="mb-4 text-xl font-semibold">
-                Systems Automation
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Automation of deployments, workflows, and operational processes
-                to reduce manual overhead, improve consistency, and accelerate
-                infrastructure operations.
-              </p>
-
-            </div>
-
-            {/* Managed Services */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-
-              <ShieldCheck className="mb-5 h-10 w-10 text-brand-primary" />
-
-              <h3 className="mb-4 text-xl font-semibold">
-                Managed Infrastructure Services
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Ongoing monitoring, optimization, maintenance, and operational
-                support for mission-critical infrastructure environments.
-              </p>
-
-            </div>
-
-          </div>
-        </Container>
-      </Section>
-
-      {/* OPERATIONAL CHALLENGES */}
-      <Section className="bg-brand-light py-28">
-        <Container>
-
-          <FadeIn>
             <div className="mx-auto max-w-4xl text-center">
 
-              <h2 className="mb-6 text-4xl font-semibold tracking-tight md:text-5xl">
-                Infrastructure Problems Slow Business Growth
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Core Services
+              </p>
+
+              <h2 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+                Infrastructure Engineering & Operational Systems
               </h2>
 
-              <p className="text-lg leading-8 text-gray-600">
-                Downtime, poor visibility, manual operations, and unstable
-                systems create operational bottlenecks that impact performance,
-                scalability, and customer experience.
+              <p className="mt-8 text-lg leading-8 text-gray-600">
+                AISEL Technologies delivers infrastructure engineering,
+                monitoring, observability, systems automation, and managed
+                operational services designed for reliability, scalability,
+                visibility, and operational efficiency.
               </p>
 
             </div>
+
+          </FadeIn>
+
+          <div className="mt-24 space-y-32">
+
+            {/* SERVICE 1 */}
+            <FadeIn>
+
+              <div className="grid items-center gap-16 lg:grid-cols-2">
+
+                {/* IMAGE */}
+                <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+
+                  <img
+                    src="/images/infrastructure-engineering.jpg"
+                    alt="Infrastructure Engineering"
+                    className="h-full w-full object-cover"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/10 to-transparent" />
+
+                </div>
+
+                {/* CONTENT */}
+                <div>
+
+                  <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                    Infrastructure Engineering
+                  </p>
+
+                  <h3 className="mt-6 text-4xl font-semibold tracking-tight">
+                    Scalable Operational Infrastructure
+                  </h3>
+
+                  <p className="mt-8 text-lg leading-8 text-gray-600">
+                    Design and implementation of scalable infrastructure
+                    environments focused on operational reliability,
+                    deployment consistency, and long-term scalability.
+                  </p>
+
+                  <div className="mt-10 grid gap-4">
+
+                    {[
+                      "Cloud & Hybrid Infrastructure",
+                      "Containerized Environments",
+                      "Infrastructure Architecture",
+                      "Operational Standardization",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-4"
+                      >
+
+                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                        <p className="text-gray-700">
+                          {item}
+                        </p>
+
+                      </div>
+                    ))}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </FadeIn>
+
+            {/* SERVICE 2 */}
+            <FadeIn>
+
+              <div className="grid items-center gap-16 lg:grid-cols-2">
+
+                {/* CONTENT */}
+                <div className="order-2 lg:order-1">
+
+                  <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                    Monitoring & Observability
+                  </p>
+
+                  <h3 className="mt-6 text-4xl font-semibold tracking-tight">
+                    Operational Visibility & Monitoring
+                  </h3>
+
+                  <p className="mt-8 text-lg leading-8 text-gray-600">
+                    Centralized monitoring and observability solutions
+                    designed to improve infrastructure visibility,
+                    operational awareness, and proactive incident response.
+                  </p>
+
+                  <div className="mt-10 grid gap-4">
+
+                    {[
+                      "Infrastructure Monitoring",
+                      "Operational Dashboards",
+                      "Metrics & Alerting",
+                      "Performance Visibility",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-4"
+                      >
+
+                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                        <p className="text-gray-700">
+                          {item}
+                        </p>
+
+                      </div>
+                    ))}
+
+                  </div>
+
+                </div>
+
+                {/* IMAGE */}
+                <div className="order-1 overflow-hidden rounded-3xl shadow-2xl lg:order-2">
+
+                  <img
+                    src="/images/monitoring-observability.jpg"
+                    alt="Monitoring & Observability"
+                    className="h-full w-full object-cover"
+                  />
+
+                </div>
+
+              </div>
+
+            </FadeIn>
+
+            {/* SERVICE 3 */}
+            <FadeIn>
+
+              <div className="grid items-center gap-16 lg:grid-cols-2">
+
+                {/* IMAGE */}
+                <div className="overflow-hidden rounded-3xl shadow-2xl">
+
+                  <img
+                    src="/images/systems-automation.jpg"
+                    alt="Systems Automation"
+                    className="h-full w-full object-cover"
+                  />
+
+                </div>
+
+                {/* CONTENT */}
+                <div>
+
+                  <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                    Systems Automation
+                  </p>
+
+                  <h3 className="mt-6 text-4xl font-semibold tracking-tight">
+                    Automated Operational Workflows
+                  </h3>
+
+                  <p className="mt-8 text-lg leading-8 text-gray-600">
+                    Automation-driven infrastructure workflows designed to
+                    improve operational efficiency, deployment consistency,
+                    and infrastructure reliability.
+                  </p>
+
+                  <div className="mt-10 grid gap-4">
+
+                    {[
+                      "CI/CD Pipelines",
+                      "Deployment Automation",
+                      "Infrastructure Scripting",
+                      "Operational Workflow Automation",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-4"
+                      >
+
+                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                        <p className="text-gray-700">
+                          {item}
+                        </p>
+
+                      </div>
+                    ))}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </FadeIn>
+
+            {/* SERVICE 4 */}
+            <FadeIn>
+
+              <div className="grid items-center gap-16 lg:grid-cols-2">
+
+                {/* CONTENT */}
+                <div className="order-2 lg:order-1">
+
+                  <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                    Managed Infrastructure Services
+                  </p>
+
+                  <h3 className="mt-6 text-4xl font-semibold tracking-tight">
+                    Ongoing Operational Infrastructure Support
+                  </h3>
+
+                  <p className="mt-8 text-lg leading-8 text-gray-600">
+                    Managed operational infrastructure services focused on
+                    system reliability, monitoring operations, incident
+                    response, and operational optimization.
+                  </p>
+
+                  <div className="mt-10 grid gap-4">
+
+                    {[
+                      "Infrastructure Operations",
+                      "Monitoring Management",
+                      "Operational Support",
+                      "Reliability Optimization",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-4"
+                      >
+
+                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                        <p className="text-gray-700">
+                          {item}
+                        </p>
+
+                      </div>
+                    ))}
+
+                  </div>
+
+                </div>
+
+                {/* IMAGE */}
+                <div className="order-1 overflow-hidden rounded-3xl shadow-2xl lg:order-2">
+
+                  <img
+                    src="/images/managed-services.jpg"
+                    alt="Managed Infrastructure Services"
+                    className="h-full w-full object-cover"
+                  />
+
+                </div>
+
+              </div>
+
+            </FadeIn>
+
+          </div>
+
+        </Container>
+
+      </Section>
+
+      {/* VALUE SECTION */}
+      <Section className="bg-brand-light py-28">
+
+        <Container>
+
+          <FadeIn>
+
+            <div className="mx-auto max-w-3xl text-center">
+
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Operational Focus
+              </p>
+
+              <h2 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+                Infrastructure Built For Reliability & Scale
+              </h2>
+
+              <p className="mt-8 text-lg leading-8 text-gray-600">
+                Our infrastructure delivery methodology emphasizes
+                operational visibility, scalability, automation,
+                reliability, and long-term operational sustainability.
+              </p>
+
+            </div>
+
           </FadeIn>
 
           <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
-            <div className="rounded-2xl bg-white p-8 shadow-sm">
-
-              <h3 className="mb-3 text-lg font-semibold">
-                Unplanned Downtime
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Infrastructure instability impacts availability and business
-                continuity.
-              </p>
-
-            </div>
-
-            <div className="rounded-2xl bg-white p-8 shadow-sm">
-
-              <h3 className="mb-3 text-lg font-semibold">
-                Limited Visibility
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Teams lack real-time insight into infrastructure performance,
-                failures, and operational risks.
-              </p>
-
-            </div>
-
-            <div className="rounded-2xl bg-white p-8 shadow-sm">
-
-              <h3 className="mb-3 text-lg font-semibold">
-                Manual Operations
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Repetitive operational tasks reduce efficiency and increase
-                deployment risk.
-              </p>
-
-            </div>
-
-            <div className="rounded-2xl bg-white p-8 shadow-sm">
-
-              <h3 className="mb-3 text-lg font-semibold">
-                Scaling Complexity
-              </h3>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Infrastructure environments become increasingly difficult to
-                manage as organizations grow.
-              </p>
-
-            </div>
-
-          </div>
-        </Container>
-      </Section>
-
-      {/* HOW WE WORK */}
-      <Section className="py-28">
-        <Container>
-
-          <FadeIn>
-            <div className="mx-auto max-w-3xl text-center">
-
-              <h2 className="mb-6 text-4xl font-semibold tracking-tight md:text-5xl">
-                Structured Infrastructure Delivery
-              </h2>
-
-              <p className="text-lg leading-8 text-gray-600">
-                Our infrastructure engagement process is designed to improve
-                operational reliability, visibility, and scalability from
-                assessment to ongoing optimization.
-              </p>
-
-            </div>
-          </FadeIn>
-
-          <div className="mt-20 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-
-            <div className="text-center">
-
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary font-semibold text-white shadow-sm">
-                1
-              </div>
-
-              <h4 className="mb-3 text-lg font-semibold">
-                Infrastructure Assessment
-              </h4>
-
-              <p className="text-sm leading-7 text-gray-600">
-                We assess your infrastructure, operational risks, and scaling
-                requirements.
-              </p>
-
-            </div>
-
-            <div className="text-center">
-
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary font-semibold text-white shadow-sm">
-                2
-              </div>
-
-              <h4 className="mb-3 text-lg font-semibold">
-                Architecture & Planning
-              </h4>
-
-              <p className="text-sm leading-7 text-gray-600">
-                We design scalable infrastructure and operational workflows
-                aligned with business goals.
-              </p>
-
-            </div>
-
-            <div className="text-center">
-
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary font-semibold text-white shadow-sm">
-                3
-              </div>
-
-              <h4 className="mb-3 text-lg font-semibold">
-                Deployment & Automation
-              </h4>
-
-              <p className="text-sm leading-7 text-gray-600">
-                We implement infrastructure, monitoring systems, and automation
-                workflows.
-              </p>
-
-            </div>
-
-            <div className="text-center">
-
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary font-semibold text-white shadow-sm">
-                4
-              </div>
-
-              <h4 className="mb-3 text-lg font-semibold">
-                Monitoring & Optimization
-              </h4>
-
-              <p className="text-sm leading-7 text-gray-600">
-                Continuous monitoring and operational optimization ensure
-                long-term infrastructure reliability.
-              </p>
-
-            </div>
-
-          </div>
-        </Container>
-      </Section>
-
-      {/* TRUST SIGNALS */}
-      <Section className="bg-brand-dark py-24 text-white">
-        <Container>
-
-          <div className="grid gap-10 text-center md:grid-cols-2 lg:grid-cols-4">
-
-            <div>
-              <h3 className="text-4xl font-semibold">24/7</h3>
-
-              <p className="mt-3 text-gray-300">
-                Infrastructure Monitoring
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-semibold">99.9%</h3>
-
-              <p className="mt-3 text-gray-300">
-                Reliability-Focused Operations
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-semibold">Automation</h3>
-
-              <p className="mt-3 text-gray-300">
-                Reduced Manual Operations
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-semibold">Scalable</h3>
-
-              <p className="mt-3 text-gray-300">
-                Infrastructure Architecture
-              </p>
-            </div>
-
-          </div>
-
-        </Container>
-      </Section>
-
-      {/* TECHNOLOGY STACK */}
-      <Section className="bg-brand-light py-28">
-        <Container>
-
-          <FadeIn>
-            <div className="mx-auto max-w-3xl text-center">
-
-              <h2 className="mb-6 text-4xl font-semibold tracking-tight md:text-5xl">
-                Modern Infrastructure & Operations Technologies
-              </h2>
-
-              <p className="text-lg leading-8 text-gray-600">
-                We work with modern infrastructure, observability, and
-                automation technologies to build reliable operational
-                environments.
-              </p>
-
-            </div>
-          </FadeIn>
-
-          <div className="mt-14 flex flex-wrap justify-center gap-4">
-
             {[
-              "Docker",
-              "Linux",
-              "Grafana",
-              "Prometheus",
-              "CI/CD Pipelines",
-              "Cloud Infrastructure",
-              "Infrastructure Automation",
-              "Monitoring Systems",
-              "Operational Visibility",
-              "Server Infrastructure",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-full bg-white px-6 py-3 text-sm shadow-sm"
-              >
-                {item}
-              </div>
-            ))}
+              {
+                icon: Server,
+                title: "Scalable Infrastructure",
+                description:
+                  "Infrastructure environments designed for growth and operational scalability.",
+              },
+
+              {
+                icon: Activity,
+                title: "Operational Visibility",
+                description:
+                  "Monitoring and observability systems that improve operational awareness.",
+              },
+
+              {
+                icon: Workflow,
+                title: "Automation",
+                description:
+                  "Workflow automation focused on operational efficiency and consistency.",
+              },
+
+              {
+                icon: ShieldCheck,
+                title: "Reliability",
+                description:
+                  "Operational systems designed for stability, resilience, and reliability.",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <FadeIn key={item.title}>
+
+                  <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
+                      <Icon className="h-7 w-7 text-brand-primary" />
+                    </div>
+
+                    <h3 className="mt-8 text-2xl font-semibold">
+                      {item.title}
+                    </h3>
+
+                    <p className="mt-5 leading-8 text-gray-600">
+                      {item.description}
+                    </p>
+
+                  </div>
+
+                </FadeIn>
+              );
+            })}
 
           </div>
+
         </Container>
+
       </Section>
 
-      {/* CTA */}
-      <Section className="bg-brand-dark py-32 text-center text-white">
+      {/* FINAL CTA */}
+      <Section className="py-32 text-center">
+
         <Container>
 
           <FadeIn>
+
             <div className="mx-auto max-w-4xl">
 
-              <h2 className="mb-6 text-4xl font-semibold tracking-tight md:text-5xl">
-                Build Reliable Infrastructure That Scales With Your Business
+              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                Build Reliable & Observable Infrastructure
               </h2>
 
-              <p className="mb-10 text-lg leading-8 text-gray-300">
-                We help organizations improve infrastructure reliability,
-                operational visibility, automation, and scalability through
-                structured engineering and managed operational support.
+              <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-600">
+                Partner with AISEL Technologies to improve operational
+                visibility, infrastructure reliability, automation,
+                and scalable infrastructure delivery.
               </p>
 
-              <a
-                href="/contact"
-                className="inline-block rounded-md bg-brand-primary px-8 py-4 transition-all duration-300 hover:translate-y-[-1px] hover:shadow-lg"
-              >
-                Schedule Infrastructure Assessment
-              </a>
+              <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
+
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
+                  Schedule Infrastructure Assessment
+
+                  <ArrowRight className="h-5 w-5" />
+
+                </Link>
+
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center justify-center gap-3 rounded-md border border-gray-200 px-8 py-4 text-gray-700 transition-all duration-300 hover:bg-gray-50"
+                >
+                  Explore Case Studies
+                </Link>
+
+              </div>
 
             </div>
+
           </FadeIn>
 
         </Container>
+
       </Section>
 
     </main>
