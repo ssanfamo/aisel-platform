@@ -57,29 +57,92 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden bg-white border-t px-6 py-4 space-y-4">
 
-          <Link href="/" onClick={() => setOpen(false)} className={linkClass("/")}>
-            Home
-          </Link>
+        <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
 
-          <Link href="/services" onClick={() => setOpen(false)} className={linkClass("/services")}>
-            Services
-          </Link>
+          <div className="px-6 py-6">
 
-          <Link href="/about" onClick={() => setOpen(false)} className={linkClass("/about")}>
-            About
-          </Link>
+            <nav className="flex flex-col gap-2">
 
-          <Link href="/case-studies" onClick={() => setOpen(false)} className={linkClass("/case-studies")}>
-            Case Studies
-          </Link>
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className={`rounded-xl px-4 py-3 text-base transition-all ${
+                  pathname === "/"
+                    ? "bg-brand-light text-brand-primary font-semibold"
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                Home
+              </Link>
 
-          <Link href="/contact" onClick={() => setOpen(false)} className={linkClass("/contact")}>
-            Contact
-          </Link>
+              <Link
+                href="/services"
+                onClick={() => setOpen(false)}
+                className={`rounded-xl px-4 py-3 text-base transition-all ${
+                  pathname === "/services"
+                    ? "bg-brand-light text-brand-primary font-semibold"
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                Services
+              </Link>
+
+              <Link
+                href="/case-studies"
+                onClick={() => setOpen(false)}
+                className={`rounded-xl px-4 py-3 text-base transition-all ${
+                  pathname === "/case-studies"
+                    ? "bg-brand-light text-brand-primary font-semibold"
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                Case Studies
+              </Link>
+
+              <Link
+                href="/about"
+                onClick={() => setOpen(false)}
+                className={`rounded-xl px-4 py-3 text-base transition-all ${
+                  pathname === "/about"
+                    ? "bg-brand-light text-brand-primary font-semibold"
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                About
+              </Link>
+
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className={`rounded-xl px-4 py-3 text-base transition-all ${
+                  pathname === "/contact"
+                    ? "bg-brand-light text-brand-primary font-semibold"
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                Contact
+              </Link>
+
+            </nav>
+
+            {/* MOBILE CTA */}
+            <div className="mt-6 border-t border-gray-100 pt-6">
+
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center rounded-xl bg-brand-primary px-5 py-4 text-sm font-medium text-white transition-all hover:shadow-lg"
+              >
+                Schedule Infrastructure Assessment
+              </Link>
+
+            </div>
+
+          </div>
 
         </div>
+
       )}
     </header>
   );
