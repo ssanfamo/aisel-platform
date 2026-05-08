@@ -20,53 +20,176 @@ export default function HomePage() {
     <main>
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-dark py-40 text-white">
+      <section className="relative overflow-hidden bg-brand-dark py-32 text-white lg:py-40">
 
         <Container>
 
-          <FadeIn>
+          <div className="grid items-center gap-20 lg:grid-cols-2">
 
-            <div className="max-w-5xl">
+            {/* LEFT CONTENT */}
+            <FadeIn>
 
-              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
-                Infrastructure Engineering & Operational Systems
-              </p>
+              <div className="max-w-3xl">
 
-              <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
-                Scalable Infrastructure Engineering & Operational Excellence
-              </h1>
+                <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                  Infrastructure Engineering & Operational Systems
+                </p>
 
-              <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-300">
-                AISEL Technologies delivers infrastructure engineering,
-                monitoring & observability, systems automation, and managed
-                infrastructure services focused on reliability, scalability,
-                operational visibility, and automation.
-              </p>
+                <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
+                  Scalable Infrastructure Engineering & Operational Excellence
+                </h1>
 
-              <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+                <p className="mt-8 text-lg leading-8 text-gray-300">
+                  AISEL Technologies delivers infrastructure engineering,
+                  monitoring & observability, systems automation,
+                  and managed infrastructure services focused on
+                  reliability, scalability, operational visibility,
+                  and automation.
+                </p>
 
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                >
-                  Schedule Infrastructure Assessment
+                {/* CTA */}
+                <div className="mt-12 flex flex-col gap-4 sm:flex-row">
 
-                  <ArrowRight className="h-5 w-5" />
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
 
-                </Link>
+                    Schedule Infrastructure Assessment
 
-                <Link
-                  href="/case-studies"
-                  className="inline-flex items-center justify-center gap-3 rounded-md border border-white/10 bg-white/5 px-8 py-4 text-white transition-all duration-300 hover:bg-white/10"
-                >
-                  View Case Studies
-                </Link>
+                    <ArrowRight className="h-5 w-5" />
+
+                  </Link>
+
+                  <Link
+                    href="/case-studies"
+                    className="inline-flex items-center justify-center gap-3 rounded-md border border-white/10 bg-white/5 px-8 py-4 text-white transition-all duration-300 hover:bg-white/10"
+                  >
+                    View Case Studies
+                  </Link>
+
+                </div>
+
+                {/* STATS */}
+                <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-3">
+
+                  <div>
+
+                    <div className="text-3xl font-semibold">
+                      24/7
+                    </div>
+
+                    <div className="mt-2 text-sm text-gray-400">
+                      Infrastructure Monitoring
+                    </div>
+
+                  </div>
+
+                  <div>
+
+                    <div className="text-3xl font-semibold">
+                      Automated
+                    </div>
+
+                    <div className="mt-2 text-sm text-gray-400">
+                      Operational Workflows
+                    </div>
+
+                  </div>
+
+                  <div>
+
+                    <div className="text-3xl font-semibold">
+                      Scalable
+                    </div>
+
+                    <div className="mt-2 text-sm text-gray-400">
+                      Infrastructure Systems
+                    </div>
+
+                  </div>
+
+                </div>
 
               </div>
 
-            </div>
+            </FadeIn>
 
-          </FadeIn>
+            {/* RIGHT VISUAL */}
+            <FadeIn>
+
+              <div className="relative">
+
+                {/* MAIN IMAGE */}
+                <div className="overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+
+                  <img
+                    src="/images/hero-infrastructure.jpg"
+                    alt="Infrastructure Operations"
+                    className="h-full w-full object-cover"
+                  />
+
+                </div>
+
+                {/* FLOATING CARD 1 */}
+                <div className="absolute -bottom-8 -left-8 hidden rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md lg:block">
+
+                  <div className="flex items-center gap-4">
+
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary">
+
+                      <Activity className="h-6 w-6 text-white" />
+
+                    </div>
+
+                    <div>
+
+                      <div className="text-sm font-medium text-gray-300">
+                        Monitoring Status
+                      </div>
+
+                      <div className="mt-1 text-lg font-semibold text-white">
+                        Operational
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                {/* FLOATING CARD 2 */}
+                <div className="absolute -right-8 top-10 hidden rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md lg:block">
+
+                  <div className="flex items-center gap-4">
+
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary">
+
+                      <Server className="h-6 w-6 text-white" />
+
+                    </div>
+
+                    <div>
+
+                      <div className="text-sm font-medium text-gray-300">
+                        Infrastructure
+                      </div>
+
+                      <div className="mt-1 text-lg font-semibold text-white">
+                        Scalable Systems
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </FadeIn>
+
+          </div>
 
         </Container>
 
@@ -237,13 +360,15 @@ export default function HomePage() {
               <div className="grid items-center gap-16 lg:grid-cols-2">
 
                 {/* IMAGE */}
-                <div className="overflow-hidden rounded-3xl shadow-2xl">
+                <div className="relative overflow-hidden rounded-3xl shadow-2xl">
 
                   <img
                     src="/images/systems-automation.jpg"
                     alt="Systems Automation"
                     className="h-full w-full object-cover"
                   />
+
+                  <div className="absolute inset-0 bg-black/20" />
 
                 </div>
 
