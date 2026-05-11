@@ -1,356 +1,156 @@
 "use client";
 
-import Container from "../../components/Container";
-import Section from "../../components/Section";
-import FadeIn from "../../components/FadeIn";
+import Link from "next/link";
 
 import {
   ArrowRight,
   Activity,
-  Workflow,
   Server,
+  Workflow,
   ShieldCheck,
-  CheckCircle2,
   BarChart3,
-  Layers3,
 } from "lucide-react";
 
-const caseStudies = [
-  {
-    category: "Monitoring & Observability",
-    title: "Infrastructure Monitoring Platform",
-    icon: Activity,
-
-    challenge:
-      "Operational environments lacked centralized visibility across infrastructure services, system health, and operational metrics.",
-
-    solution:
-      "Designed and deployed a centralized monitoring and observability stack for operational infrastructure visibility and alerting.",
-
-    technologies: [
-      "Grafana",
-      "Prometheus",
-      "Docker",
-      "Linux",
-      "Node Exporter",
-    ],
-
-    outcomes: [
-      "Improved operational visibility",
-      "Centralized monitoring",
-      "Real-time alerting",
-      "Reduced infrastructure blind spots",
-    ],
-  },
-
-  {
-    category: "Systems Automation",
-    title: "Automated Deployment Pipeline",
-    icon: Workflow,
-
-    challenge:
-      "Manual deployment workflows increased operational overhead, slowed releases, and introduced configuration inconsistencies.",
-
-    solution:
-      "Implemented automated CI/CD deployment workflows with containerized deployment processes and operational standardization.",
-
-    technologies: [
-      "GitHub Actions",
-      "Docker",
-      "Linux",
-      "Nginx",
-      "Git",
-    ],
-
-    outcomes: [
-      "Reduced deployment overhead",
-      "Improved release consistency",
-      "Faster operational delivery",
-      "Reduced manual intervention",
-    ],
-  },
-
-  {
-    category: "Infrastructure Engineering",
-    title: "Containerized Infrastructure Environment",
-    icon: Server,
-
-    challenge:
-      "Operational environments required improved scalability, deployment consistency, and simplified infrastructure management.",
-
-    solution:
-      "Designed a containerized operational infrastructure environment with standardized deployment and operational workflows.",
-
-    technologies: [
-      "Docker",
-      "Reverse Proxy",
-      "Linux",
-      "Monitoring Stack",
-      "Automation Scripts",
-    ],
-
-    outcomes: [
-      "Improved scalability",
-      "Operational consistency",
-      "Simplified infrastructure management",
-      "Enhanced deployment portability",
-    ],
-  },
-];
-
-const focusAreas = [
-  {
-    title: "Infrastructure Reliability",
-    description:
-      "Designing operational environments focused on stability, scalability, and infrastructure resilience.",
-    icon: ShieldCheck,
-  },
-
-  {
-    title: "Operational Visibility",
-    description:
-      "Improving visibility across infrastructure systems, monitoring, alerting, and operational metrics.",
-    icon: BarChart3,
-  },
-
-  {
-    title: "Systems Automation",
-    description:
-      "Reducing operational overhead through workflow automation and deployment standardization.",
-    icon: Workflow,
-  },
-
-  {
-    title: "Scalable Architecture",
-    description:
-      "Building infrastructure environments designed for operational growth and long-term scalability.",
-    icon: Layers3,
-  },
-];
+import Container from "../../components/Container";
+import Section from "../../components/Section";
+import FadeIn from "../../components/FadeIn";
 
 export default function CaseStudiesPage() {
+  const caseStudies = [
+    {
+      title: "Infrastructure Monitoring Modernization",
+      category: "Monitoring & Observability",
+      challenge:
+        "Operational visibility was fragmented across infrastructure environments, making incident detection and performance analysis difficult.",
+      solution:
+        "Implemented centralized monitoring and observability systems using modern dashboarding, infrastructure metrics collection, and operational alerting workflows.",
+      results: [
+        "Centralized operational visibility",
+        "Improved infrastructure awareness",
+        "Faster operational diagnostics",
+        "Standardized monitoring workflows",
+      ],
+      technologies: [
+        "Grafana",
+        "Prometheus",
+        "Docker",
+        "Linux",
+      ],
+      image: "/images/case-monitoring.jpg",
+    },
+
+    {
+      title: "Automation-Driven Deployment Pipeline",
+      category: "Systems Automation",
+      challenge:
+        "Manual deployment workflows created operational inconsistencies and increased deployment risk across environments.",
+      solution:
+        "Designed automation-driven CI/CD workflows with containerized deployment pipelines, operational validation, and deployment standardization.",
+      results: [
+        "Improved deployment consistency",
+        "Reduced operational overhead",
+        "Standardized release workflows",
+        "Improved deployment reliability",
+      ],
+      technologies: [
+        "Docker",
+        "GitHub Actions",
+        "Nginx",
+        "Linux",
+      ],
+      image: "/images/case-automation.jpg",
+    },
+
+    {
+      title: "Infrastructure Standardization Initiative",
+      category: "Infrastructure Engineering",
+      challenge:
+        "Infrastructure environments lacked standardization, scalability planning, and operational consistency.",
+      solution:
+        "Implemented scalable infrastructure baselines, operational standards, monitoring integration, and containerized operational environments.",
+      results: [
+        "Improved infrastructure scalability",
+        "Operational standardization",
+        "Enhanced infrastructure reliability",
+        "Improved environment consistency",
+      ],
+      technologies: [
+        "Docker",
+        "Ubuntu",
+        "Cloud Infrastructure",
+        "Monitoring Stack",
+      ],
+      image: "/images/case-infrastructure.jpg",
+    },
+  ];
+
   return (
     <main>
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-dark py-40 text-white">
+      <section className="relative overflow-hidden bg-brand-dark py-24 text-white lg:py-32">
 
         <Container>
 
-          <FadeIn>
+          <div className="mx-auto max-w-5xl text-center">
 
-            <div className="max-w-5xl">
+            <FadeIn>
 
               <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
                 Case Studies
               </p>
 
               <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
-                Infrastructure & Operational Capability
+                Infrastructure Engineering & Operational Delivery
               </h1>
 
-              <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-300">
-                AISEL Technologies delivers infrastructure engineering,
-                monitoring, observability, and systems automation solutions
-                focused on operational reliability, visibility, scalability,
-                and operational efficiency.
+              <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-300">
+                Real-world infrastructure modernization, operational automation,
+                observability deployment, and scalable infrastructure engineering
+                initiatives focused on reliability, visibility, and operational excellence.
               </p>
 
-            </div>
-
-          </FadeIn>
-
-        </Container>
-
-      </section>
-
-      {/* INTRO */}
-      <Section className="py-28">
-
-        <Container>
-
-          <FadeIn>
-
-            <div className="mx-auto max-w-4xl text-center">
-
-              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Operational Infrastructure Solutions
-              </h2>
-
-              <p className="mt-8 text-lg leading-8 text-gray-600">
-                Our infrastructure-focused delivery approach emphasizes
-                operational reliability, visibility, automation, and scalable
-                infrastructure systems designed to support long-term operational
-                growth.
-              </p>
-
-            </div>
-
-          </FadeIn>
-
-        </Container>
-
-      </Section>
-
-      {/* CASE STUDIES */}
-      <Section className="bg-brand-light py-28">
-
-        <Container>
-
-          <div className="grid gap-10">
-
-            {caseStudies.map((study) => {
-              const Icon = study.icon;
-
-              return (
-                <FadeIn key={study.title}>
-
-                  <div className="rounded-3xl bg-white p-10 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-
-                    <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-
-                      {/* LEFT */}
-                      <div className="max-w-3xl">
-
-                        <div className="inline-flex items-center rounded-full bg-brand-light px-4 py-2 text-sm font-medium text-brand-primary">
-                          {study.category}
-                        </div>
-
-                        <div className="mt-6 flex items-center gap-4">
-
-                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
-                            <Icon className="h-7 w-7 text-brand-primary" />
-                          </div>
-
-                          <h2 className="text-3xl font-semibold tracking-tight">
-                            {study.title}
-                          </h2>
-
-                        </div>
-
-                        <div className="mt-10">
-
-                          <h3 className="text-lg font-semibold">
-                            Operational Challenge
-                          </h3>
-
-                          <p className="mt-4 leading-8 text-gray-600">
-                            {study.challenge}
-                          </p>
-
-                        </div>
-
-                        <div className="mt-10">
-
-                          <h3 className="text-lg font-semibold">
-                            Solution Architecture
-                          </h3>
-
-                          <p className="mt-4 leading-8 text-gray-600">
-                            {study.solution}
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                      {/* RIGHT */}
-                      <div className="w-full max-w-md rounded-3xl bg-brand-light p-8">
-
-                        <div>
-
-                          <h3 className="text-lg font-semibold">
-                            Technologies Used
-                          </h3>
-
-                          <div className="mt-6 flex flex-wrap gap-3">
-
-                            {study.technologies.map((tech) => (
-                              <div
-                                key={tech}
-                                className="rounded-full bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm"
-                              >
-                                {tech}
-                              </div>
-                            ))}
-
-                          </div>
-
-                        </div>
-
-                        <div className="mt-10">
-
-                          <h3 className="text-lg font-semibold">
-                            Operational Outcomes
-                          </h3>
-
-                          <div className="mt-6 space-y-4">
-
-                            {study.outcomes.map((outcome) => (
-                              <div
-                                key={outcome}
-                                className="flex items-start gap-4"
-                              >
-
-                                <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
-
-                                <p className="text-gray-700">
-                                  {outcome}
-                                </p>
-
-                              </div>
-                            ))}
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </FadeIn>
-              );
-            })}
+            </FadeIn>
 
           </div>
 
         </Container>
 
-      </Section>
+      </section>
 
-      {/* FOCUS AREAS */}
-      <Section className="py-28">
+      {/* METRICS */}
+      <Section className="bg-white py-24">
 
         <Container>
 
-          <FadeIn>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
-            <div className="mx-auto max-w-3xl text-center">
-
-              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Infrastructure Focus Areas
-              </h2>
-
-              <p className="mt-8 text-lg leading-8 text-gray-600">
-                AISEL Technologies focuses on operational infrastructure
-                environments designed for visibility, reliability, scalability,
-                and operational efficiency.
-              </p>
-
-            </div>
-
-          </FadeIn>
-
-          <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-
-            {focusAreas.map((area) => {
-              const Icon = area.icon;
+            {[
+              {
+                icon: Server,
+                title: "Infrastructure",
+                value: "Scalable",
+              },
+              {
+                icon: Activity,
+                title: "Observability",
+                value: "24/7",
+              },
+              {
+                icon: Workflow,
+                title: "Automation",
+                value: "Operational",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Reliability",
+                value: "Enterprise",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
 
               return (
-                <FadeIn key={area.title}>
+                <FadeIn key={item.title}>
 
                   <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
 
@@ -358,13 +158,13 @@ export default function CaseStudiesPage() {
                       <Icon className="h-7 w-7 text-brand-primary" />
                     </div>
 
-                    <h3 className="mt-8 text-2xl font-semibold">
-                      {area.title}
-                    </h3>
+                    <div className="mt-8 text-3xl font-semibold">
+                      {item.value}
+                    </div>
 
-                    <p className="mt-5 leading-8 text-gray-600">
-                      {area.description}
-                    </p>
+                    <div className="mt-3 text-gray-600">
+                      {item.title}
+                    </div>
 
                   </div>
 
@@ -378,8 +178,8 @@ export default function CaseStudiesPage() {
 
       </Section>
 
-      {/* DELIVERY APPROACH */}
-      <Section className="bg-brand-dark py-28 text-white">
+      {/* CASE STUDIES */}
+      <Section className="bg-brand-light py-32">
 
         <Container>
 
@@ -387,15 +187,158 @@ export default function CaseStudiesPage() {
 
             <div className="mx-auto max-w-4xl text-center">
 
-              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Operational Delivery Approach
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Featured Initiatives
+              </p>
+
+              <h2 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+                Infrastructure & Operational Transformation
               </h2>
 
-              <p className="mt-8 text-lg leading-8 text-gray-300">
-                Our infrastructure delivery methodology focuses on operational
-                visibility, infrastructure reliability, automation, scalability,
-                and long-term operational sustainability.
+            </div>
+
+          </FadeIn>
+
+          <div className="mt-24 space-y-32">
+
+            {caseStudies.map((study, index) => (
+              <FadeIn key={study.title}>
+
+                <div className="grid items-center gap-16 lg:grid-cols-2">
+
+                  {/* IMAGE */}
+                  <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
+
+                    <div className="relative h-[420px] overflow-hidden rounded-3xl shadow-2xl lg:h-[520px]">
+
+                      <img
+                        src={study.image}
+                        alt={study.title}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/20 to-transparent" />
+
+                      <div className="absolute bottom-8 left-8 right-8">
+
+                        <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-md">
+                          {study.category}
+                        </div>
+
+                        <h3 className="mt-5 text-3xl font-semibold text-white">
+                          {study.title}
+                        </h3>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className={`${index % 2 === 1 ? "lg:order-1" : ""}`}>
+
+                    <div>
+
+                      <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                        Challenge
+                      </p>
+
+                      <p className="mt-5 text-lg leading-8 text-gray-600">
+                        {study.challenge}
+                      </p>
+
+                    </div>
+
+                    <div className="mt-12">
+
+                      <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                        Solution
+                      </p>
+
+                      <p className="mt-5 text-lg leading-8 text-gray-600">
+                        {study.solution}
+                      </p>
+
+                    </div>
+
+                    <div className="mt-12">
+
+                      <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                        Results
+                      </p>
+
+                      <div className="mt-6 grid gap-4">
+
+                        {study.results.map((result) => (
+                          <div
+                            key={result}
+                            className="flex items-start gap-4"
+                          >
+
+                            <ShieldCheck className="mt-1 h-5 w-5 text-brand-primary" />
+
+                            <p className="text-gray-700">
+                              {result}
+                            </p>
+
+                          </div>
+                        ))}
+
+                      </div>
+
+                    </div>
+
+                    <div className="mt-12">
+
+                      <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                        Technology Stack
+                      </p>
+
+                      <div className="mt-6 flex flex-wrap gap-3">
+
+                        {study.technologies.map((tech) => (
+                          <div
+                            key={tech}
+                            className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm"
+                          >
+                            {tech}
+                          </div>
+                        ))}
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </FadeIn>
+            ))}
+
+          </div>
+
+        </Container>
+
+      </Section>
+
+      {/* DELIVERY METHODOLOGY */}
+      <Section className="bg-white py-28">
+
+        <Container>
+
+          <FadeIn>
+
+            <div className="mx-auto max-w-4xl text-center">
+
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Delivery Methodology
               </p>
+
+              <h2 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+                Infrastructure Delivery Focused On Reliability
+              </h2>
 
             </div>
 
@@ -404,22 +347,42 @@ export default function CaseStudiesPage() {
           <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
             {[
-              "Infrastructure Assessment",
-              "Architecture Design",
-              "Operational Implementation",
-              "Monitoring & Optimization",
-            ].map((step, index) => (
-              <FadeIn key={step}>
+              {
+                title: "Assessment",
+                description:
+                  "Operational analysis and infrastructure evaluation.",
+              },
+              {
+                title: "Architecture",
+                description:
+                  "Scalable infrastructure planning and system design.",
+              },
+              {
+                title: "Implementation",
+                description:
+                  "Deployment automation and operational integration.",
+              },
+              {
+                title: "Optimization",
+                description:
+                  "Monitoring, observability, and operational refinement.",
+              },
+            ].map((item) => (
+              <FadeIn key={item.title}>
 
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm">
+                <div className="rounded-3xl bg-brand-light p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
 
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary font-semibold text-white">
-                    {index + 1}
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm">
+                    <BarChart3 className="h-7 w-7 text-brand-primary" />
                   </div>
 
-                  <h3 className="mt-6 text-lg font-semibold leading-7">
-                    {step}
+                  <h3 className="mt-8 text-2xl font-semibold">
+                    {item.title}
                   </h3>
+
+                  <p className="mt-5 leading-8 text-gray-600">
+                    {item.description}
+                  </p>
 
                 </div>
 
@@ -442,26 +405,33 @@ export default function CaseStudiesPage() {
             <div className="mx-auto max-w-4xl">
 
               <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Build Scalable & Observable Infrastructure
+                Build Reliable & Observable Infrastructure
               </h2>
 
               <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-600">
-                Partner with AISEL Technologies to improve operational
-                visibility, infrastructure reliability, automation, and scalable
-                infrastructure delivery.
+                Partner with AISEL Technologies to modernize infrastructure,
+                improve operational visibility, and implement scalable
+                infrastructure systems.
               </p>
 
-              <div className="mt-12">
+              <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
 
-                <a
+                <Link
                   href="/contact"
-                  className="inline-flex items-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
                   Schedule Infrastructure Assessment
 
                   <ArrowRight className="h-5 w-5" />
 
-                </a>
+                </Link>
+
+                <Link
+                  href="/services"
+                  className="inline-flex items-center justify-center gap-3 rounded-md border border-gray-200 px-8 py-4 text-gray-700 transition-all duration-300 hover:bg-gray-50"
+                >
+                  Explore Services
+                </Link>
 
               </div>
 
