@@ -6,6 +6,9 @@ import Container from "../components/Container";
 import Section from "../components/Section";
 import FadeIn from "../components/FadeIn";
 
+import InfrastructureDashboardPreview from "../components/InfrastructureDashboardPreview";
+import AutomationPipelinePreview from "../components/AutomationPipelinePreview";
+
 import {
   ArrowRight,
   CheckCircle2,
@@ -54,11 +57,9 @@ export default function HomePage() {
                     href="/contact"
                     className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                   >
-
                     Schedule Infrastructure Assessment
 
                     <ArrowRight className="h-5 w-5" />
-
                   </Link>
 
                   <Link
@@ -118,72 +119,15 @@ export default function HomePage() {
             {/* RIGHT VISUAL */}
             <FadeIn>
 
-              <div className="relative">
+              <div className="relative h-[500px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl lg:h-[650px]">
 
-                {/* MAIN IMAGE */}
-                <div className="overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+                <img
+                  src="/images/hero-infrastructure.jpg"
+                  alt="Infrastructure Operations"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
 
-                  <img
-                    src="/images/hero-infrastructure.jpg"
-                    alt="Infrastructure Operations"
-                    className="h-full w-full object-cover"
-                  />
-
-                </div>
-
-                {/* FLOATING CARD 1 */}
-                <div className="absolute -bottom-8 -left-8 hidden rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md lg:block">
-
-                  <div className="flex items-center gap-4">
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary">
-
-                      <Activity className="h-6 w-6 text-white" />
-
-                    </div>
-
-                    <div>
-
-                      <div className="text-sm font-medium text-gray-300">
-                        Monitoring Status
-                      </div>
-
-                      <div className="mt-1 text-lg font-semibold text-white">
-                        Operational
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                {/* FLOATING CARD 2 */}
-                <div className="absolute -right-8 top-10 hidden rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md lg:block">
-
-                  <div className="flex items-center gap-4">
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary">
-
-                      <Server className="h-6 w-6 text-white" />
-
-                    </div>
-
-                    <div>
-
-                      <div className="text-sm font-medium text-gray-300">
-                        Infrastructure
-                      </div>
-
-                      <div className="mt-1 text-lg font-semibold text-white">
-                        Scalable Systems
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
+                <div className="absolute inset-0 bg-black/20" />
 
               </div>
 
@@ -232,12 +176,12 @@ export default function HomePage() {
               <div className="grid items-center gap-16 lg:grid-cols-2">
 
                 {/* IMAGE */}
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+                <div className="relative h-[500px] overflow-hidden rounded-3xl shadow-2xl lg:h-[650px]">
 
                   <img
-                    src="/images/infrastructure-engineering.jpg"
+                    src="/images/hero-infrastructure.jpg"
                     alt="Infrastructure Engineering"
-                    className="h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/10 to-transparent" />
@@ -263,25 +207,25 @@ export default function HomePage() {
 
                   <div className="mt-10 grid gap-4">
 
-                    {[
-                      "Cloud & Hybrid Infrastructure",
-                      "Containerized Environments",
-                      "Infrastructure Architecture",
-                      "Operational Standardization",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-4"
-                      >
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Cloud & Hybrid Infrastructure</p>
+                    </div>
 
-                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Containerized Environments</p>
+                    </div>
 
-                        <p className="text-gray-700">
-                          {item}
-                        </p>
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Infrastructure Architecture</p>
+                    </div>
 
-                      </div>
-                    ))}
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Operational Standardization</p>
+                    </div>
 
                   </div>
 
@@ -315,38 +259,34 @@ export default function HomePage() {
 
                   <div className="mt-10 grid gap-4">
 
-                    {[
-                      "Infrastructure Monitoring",
-                      "Operational Dashboards",
-                      "Metrics & Alerting",
-                      "Performance Visibility",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-4"
-                      >
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Infrastructure Monitoring</p>
+                    </div>
 
-                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Operational Dashboards</p>
+                    </div>
 
-                        <p className="text-gray-700">
-                          {item}
-                        </p>
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Metrics & Alerting</p>
+                    </div>
 
-                      </div>
-                    ))}
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Performance Visibility</p>
+                    </div>
 
                   </div>
 
                 </div>
 
-                {/* IMAGE */}
-                <div className="order-1 overflow-hidden rounded-3xl shadow-2xl lg:order-2">
+                {/* DASHBOARD */}
+                <div className="order-1 lg:order-2">
 
-                  <img
-                    src="/images/monitoring-observability.jpg"
-                    alt="Monitoring & Observability"
-                    className="h-full w-full object-cover"
-                  />
+                  <InfrastructureDashboardPreview />
 
                 </div>
 
@@ -359,16 +299,10 @@ export default function HomePage() {
 
               <div className="grid items-center gap-16 lg:grid-cols-2">
 
-                {/* IMAGE */}
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+                {/* AUTOMATION */}
+                <div>
 
-                  <img
-                    src="/images/systems-automation.jpg"
-                    alt="Systems Automation"
-                    className="h-full w-full object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-black/20" />
+                  <AutomationPipelinePreview />
 
                 </div>
 
@@ -391,25 +325,25 @@ export default function HomePage() {
 
                   <div className="mt-10 grid gap-4">
 
-                    {[
-                      "CI/CD Pipelines",
-                      "Deployment Automation",
-                      "Infrastructure Scripting",
-                      "Operational Workflow Automation",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-4"
-                      >
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">CI/CD Pipelines</p>
+                    </div>
 
-                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Deployment Automation</p>
+                    </div>
 
-                        <p className="text-gray-700">
-                          {item}
-                        </p>
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Infrastructure Scripting</p>
+                    </div>
 
-                      </div>
-                    ))}
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Operational Workflow Automation</p>
+                    </div>
 
                   </div>
 
@@ -443,38 +377,40 @@ export default function HomePage() {
 
                   <div className="mt-10 grid gap-4">
 
-                    {[
-                      "Infrastructure Operations",
-                      "Monitoring Management",
-                      "Operational Support",
-                      "Reliability Optimization",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-4"
-                      >
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Infrastructure Operations</p>
+                    </div>
 
-                        <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Monitoring Management</p>
+                    </div>
 
-                        <p className="text-gray-700">
-                          {item}
-                        </p>
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Operational Support</p>
+                    </div>
 
-                      </div>
-                    ))}
+                    <div className="flex items-start gap-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                      <p className="text-gray-700">Reliability Optimization</p>
+                    </div>
 
                   </div>
 
                 </div>
 
                 {/* IMAGE */}
-                <div className="order-1 overflow-hidden rounded-3xl shadow-2xl lg:order-2">
+                <div className="relative h-[500px] overflow-hidden rounded-3xl shadow-2xl lg:h-[650px]">
 
                   <img
                     src="/images/managed-services.jpg"
                     alt="Managed Infrastructure Services"
-                    className="h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
+
+                  <div className="absolute inset-0 bg-black/20" />
 
                 </div>
 
@@ -517,59 +453,93 @@ export default function HomePage() {
 
           <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
-            {[
-              {
-                icon: Server,
-                title: "Scalable Infrastructure",
-                description:
-                  "Infrastructure environments designed for growth and operational scalability.",
-              },
+            <FadeIn>
 
-              {
-                icon: Activity,
-                title: "Operational Visibility",
-                description:
-                  "Monitoring and observability systems that improve operational awareness.",
-              },
+              <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
 
-              {
-                icon: Workflow,
-                title: "Automation",
-                description:
-                  "Workflow automation focused on operational efficiency and consistency.",
-              },
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
 
-              {
-                icon: ShieldCheck,
-                title: "Reliability",
-                description:
-                  "Operational systems designed for stability, resilience, and reliability.",
-              },
-            ].map((item) => {
-              const Icon = item.icon;
+                  <Server className="h-7 w-7 text-brand-primary" />
 
-              return (
-                <FadeIn key={item.title}>
+                </div>
 
-                  <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <h3 className="mt-8 text-2xl font-semibold">
+                  Scalable Infrastructure
+                </h3>
 
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
-                      <Icon className="h-7 w-7 text-brand-primary" />
-                    </div>
+                <p className="mt-5 leading-8 text-gray-600">
+                  Infrastructure environments designed for growth and operational scalability.
+                </p>
 
-                    <h3 className="mt-8 text-2xl font-semibold">
-                      {item.title}
-                    </h3>
+              </div>
 
-                    <p className="mt-5 leading-8 text-gray-600">
-                      {item.description}
-                    </p>
+            </FadeIn>
 
-                  </div>
+            <FadeIn>
 
-                </FadeIn>
-              );
-            })}
+              <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
+
+                  <Activity className="h-7 w-7 text-brand-primary" />
+
+                </div>
+
+                <h3 className="mt-8 text-2xl font-semibold">
+                  Operational Visibility
+                </h3>
+
+                <p className="mt-5 leading-8 text-gray-600">
+                  Monitoring and observability systems that improve operational awareness.
+                </p>
+
+              </div>
+
+            </FadeIn>
+
+            <FadeIn>
+
+              <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
+
+                  <Workflow className="h-7 w-7 text-brand-primary" />
+
+                </div>
+
+                <h3 className="mt-8 text-2xl font-semibold">
+                  Automation
+                </h3>
+
+                <p className="mt-5 leading-8 text-gray-600">
+                  Workflow automation focused on operational efficiency and consistency.
+                </p>
+
+              </div>
+
+            </FadeIn>
+
+            <FadeIn>
+
+              <div className="rounded-3xl bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light">
+
+                  <ShieldCheck className="h-7 w-7 text-brand-primary" />
+
+                </div>
+
+                <h3 className="mt-8 text-2xl font-semibold">
+                  Reliability
+                </h3>
+
+                <p className="mt-5 leading-8 text-gray-600">
+                  Operational systems designed for stability, resilience, and reliability.
+                </p>
+
+              </div>
+
+            </FadeIn>
 
           </div>
 
@@ -605,7 +575,6 @@ export default function HomePage() {
                   Schedule Infrastructure Assessment
 
                   <ArrowRight className="h-5 w-5" />
-
                 </Link>
 
                 <Link
@@ -628,3 +597,7 @@ export default function HomePage() {
     </main>
   );
 }
+
+<div className="hidden lg:block text-red-500">
+  DESKTOP ACTIVE
+</div>
