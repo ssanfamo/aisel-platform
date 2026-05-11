@@ -23,7 +23,8 @@ export default function HomePage() {
     <main>
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-dark py-32 text-white lg:py-40">
+
+      <section className="relative overflow-hidden bg-brand-dark py-24 text-white lg:py-32">
 
         <Container>
 
@@ -119,7 +120,7 @@ export default function HomePage() {
             {/* RIGHT VISUAL */}
             <FadeIn>
 
-              <div className="relative h-[500px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl lg:h-[650px]">
+              <div className="relative h-[500px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl lg:h-[520px]">
 
                 <img
                   src="/images/hero-infrastructure.jpg"
