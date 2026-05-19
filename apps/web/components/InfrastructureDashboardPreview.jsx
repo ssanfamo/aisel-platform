@@ -38,8 +38,8 @@ export default function InfrastructureDashboardPreview() {
               value: "61%",
             },
             {
-              label: "Network Traffic",
-              value: "1.2Gb/s",
+              label: "Containers Running",
+              value: "12",
             },
           ].map((item) => (
             <div
@@ -68,7 +68,7 @@ export default function InfrastructureDashboardPreview() {
 
         </div>
 
-        {/* CHART AREA */}
+        {/* DASHBOARD PREVIEW */}
         <div className="rounded-2xl border border-white/5 bg-white/5 p-5 lg:col-span-2">
 
           <div className="flex items-center justify-between">
@@ -84,6 +84,7 @@ export default function InfrastructureDashboardPreview() {
             </div>
 
             <div className="flex gap-2 text-xs text-gray-400">
+
               <span className="rounded-full bg-white/5 px-3 py-1">
                 24H
               </span>
@@ -91,43 +92,23 @@ export default function InfrastructureDashboardPreview() {
               <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-emerald-400">
                 LIVE
               </span>
+
             </div>
 
           </div>
 
-          {/* FAKE CHART */}
-          <div className="relative mt-8 h-64 overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-b from-emerald-500/5 to-transparent">
+          {/* REAL DASHBOARD IMAGE */}
+          <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/5 bg-black/30">
 
-            <div className="absolute inset-0 opacity-20">
+            <img
+              src="/images/dashboard-overview.jpg"
+              alt="AISEL Infrastructure Dashboard"
+              className="w-full rounded-2xl border-4 border-red-500"
+            />
 
-              <div className="h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/80 via-transparent to-transparent" />
 
-            </div>
-
-            <svg
-              viewBox="0 0 500 200"
-              className="absolute inset-0 h-full w-full"
-              fill="none"
-            >
-
-              <path
-                d="M0 160 C80 140, 120 90, 180 110 C240 130, 280 40, 340 60 C400 80, 450 30, 500 50"
-                stroke="#34D399"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-
-              <path
-                d="M0 180 C80 170, 120 120, 180 130 C240 140, 280 70, 340 90 C400 110, 450 60, 500 80"
-                stroke="#10B981"
-                strokeWidth="3"
-                strokeLinecap="round"
-                opacity="0.7"
-              />
-
-            </svg>
-
-            <div className="absolute bottom-4 left-4 rounded-xl border border-white/5 bg-black/40 px-4 py-3 backdrop-blur-sm">
+            <div className="absolute bottom-4 left-4 rounded-xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
 
               <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
                 Operational Status
@@ -138,7 +119,7 @@ export default function InfrastructureDashboardPreview() {
                 <div className="h-2 w-2 rounded-full bg-emerald-400" />
 
                 <span className="text-sm font-medium">
-                  All Systems Operational
+                  Live Infrastructure Metrics
                 </span>
 
               </div>
