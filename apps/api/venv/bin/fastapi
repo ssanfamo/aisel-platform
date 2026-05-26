@@ -1,4 +1,4 @@
-#!/home/sesan/projects/aisel-clean/apps/api/venv/bin/python3
+#!/home/sesan/projects/aisel-platform/apps/api/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

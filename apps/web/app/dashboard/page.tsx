@@ -2,687 +2,289 @@
 
 import { useEffect, useState } from "react";
 
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 import {
+  ResponsiveContainer,
   LineChart,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  CartesianGrid,
 } from "recharts";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL!;
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:8000";
 
-const TOKEN =
-  process.env.NEXT_PUBLIC_JWT_TOKEN!;
+type NodeType = {
+  id: string;
+  name: string;
+  status: string;
+};
+
+type MetricType = {
+  node_id: string;
+  cpu_usage: number;
+  memory_usage: number;
+  timestamp: string;
+};
 
 export default function DashboardPage() {
-
-  const [overview, setOverview] =
-    useState<any>(null);
-
-  const [chartData, setChartData] =
-    useState<any[]>([]);
-
-  const [nodes, setNodes] =
-    useState<any[]>([]);
-
-  const [selectedNode, setSelectedNode] =
-    useState<string>("");
-
-
-  async function loadOverview(
-    nodeId?: string
-  ) {
-
-    try {
-
-      const currentNode =
-        nodeId || selectedNode;
-
-      if (!currentNode) {
-        return;
-      }
-
-      const response =
-        await fetch(
-          `${API_URL}/api/nodes/${currentNode}/overview`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${TOKEN}`
-            }
-          }
-        );
-
-      const data =
-        await response.json();
-
-      setOverview(data.overview);
-
-      if (
-        data.overview?.latest_metrics
-        ) {
-
-        const metric =
-            data.overview.latest_metrics;
-
-        if (!metric) return;
-
-        setChartData((prev) => {
-
-            const updated = [
-
-            ...prev,
-
-            {
-                time:
-                new Date(
-                    metric.timestamp
-                ).toLocaleTimeString(),
-
-                cpu:
-                metric.cpu_usage,
-
-                memory:
-                metric.memory_usage
-            }
-            ];
-
-            return updated.slice(-20);
-        });
-        }
-
-    } catch (error) {
-
-      console.error(
-        "Failed to load overview:",
-        error
-      );
-    }
-  }
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [metrics, setMetrics] = useState<MetricType[]>([]);
+  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
+    loadNodes();
 
-    async function initialize() {
+    const socket = io(API_URL, {
+      transports: ["websocket", "polling"],
+    });
 
-        try {
+    socket.on("connect", () => {
+      console.log("Socket connected");
+      setConnected(true);
+    });
 
-        const response =
-            await fetch(
-            `${API_URL}/api/nodes`,
-            {
-                headers: {
-                Authorization:
-                    `Bearer ${TOKEN}`
-                }
-            }
-            );
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+      setConnected(false);
+    });
 
-        const data =
-            await response.json();
+    socket.on("metric_update", (metric: MetricType) => {
+      console.log("Metric received:", metric);
 
-        setNodes(data.nodes || []);
+      setMetrics((prev) => {
+        const updated = [...prev, metric];
 
-        if (
-            data.nodes &&
-            data.nodes.length > 0
-        ) {
+        return updated.slice(-20);
+      });
+    });
 
-            const firstNode =
-            data.nodes[0].id;
-
-            setSelectedNode(firstNode);
-
-            await loadOverview(firstNode);
-        }
-
-        } catch (error) {
-
-        console.error(
-            "Initialization failed:",
-            error
-        );
-        }
-    }
-
-    initialize();
-
-    }, []);
-
-  useEffect(() => {
-
-    if (selectedNode) {
-      loadOverview();
-    }
-
-  }, [selectedNode]);
-
-  useEffect(() => {
-
-    const socket =
-      io(API_URL);
-
-    socket.on(
-      "connect",
-      () => {
-
-        console.log(
-          "Socket connected:",
-          socket.id
-        );
-      }
-    );
-
-    socket.on(
-      "metrics:new",
-      (data) => {
-
-        console.log(
-          "LIVE METRIC:",
-          data
-        );
-
-        if (
-          data.node_id !==
-          selectedNode
-        ) {
-          return;
-        }
-
-        setChartData((prev) => [
-
-          ...prev.slice(-19),
-
-          {
-            time:
-              new Date(
-                data.timestamp
-              ).toLocaleTimeString(),
-
-            cpu:
-              data.cpu_usage,
-
-            memory:
-              data.memory_usage
-          }
-        ]);
-
-        loadOverview();
-      }
-    );
+    socket.on("connect_error", (err) => {
+      console.error("Socket error:", err);
+    });
 
     return () => {
       socket.disconnect();
     };
+  }, []);
 
-  }, [selectedNode]);
+  async function loadNodes() {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/nodes`
+      );
+
+      const data = await response.json();
+
+      console.log("Nodes response:", data);
+
+      if (Array.isArray(data)) {
+        setNodes(data);
+      } else if (Array.isArray(data.nodes)) {
+        setNodes(data.nodes);
+      } else {
+        setNodes([]);
+      }
+    } catch (error) {
+      console.error("Failed to load nodes:", error);
+    }
+  }
 
   return (
+    <main className="min-h-screen bg-[#0b1020] p-8 text-white">
+      <div className="mx-auto max-w-7xl space-y-8">
 
-    <div className="flex min-h-screen bg-gray-50">
+        {/* HEADER */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold">
+              AISEL Infrastructure Dashboard
+            </h1>
 
-      <div
-        className="
-          w-[280px]
-          bg-white
-          border-r
-          p-6
-        "
-      >
-
-        <h2
-          className="
-            text-2xl
-            font-bold
-            mb-6
-          "
-        >
-          Infrastructure Nodes
-        </h2>
-
-        <div className="space-y-3">
-
-          {
-            nodes.map((node) => (
-
-              <button
-                key={node.id}
-
-                onClick={() =>
-                  setSelectedNode(
-                    node.id
-                  )
-                }
-
-                className={`
-                  w-full
-                  text-left
-                  p-4
-                  rounded-xl
-                  border
-                  transition
-
-                  ${
-                    selectedNode ===
-                    node.id
-                      ? "bg-black text-white"
-                      : "bg-white hover:bg-gray-100"
-                  }
-                `}
-              >
-
-                <p className="font-bold">
-                  {node.name}
-                </p>
-
-                <p
-                  className="
-                    text-sm
-                    opacity-70
-                  "
-                >
-                  {node.type}
-                </p>
-
-              </button>
-            ))
-          }
-
-        </div>
-      </div>
-
-      <div
-        className="
-          flex-1
-          p-10
-          space-y-6
-        "
-      >
-
-        <div>
-
-          <h1
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            AISEL Fleet Dashboard
-          </h1>
-
-          <p
-            className="
-              text-lg
-              text-gray-500
-              mt-2
-            "
-          >
-
-            Active Node:
-
-            {" "}
-
-            {
-              nodes.find(
-                (
-                  node
-                ) =>
-                  node.id ===
-                  selectedNode
-              )?.name
-            }
-
-          </p>
-
-        </div>
-
-        {
-          overview && (
-
-            <div
-              className="
-                grid
-                grid-cols-1
-                md:grid-cols-2
-                xl:grid-cols-4
-                gap-6
-              "
-            >
-
-              <div
-                className="
-                  bg-white
-                  rounded-2xl
-                  shadow-sm
-                  p-6
-                "
-              >
-
-                <h2
-                  className="
-                    text-lg
-                    font-semibold
-                    mb-3
-                  "
-                >
-                  Health Status
-                </h2>
-
-                <p
-                  className="
-                    text-3xl
-                    font-bold
-                  "
-                >
-                  {
-                    overview.health
-                      ?.status
-                  }
-                </p>
-
-                <p
-                  className="
-                    text-gray-500
-                    mt-2
-                  "
-                >
-                  Score:
-
-                  {" "}
-
-                  {
-                    overview.health
-                      ?.health_score
-                  }
-                </p>
-
-              </div>
-
-              <div
-                className="
-                  bg-white
-                  rounded-2xl
-                  shadow-sm
-                  p-6
-                "
-              >
-
-                <h2
-                  className="
-                    text-lg
-                    font-semibold
-                    mb-3
-                  "
-                >
-                  CPU Average
-                </h2>
-
-                <p
-                  className="
-                    text-3xl
-                    font-bold
-                  "
-                >
-                  {
-                    overview.trends
-                      ?.cpu_average
-                  }%
-                </p>
-
-              </div>
-
-              <div
-                className="
-                  bg-white
-                  rounded-2xl
-                  shadow-sm
-                  p-6
-                "
-              >
-
-                <h2
-                  className="
-                    text-lg
-                    font-semibold
-                    mb-3
-                  "
-                >
-                  Memory Average
-                </h2>
-
-                <p
-                  className="
-                    text-3xl
-                    font-bold
-                  "
-                >
-                  {
-                    overview.trends
-                      ?.memory_average
-                  }%
-                </p>
-
-              </div>
-
-              <div
-                className="
-                  bg-white
-                  rounded-2xl
-                  shadow-sm
-                  p-6
-                "
-              >
-
-                <h2
-                  className="
-                    text-lg
-                    font-semibold
-                    mb-3
-                  "
-                >
-                  Active Alerts
-                </h2>
-
-                <p
-                  className="
-                    text-3xl
-                    font-bold
-                  "
-                >
-                  {
-                    overview.active_alerts
-                      ?.length
-                  }
-                </p>
-
-              </div>
-
-            </div>
-          )
-        }
-
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-sm
-            p-6
-          "
-        >
-
-          <h2
-            className="
-              text-2xl
-              font-bold
-              mb-6
-            "
-          >
-            Live Infrastructure Metrics
-          </h2>
-
-          <div className="h-[350px] w-full min-w-0">
-
-            <ResponsiveContainer
-              width="100%"
-              height={350}
-            >
-
-              <LineChart
-                data={chartData}
-              >
-
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                />
-
-                <XAxis dataKey="time" />
-
-                <YAxis />
-
-                <Tooltip />
-
-                <Line
-                  type="monotone"
-                  dataKey="cpu"
-                  stroke="#000"
-                />
-
-                <Line
-                  type="monotone"
-                  dataKey="memory"
-                  stroke="#8884d8"
-                />
-
-              </LineChart>
-
-            </ResponsiveContainer>
-
+            <p className="mt-2 text-gray-400">
+              Real-time infrastructure observability
+            </p>
           </div>
 
+          <div
+            className={`rounded-full px-4 py-2 text-sm font-medium ${
+              connected
+                ? "bg-green-500/20 text-green-400"
+                : "bg-red-500/20 text-red-400"
+            }`}
+          >
+            {connected ? "Connected" : "Disconnected"}
+          </div>
         </div>
 
-        {
-          overview?.diagnostics && (
-
+        {/* NODES */}
+        <div className="grid gap-6 md:grid-cols-3">
+          {nodes.map((node) => (
             <div
-              className="
-                bg-white
-                rounded-2xl
-                shadow-sm
-                p-6
-              "
+              key={node.id}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6"
             >
-
-              <h2
-                className="
-                  text-2xl
-                  font-bold
-                  mb-4
-                "
-              >
-                Diagnostics
+              <h2 className="text-xl font-semibold">
+                {node.name}
               </h2>
 
-              <div className="space-y-3">
+              <p className="mt-2 text-sm text-gray-400">
+                {node.id}
+              </p>
 
-                {
-                  overview
-                    .diagnostics
-                    .diagnostics
-                    ?.map(
-                      (
-                        item: string,
-                        index: number
-                      ) => (
-
-                        <div
-                          key={index}
-
-                          className="
-                            p-4
-                            rounded-xl
-                            bg-red-50
-                            border
-                            border-red-200
-                          "
-                        >
-                          {item}
-                        </div>
-                      )
-                    )
-                }
-
+              <div className="mt-4">
+                <span
+                  className={`rounded-full px-3 py-1 text-xs ${
+                    node.status === "online"
+                      ? "bg-green-500/20 text-green-400"
+                      : "bg-red-500/20 text-red-400"
+                  }`}
+                >
+                  {node.status}
+                </span>
               </div>
-
             </div>
-          )
-        }
+          ))}
+        </div>
 
-        {
-          overview?.diagnostics
-            ?.recommendations && (
+        {/* CHARTS */}
+        <div className="grid gap-8 lg:grid-cols-2">
+
+          {/* CPU CHART */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h2 className="mb-6 text-2xl font-semibold">
+              CPU Usage
+            </h2>
 
             <div
-              className="
-                bg-white
-                rounded-2xl
-                shadow-sm
-                p-6
-              "
+              style={{
+                width: "100%",
+                height: 350,
+                minWidth: 0,
+              }}
             >
+              <ResponsiveContainer width="100%" height={350}>
+                <LineChart data={metrics}>
+                  <CartesianGrid strokeDasharray="3 3" />
 
-              <h2
-                className="
-                  text-2xl
-                  font-bold
-                  mb-4
-                "
-              >
-                Recommendations
-              </h2>
+                  <XAxis
+                    dataKey="timestamp"
+                    tickFormatter={(value) =>
+                      new Date(value).toLocaleTimeString()
+                    }
+                  />
 
-              <div className="space-y-3">
+                  <YAxis domain={[0, 100]} />
 
-                {
-                  overview
-                    .diagnostics
-                    .recommendations
-                    ?.map(
-                      (
-                        item: string,
-                        index: number
-                      ) => (
+                  <Tooltip />
 
-                        <div
-                          key={index}
-
-                          className="
-                            p-4
-                            rounded-xl
-                            bg-blue-50
-                            border
-                            border-blue-200
-                          "
-                        >
-                          {item}
-                        </div>
-                      )
-                    )
-                }
-
-              </div>
-
+                  <Line
+                    type="monotone"
+                    dataKey="cpu_usage"
+                    stroke="#3b82f6"
+                    strokeWidth={3}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
-          )
-        }
+          </div>
+
+          {/* MEMORY CHART */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h2 className="mb-6 text-2xl font-semibold">
+              Memory Usage
+            </h2>
+
+            <div
+              style={{
+                width: "100%",
+                height: 350,
+                minWidth: 0,
+              }}
+            >
+              <ResponsiveContainer width="100%" height={350}>
+                <LineChart data={metrics}>
+                  <CartesianGrid strokeDasharray="3 3" />
+
+                  <XAxis
+                    dataKey="timestamp"
+                    tickFormatter={(value) =>
+                      new Date(value).toLocaleTimeString()
+                    }
+                  />
+
+                  <YAxis domain={[0, 100]} />
+
+                  <Tooltip />
+
+                  <Line
+                    type="monotone"
+                    dataKey="memory_usage"
+                    stroke="#10b981"
+                    strokeWidth={3}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* LIVE METRICS */}
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <h2 className="mb-6 text-2xl font-semibold">
+            Live Metrics Stream
+          </h2>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="border-b border-white/10 text-gray-400">
+                <tr>
+                  <th className="pb-4">Time</th>
+                  <th className="pb-4">Node</th>
+                  <th className="pb-4">CPU</th>
+                  <th className="pb-4">Memory</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {[...metrics]
+                  .reverse()
+                  .map((metric, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-white/5"
+                    >
+                      <td className="py-3">
+                        {new Date(
+                          metric.timestamp
+                        ).toLocaleTimeString()}
+                      </td>
+
+                      <td className="py-3">
+                        {metric.node_id}
+                      </td>
+
+                      <td className="py-3">
+                        {metric.cpu_usage}%
+                      </td>
+
+                      <td className="py-3">
+                        {metric.memory_usage}%
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
       </div>
-
-    </div>
+    </main>
   );
 }

@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+
+  postgres:
+
+    image: timescale/timescaledb:latest-pg15
+
+    container_name: aisel-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: aisel
+      POSTGRES_PASSWORD: Ibilola1976*
+      POSTGRES_DB: observability
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
