@@ -22,12 +22,17 @@ type NodeType = {
   id: string;
   name: string;
   status: string;
+  cpu_usage?: number;
+  memory_usage?: number;
+  disk_usage?: number;
 };
 
 type MetricType = {
+  id?: number;
   node_id: string;
   cpu_usage: number;
   memory_usage: number;
+  disk_usage: number;
   timestamp: string;
 };
 
@@ -40,7 +45,7 @@ export default function DashboardPage() {
     loadNodes();
 
     const socket = io(API_URL, {
-      transports: ["websocket", "polling"],
+      transports: ["websocket"], // Changed to only websocket as per your requirement
     });
 
     socket.on("connect", () => {
@@ -53,14 +58,32 @@ export default function DashboardPage() {
       setConnected(false);
     });
 
-    socket.on("metric_update", (metric: MetricType) => {
-      console.log("Metric received:", metric);
+    // Changed from "metric_update" to "metrics_update" as per your provided code
+    socket.on("metrics_update", (metric: MetricType) => {
+      console.log("Live metric:", metric);
 
       setMetrics((prev) => {
         const updated = [...prev, metric];
-
         return updated.slice(-20);
       });
+
+      setNodes((prevNodes) =>
+        prevNodes.map((node) => {
+          if (node.id === metric.node_id) {
+            return {
+              ...node,
+              cpu_usage: metric.cpu_usage,
+              memory_usage: metric.memory_usage,
+              disk_usage: metric.disk_usage,
+              status:
+                metric.cpu_usage > 85
+                  ? "critical"
+                  : "healthy",
+            };
+          }
+          return node;
+        })
+      );
     });
 
     socket.on("connect_error", (err) => {
@@ -82,15 +105,24 @@ export default function DashboardPage() {
 
       console.log("Nodes response:", data);
 
+      let nodesData = [];
       if (Array.isArray(data)) {
-        setNodes(data);
+        nodesData = data;
       } else if (Array.isArray(data.nodes)) {
-        setNodes(data.nodes);
-      } else {
-        setNodes([]);
+        nodesData = data.nodes;
       }
+
+      // Initialize nodes with default values
+      setNodes(nodesData.map((node: any) => ({
+        ...node,
+        cpu_usage: node.cpu_usage || 0,
+        memory_usage: node.memory_usage || 0,
+        disk_usage: node.disk_usage || 0,
+        status: node.status || "healthy"
+      })));
     } catch (error) {
       console.error("Failed to load nodes:", error);
+      setNodes([]);
     }
   }
 
@@ -136,12 +168,32 @@ export default function DashboardPage() {
                 {node.id}
               </p>
 
+              {/* Display real-time metrics for each node */}
+              <div className="mt-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>CPU Usage:</span>
+                  <span className={node.cpu_usage && node.cpu_usage > 85 ? "text-red-400" : "text-green-400"}>
+                    {node.cpu_usage?.toFixed(1)}%
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Memory Usage:</span>
+                  <span>{node.memory_usage?.toFixed(1)}%</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Disk Usage:</span>
+                  <span>{node.disk_usage?.toFixed(1)}%</span>
+                </div>
+              </div>
+
               <div className="mt-4">
                 <span
                   className={`rounded-full px-3 py-1 text-xs ${
-                    node.status === "online"
+                    node.status === "healthy" || node.status === "online"
                       ? "bg-green-500/20 text-green-400"
-                      : "bg-red-500/20 text-red-400"
+                      : node.status === "critical"
+                      ? "bg-red-500/20 text-red-400"
+                      : "bg-yellow-500/20 text-yellow-400"
                   }`}
                 >
                   {node.status}
@@ -249,6 +301,7 @@ export default function DashboardPage() {
                   <th className="pb-4">Node</th>
                   <th className="pb-4">CPU</th>
                   <th className="pb-4">Memory</th>
+                  <th className="pb-4">Disk</th>
                 </tr>
               </thead>
 
@@ -276,6 +329,10 @@ export default function DashboardPage() {
 
                       <td className="py-3">
                         {metric.memory_usage}%
+                      </td>
+
+                      <td className="py-3">
+                        {metric.disk_usage}%
                       </td>
                     </tr>
                   ))}

@@ -1,23 +1,56 @@
+import asyncio
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 import socketio
-import asyncio
-import random
-from datetime import datetime
 
-# -----------------------------
-# SOCKET.IO SERVER
-# -----------------------------
+from database import engine, SessionLocal
+from models.metric import Base as MetricBase
+from models.alert import Base as AlertBase
+
+from services.metrics_service import (
+    metric_generator,
+    get_latest_metrics,
+    get_metrics_by_node,
+)
+
+from services.nodes_service import (
+    get_nodes,
+)
+
+from services.alerts_service import (
+    get_active_alerts,
+)
+
+# ---------------------------------------------------
+# DATABASE
+# ---------------------------------------------------
+
+MetricBase.metadata.create_all(bind=engine)
+AlertBase.metadata.create_all(bind=engine)
+
+# ---------------------------------------------------
+# SOCKET.IO
+# ---------------------------------------------------
 
 sio = socketio.AsyncServer(
     async_mode="asgi",
     cors_allowed_origins="*",
 )
 
-fastapi_app = FastAPI()
+socket_app = socketio.ASGIApp(
+    sio
+)
 
-fastapi_app.add_middleware(
+# ---------------------------------------------------
+# FASTAPI
+# ---------------------------------------------------
+
+app = FastAPI(
+    title="AISEL Infrastructure API"
+)
+
+app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
@@ -25,81 +58,132 @@ fastapi_app.add_middleware(
     allow_headers=["*"],
 )
 
-# -----------------------------
-# API ROUTES
-# -----------------------------
+app.mount("/socket.io", socket_app)
 
-@fastapi_app.get("/")
-async def root():
-    return {"status": "running"}
-
-@fastapi_app.get("/api/nodes")
-async def get_nodes():
-    return [
-        {
-            "id": "node-1",
-            "name": "AISEL Core Node",
-            "status": "online",
-        },
-        {
-            "id": "node-2",
-            "name": "Monitoring Node",
-            "status": "online",
-        },
-        {
-            "id": "node-3",
-            "name": "Automation Node",
-            "status": "online",
-        },
-    ]
-
-# -----------------------------
+# ---------------------------------------------------
 # SOCKET EVENTS
-# -----------------------------
+# ---------------------------------------------------
 
 @sio.event
 async def connect(sid, environ):
     print(f"Client connected: {sid}")
 
+
 @sio.event
 async def disconnect(sid):
     print(f"Client disconnected: {sid}")
 
-# -----------------------------
-# METRIC EMITTER
-# -----------------------------
+# ---------------------------------------------------
+# STARTUP
+# ---------------------------------------------------
 
-async def metric_generator():
-    while True:
-        metric = {
-            "node_id": "node-1",
-            "timestamp": datetime.utcnow().isoformat(),
-            "cpu_usage": random.randint(20, 90),
-            "memory_usage": random.randint(30, 95),
-        }
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(
+        metric_generator(
+            SessionLocal,
+            sio
+        )
+    )
 
-        print("Emitting metric:", metric)
+# ---------------------------------------------------
+# ROOT
+# ---------------------------------------------------
 
-        await sio.emit(
-            "metric_update",
-            metric
+@app.get("/")
+async def root():
+    return {
+        "status": "running"
+    }
+
+# ---------------------------------------------------
+# NODES
+# ---------------------------------------------------
+
+@app.get("/api/nodes")
+async def api_nodes():
+    return get_nodes()
+
+# ---------------------------------------------------
+# METRICS
+# ---------------------------------------------------
+
+@app.get("/api/metrics")
+async def api_metrics(limit: int = 50):
+    db = SessionLocal()
+
+    try:
+        metrics = get_latest_metrics(
+            db,
+            limit
         )
 
-        await asyncio.sleep(3)
+        return [
+            {
+                "id": metric.id,
+                "node_id": metric.node_id,
+                "cpu_usage": metric.cpu_usage,
+                "memory_usage": metric.memory_usage,
+                "disk_usage": metric.disk_usage,
+                "timestamp": metric.timestamp.isoformat(),
+            }
+            for metric in metrics
+        ]
 
-# -----------------------------
-# STARTUP
-# -----------------------------
+    finally:
+        db.close()
 
-@fastapi_app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(metric_generator())
 
-# -----------------------------
-# ASGI APP
-# -----------------------------
+@app.get("/api/metrics/{node_id}")
+async def api_node_metrics(
+    node_id: str,
+    limit: int = 100
+):
+    db = SessionLocal()
 
-app = socketio.ASGIApp(
-    sio,
-    other_asgi_app=fastapi_app,
-)
+    try:
+        metrics = get_metrics_by_node(
+            db,
+            node_id,
+            limit
+        )
+
+        return [
+            {
+                "id": metric.id,
+                "node_id": metric.node_id,
+                "cpu_usage": metric.cpu_usage,
+                "memory_usage": metric.memory_usage,
+                "disk_usage": metric.disk_usage,
+                "timestamp": metric.timestamp.isoformat(),
+            }
+            for metric in metrics
+        ]
+
+    finally:
+        db.close()
+
+# ---------------------------------------------------
+# ALERTS
+# ---------------------------------------------------
+
+@app.get("/api/alerts")
+async def api_alerts():
+    db = SessionLocal()
+
+    try:
+        alerts = get_active_alerts(db)
+
+        return [
+            {
+                "id": alert.id,
+                "node_id": alert.node_id,
+                "level": alert.level,
+                "message": alert.message,
+                "created_at": alert.created_at.isoformat(),
+            }
+            for alert in alerts
+        ]
+
+    finally:
+        db.close()
