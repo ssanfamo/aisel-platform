@@ -23,6 +23,8 @@ import {
 
 import { io } from "socket.io-client";
 
+import InfrastructureTopology from "../../components/topology/infrastructure-topology";
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://localhost:8000";
@@ -493,6 +495,28 @@ export default function DashboardPage() {
             </div>
 
           </div>
+
+        </div>
+        
+        {/* TOPOLOGY */}
+
+        <div className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-8">
+
+          <div className="mb-6">
+
+            <h2 className="text-3xl font-bold">
+              Infrastructure Topology
+            </h2>
+
+            <p className="mt-2 text-slate-400">
+              Real-time infrastructure relationship map
+            </p>
+
+          </div>
+
+          <InfrastructureTopology
+            nodesData={nodes}
+          />
 
         </div>
 
