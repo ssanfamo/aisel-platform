@@ -2,346 +2,565 @@
 
 import { useEffect, useState } from "react";
 
-import io from "socket.io-client";
+import {
+  Activity,
+  AlertTriangle,
+  Cpu,
+  HardDrive,
+  MemoryStick,
+  ShieldAlert,
+} from "lucide-react";
 
 import {
-  ResponsiveContainer,
   LineChart,
   Line,
+  ResponsiveContainer,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
 } from "recharts";
 
+import { io } from "socket.io-client";
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://localhost:8000";
 
-type NodeType = {
-  id: string;
-  name: string;
-  status: string;
-  cpu_usage?: number;
-  memory_usage?: number;
-  disk_usage?: number;
-};
-
-type MetricType = {
-  id?: number;
-  node_id: string;
-  cpu_usage: number;
-  memory_usage: number;
-  disk_usage: number;
-  timestamp: string;
-};
+const socket = io(API_URL, {
+  transports: ["websocket"],
+});
 
 export default function DashboardPage() {
-  const [nodes, setNodes] = useState<NodeType[]>([]);
-  const [metrics, setMetrics] = useState<MetricType[]>([]);
-  const [connected, setConnected] = useState(false);
+  const [nodes, setNodes] = useState<any[]>([]);
+
+  const [metrics, setMetrics] = useState<any[]>([]);
+
+  const [alerts, setAlerts] = useState<any[]>([]);
+
+  const [connected, setConnected] =
+    useState(false);
+
+  // ---------------------------------------------------
+  // LOAD INITIAL DATA
+  // ---------------------------------------------------
 
   useEffect(() => {
     loadNodes();
 
-    const socket = io(API_URL, {
-      transports: ["websocket"], // Changed to only websocket as per your requirement
-    });
+    loadAlerts();
+  }, []);
 
+  const loadNodes = async () => {
+    try {
+      const response =
+        await fetch(
+          `${API_URL}/api/nodes`
+        );
+
+      const data = await response.json();
+
+      setNodes(data);
+    } catch (err) {
+      console.error(
+        "Failed to load nodes:",
+        err
+      );
+    }
+  };
+
+  const loadAlerts = async () => {
+    try {
+      const response =
+        await fetch(
+          `${API_URL}/api/alerts`
+        );
+
+      const data = await response.json();
+
+      setAlerts(data);
+    } catch (err) {
+      console.error(
+        "Failed to load alerts:",
+        err
+      );
+    }
+  };
+
+  // ---------------------------------------------------
+  // SOCKET EVENTS
+  // ---------------------------------------------------
+
+  useEffect(() => {
     socket.on("connect", () => {
-      console.log("Socket connected");
       setConnected(true);
     });
 
     socket.on("disconnect", () => {
-      console.log("Socket disconnected");
       setConnected(false);
     });
 
-    // Changed from "metric_update" to "metrics_update" as per your provided code
-    socket.on("metrics_update", (metric: MetricType) => {
-      console.log("Live metric:", metric);
+    socket.on(
+      "metrics_update",
+      (metric) => {
+        setMetrics((prev) => [
+          metric,
+          ...prev,
+        ].slice(0, 30));
+      }
+    );
 
-      setMetrics((prev) => {
-        const updated = [...prev, metric];
-        return updated.slice(-20);
-      });
-
-      setNodes((prevNodes) =>
-        prevNodes.map((node) => {
-          if (node.id === metric.node_id) {
-            return {
-              ...node,
-              cpu_usage: metric.cpu_usage,
-              memory_usage: metric.memory_usage,
-              disk_usage: metric.disk_usage,
-              status:
-                metric.cpu_usage > 85
-                  ? "critical"
-                  : "healthy",
-            };
-          }
-          return node;
-        })
-      );
-    });
-
-    socket.on("connect_error", (err) => {
-      console.error("Socket error:", err);
-    });
+    socket.on(
+      "nodes_update",
+      (updatedNodes) => {
+        setNodes(updatedNodes);
+      }
+    );
 
     return () => {
-      socket.disconnect();
+      socket.off("connect");
+
+      socket.off("disconnect");
+
+      socket.off("metrics_update");
+
+      socket.off("nodes_update");
     };
   }, []);
 
-  async function loadNodes() {
-    try {
-      const response = await fetch(
-        `${API_URL}/api/nodes`
-      );
+  // ---------------------------------------------------
+  // KPI CALCULATIONS
+  // ---------------------------------------------------
 
-      const data = await response.json();
+  const activeAlerts =
+    alerts.length;
 
-      console.log("Nodes response:", data);
+  const healthyNodes =
+    nodes.filter(
+      (n) => n.status === "healthy"
+    ).length;
 
-      let nodesData = [];
-      if (Array.isArray(data)) {
-        nodesData = data;
-      } else if (Array.isArray(data.nodes)) {
-        nodesData = data.nodes;
-      }
+  const avgCpu =
+    nodes.length > 0
+      ? (
+          nodes.reduce(
+            (sum, node) =>
+              sum + node.cpu_usage,
+            0
+          ) / nodes.length
+        ).toFixed(1)
+      : "0";
 
-      // Initialize nodes with default values
-      setNodes(nodesData.map((node: any) => ({
-        ...node,
-        cpu_usage: node.cpu_usage || 0,
-        memory_usage: node.memory_usage || 0,
-        disk_usage: node.disk_usage || 0,
-        status: node.status || "healthy"
-      })));
-    } catch (error) {
-      console.error("Failed to load nodes:", error);
-      setNodes([]);
+  // ---------------------------------------------------
+  // STATUS COLORS
+  // ---------------------------------------------------
+
+  const getStatusStyles = (
+    status: string
+  ) => {
+    switch (status) {
+      case "critical":
+        return "bg-red-500/20 text-red-400";
+
+      case "warning":
+        return "bg-yellow-500/20 text-yellow-400";
+
+      default:
+        return "bg-green-500/20 text-green-400";
     }
-  }
+  };
+
+  const getAlertStyles = (
+    severity: string
+  ) => {
+    switch (severity) {
+      case "critical":
+        return "border-red-500/30 bg-red-500/10 text-red-300";
+
+      case "warning":
+        return "border-yellow-500/30 bg-yellow-500/10 text-yellow-300";
+
+      default:
+        return "border-blue-500/30 bg-blue-500/10 text-blue-300";
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-[#0b1020] p-8 text-white">
-      <div className="mx-auto max-w-7xl space-y-8">
+    <main className="min-h-screen bg-[#020817] text-white">
+
+      <div className="mx-auto max-w-7xl p-8">
 
         {/* HEADER */}
-        <div className="flex items-center justify-between">
+
+        <div className="mb-10 flex items-start justify-between">
+
           <div>
-            <h1 className="text-4xl font-bold">
+
+            <h1 className="text-5xl font-bold tracking-tight">
               AISEL Infrastructure Dashboard
             </h1>
 
-            <p className="mt-2 text-gray-400">
+            <p className="mt-3 text-slate-400">
               Real-time infrastructure observability
             </p>
+
           </div>
 
           <div
-            className={`rounded-full px-4 py-2 text-sm font-medium ${
+            className={`rounded-full px-5 py-2 text-sm font-medium ${
               connected
                 ? "bg-green-500/20 text-green-400"
                 : "bg-red-500/20 text-red-400"
             }`}
           >
-            {connected ? "Connected" : "Disconnected"}
+            {connected
+              ? "Connected"
+              : "Disconnected"}
           </div>
+
+        </div>
+
+        {/* KPI CARDS */}
+
+        <div className="mb-8 grid gap-6 md:grid-cols-4">
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+
+            <div className="flex items-center gap-4">
+
+              <Activity className="h-8 w-8 text-cyan-400" />
+
+              <div>
+
+                <div className="text-sm text-slate-400">
+                  Infrastructure Health
+                </div>
+
+                <div className="text-3xl font-bold">
+                  {healthyNodes}/{nodes.length}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+
+            <div className="flex items-center gap-4">
+
+              <ShieldAlert className="h-8 w-8 text-red-400" />
+
+              <div>
+
+                <div className="text-sm text-slate-400">
+                  Active Alerts
+                </div>
+
+                <div className="text-3xl font-bold">
+                  {activeAlerts}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+
+            <div className="flex items-center gap-4">
+
+              <Cpu className="h-8 w-8 text-blue-400" />
+
+              <div>
+
+                <div className="text-sm text-slate-400">
+                  Avg CPU Usage
+                </div>
+
+                <div className="text-3xl font-bold">
+                  {avgCpu}%
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+
+            <div className="flex items-center gap-4">
+
+              <AlertTriangle className="h-8 w-8 text-yellow-400" />
+
+              <div>
+
+                <div className="text-sm text-slate-400">
+                  Operational Status
+                </div>
+
+                <div className="text-2xl font-bold text-green-400">
+                  Stable
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
         {/* NODES */}
-        <div className="grid gap-6 md:grid-cols-3">
+
+        <div className="mb-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
           {nodes.map((node) => (
+
             <div
               key={node.id}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6"
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
             >
-              <h2 className="text-xl font-semibold">
-                {node.name}
-              </h2>
 
-              <p className="mt-2 text-sm text-gray-400">
-                {node.id}
-              </p>
+              <div className="mb-5 flex items-start justify-between">
 
-              {/* Display real-time metrics for each node */}
-              <div className="mt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>CPU Usage:</span>
-                  <span className={node.cpu_usage && node.cpu_usage > 85 ? "text-red-400" : "text-green-400"}>
-                    {node.cpu_usage?.toFixed(1)}%
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Memory Usage:</span>
-                  <span>{node.memory_usage?.toFixed(1)}%</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Disk Usage:</span>
-                  <span>{node.disk_usage?.toFixed(1)}%</span>
-                </div>
-              </div>
+                <div>
 
-              <div className="mt-4">
-                <span
-                  className={`rounded-full px-3 py-1 text-xs ${
-                    node.status === "healthy" || node.status === "online"
-                      ? "bg-green-500/20 text-green-400"
-                      : node.status === "critical"
-                      ? "bg-red-500/20 text-red-400"
-                      : "bg-yellow-500/20 text-yellow-400"
-                  }`}
+                  <h2 className="text-2xl font-bold">
+                    {node.name}
+                  </h2>
+
+                  <p className="mt-1 text-sm text-slate-400">
+                    {node.id}
+                  </p>
+
+                </div>
+
+                <div
+                  className={`rounded-full px-3 py-1 text-sm font-medium ${getStatusStyles(
+                    node.status
+                  )}`}
                 >
                   {node.status}
-                </span>
+                </div>
+
               </div>
+
+              <div className="space-y-4 text-sm">
+
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-2">
+                    <Cpu className="h-4 w-4 text-blue-400" />
+                    CPU Usage
+                  </div>
+
+                  <div className="font-semibold text-green-400">
+                    {node.cpu_usage}%
+                  </div>
+
+                </div>
+
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-2">
+                    <MemoryStick className="h-4 w-4 text-emerald-400" />
+                    Memory Usage
+                  </div>
+
+                  <div className="font-semibold">
+                    {node.memory_usage}%
+                  </div>
+
+                </div>
+
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-2">
+                    <HardDrive className="h-4 w-4 text-yellow-400" />
+                    Disk Usage
+                  </div>
+
+                  <div className="font-semibold">
+                    {node.disk_usage}%
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
+
           ))}
+
         </div>
 
         {/* CHARTS */}
-        <div className="grid gap-8 lg:grid-cols-2">
 
-          {/* CPU CHART */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-6 text-2xl font-semibold">
+        <div className="mb-10 grid gap-8 lg:grid-cols-2">
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
+
+            <h2 className="mb-6 text-3xl font-bold">
               CPU Usage
             </h2>
 
-            <div
-              style={{
-                width: "100%",
-                height: 350,
-                minWidth: 0,
-              }}
-            >
-              <ResponsiveContainer width="100%" height={350}>
+            <div className="h-[350px] w-full">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+
                 <LineChart data={metrics}>
+
                   <CartesianGrid strokeDasharray="3 3" />
 
                   <XAxis
                     dataKey="timestamp"
                     tickFormatter={(value) =>
-                      new Date(value).toLocaleTimeString()
+                      new Date(
+                        value
+                      ).toLocaleTimeString()
                     }
                   />
 
-                  <YAxis domain={[0, 100]} />
+                  <YAxis />
 
                   <Tooltip />
 
                   <Line
                     type="monotone"
                     dataKey="cpu_usage"
-                    stroke="#3b82f6"
+                    stroke="#3B82F6"
                     strokeWidth={3}
                     dot={false}
                   />
+
                 </LineChart>
+
               </ResponsiveContainer>
+
             </div>
+
           </div>
 
-          {/* MEMORY CHART */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-6 text-2xl font-semibold">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
+
+            <h2 className="mb-6 text-3xl font-bold">
               Memory Usage
             </h2>
 
-            <div
-              style={{
-                width: "100%",
-                height: 350,
-                minWidth: 0,
-              }}
-            >
-              <ResponsiveContainer width="100%" height={350}>
+            <div className="h-[350px] w-full">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+
                 <LineChart data={metrics}>
+
                   <CartesianGrid strokeDasharray="3 3" />
 
                   <XAxis
                     dataKey="timestamp"
                     tickFormatter={(value) =>
-                      new Date(value).toLocaleTimeString()
+                      new Date(
+                        value
+                      ).toLocaleTimeString()
                     }
                   />
 
-                  <YAxis domain={[0, 100]} />
+                  <YAxis />
 
                   <Tooltip />
 
                   <Line
                     type="monotone"
                     dataKey="memory_usage"
-                    stroke="#10b981"
+                    stroke="#10B981"
                     strokeWidth={3}
                     dot={false}
                   />
+
                 </LineChart>
+
               </ResponsiveContainer>
+
             </div>
+
           </div>
+
         </div>
 
-        {/* LIVE METRICS */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <h2 className="mb-6 text-2xl font-semibold">
-            Live Metrics Stream
-          </h2>
+        {/* ALERT CENTER */}
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead className="border-b border-white/10 text-gray-400">
-                <tr>
-                  <th className="pb-4">Time</th>
-                  <th className="pb-4">Node</th>
-                  <th className="pb-4">CPU</th>
-                  <th className="pb-4">Memory</th>
-                  <th className="pb-4">Disk</th>
-                </tr>
-              </thead>
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
 
-              <tbody>
-                {[...metrics]
-                  .reverse()
-                  .map((metric, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-white/5"
-                    >
-                      <td className="py-3">
-                        {new Date(
-                          metric.timestamp
-                        ).toLocaleTimeString()}
-                      </td>
+          <div className="mb-6 flex items-center justify-between">
 
-                      <td className="py-3">
-                        {metric.node_id}
-                      </td>
+            <h2 className="text-3xl font-bold">
+              Active Alerts
+            </h2>
 
-                      <td className="py-3">
-                        {metric.cpu_usage}%
-                      </td>
+            <div className="rounded-full bg-red-500/20 px-4 py-2 text-sm text-red-400">
+              {alerts.length} Alerts
+            </div>
 
-                      <td className="py-3">
-                        {metric.memory_usage}%
-                      </td>
-
-                      <td className="py-3">
-                        {metric.disk_usage}%
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
           </div>
+
+          <div className="space-y-4">
+
+            {alerts.length === 0 && (
+
+              <div className="rounded-xl border border-green-500/20 bg-green-500/10 p-5 text-green-300">
+                No active infrastructure alerts
+              </div>
+
+            )}
+
+            {alerts.map((alert) => (
+
+              <div
+                key={alert.id}
+                className={`rounded-xl border p-5 ${getAlertStyles(
+                  alert.severity
+                )}`}
+              >
+
+                <div className="flex items-start justify-between">
+
+                  <div>
+
+                    <div className="font-semibold">
+                      {alert.message}
+                    </div>
+
+                    <div className="mt-2 text-sm opacity-70">
+                      {alert.node_id}
+                    </div>
+
+                  </div>
+
+                  <div className="rounded-full bg-black/20 px-3 py-1 text-xs uppercase tracking-wide">
+                    {alert.severity}
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
         </div>
 
       </div>
+
     </main>
   );
 }

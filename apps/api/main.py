@@ -12,6 +12,7 @@ from services.metrics_service import (
     metric_generator,
     get_latest_metrics,
     get_metrics_by_node,
+    build_nodes_snapshot,
 )
 
 from services.nodes_service import (
@@ -19,6 +20,11 @@ from services.nodes_service import (
 )
 
 from services.alerts_service import (
+    get_active_alerts,
+)
+
+from services.alerts_service import (
+    evaluate_alerts,
     get_active_alerts,
 )
 
@@ -101,8 +107,15 @@ async def root():
 # ---------------------------------------------------
 
 @app.get("/api/nodes")
-async def api_nodes():
-    return get_nodes()
+async def get_nodes():
+
+    db = SessionLocal()
+
+    try:
+        return build_nodes_snapshot(db)
+
+    finally:
+        db.close()
 
 # ---------------------------------------------------
 # METRICS
@@ -166,19 +179,22 @@ async def api_node_metrics(
 # ---------------------------------------------------
 # ALERTS
 # ---------------------------------------------------
-
 @app.get("/api/alerts")
-async def api_alerts():
+async def alerts():
+
     db = SessionLocal()
 
     try:
+
         alerts = get_active_alerts(db)
 
         return [
             {
                 "id": alert.id,
                 "node_id": alert.node_id,
-                "level": alert.level,
+                "severity": alert.severity,
+                "metric_type": alert.metric_type,
+                "metric_value": alert.metric_value,
                 "message": alert.message,
                 "created_at": alert.created_at.isoformat(),
             }
