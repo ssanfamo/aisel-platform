@@ -11,6 +11,10 @@ from services.alerts_service import (
     evaluate_alerts,
 )
 
+from services.nodes_service import (
+    update_node_metrics,
+)
+
 # ---------------------------------------------------
 # INFRASTRUCTURE NODES
 # ---------------------------------------------------
@@ -43,18 +47,27 @@ NODES = [
     },
 ]
 
+DEFAULT_TENANT_ID = 1
+
+
 # ---------------------------------------------------
 # METRIC QUERIES
 # ---------------------------------------------------
 
-
 def get_latest_metrics(
     db: Session,
-    limit: int = 50
+    tenant_id: int,
+    limit: int = 50,
 ):
+
     return (
         db.query(Metric)
-        .order_by(desc(Metric.timestamp))
+        .filter(
+            Metric.tenant_id == tenant_id
+        )
+        .order_by(
+            desc(Metric.timestamp)
+        )
         .limit(limit)
         .all()
     )
@@ -62,13 +75,20 @@ def get_latest_metrics(
 
 def get_metrics_by_node(
     db: Session,
+    tenant_id: int,
     node_id: str,
-    limit: int = 100
+    limit: int = 100,
 ):
+
     return (
         db.query(Metric)
-        .filter(Metric.node_id == node_id)
-        .order_by(desc(Metric.timestamp))
+        .filter(
+            Metric.tenant_id == tenant_id,
+            Metric.node_id == node_id,
+        )
+        .order_by(
+            desc(Metric.timestamp)
+        )
         .limit(limit)
         .all()
     )
@@ -78,13 +98,24 @@ def get_metrics_by_node(
 # NODE STATUS
 # ---------------------------------------------------
 
+def calculate_node_status(
+    cpu,
+    memory,
+    disk,
+):
 
-def calculate_node_status(cpu, memory, disk):
-
-    if cpu >= 90 or memory >= 90 or disk >= 90:
+    if (
+        cpu >= 90
+        or memory >= 90
+        or disk >= 90
+    ):
         return "critical"
 
-    if cpu >= 75 or memory >= 75 or disk >= 75:
+    if (
+        cpu >= 75
+        or memory >= 75
+        or disk >= 75
+    ):
         return "warning"
 
     return "healthy"
@@ -94,8 +125,10 @@ def calculate_node_status(cpu, memory, disk):
 # LIVE NODE SNAPSHOT
 # ---------------------------------------------------
 
-
-def build_nodes_snapshot(db: Session):
+def build_nodes_snapshot(
+    db: Session,
+    tenant_id: int,
+):
 
     snapshot = []
 
@@ -103,8 +136,13 @@ def build_nodes_snapshot(db: Session):
 
         latest_metric = (
             db.query(Metric)
-            .filter(Metric.node_id == node["id"])
-            .order_by(desc(Metric.timestamp))
+            .filter(
+                Metric.tenant_id == tenant_id,
+                Metric.node_id == node["id"],
+            )
+            .order_by(
+                desc(Metric.timestamp)
+            )
             .first()
         )
 
@@ -118,6 +156,7 @@ def build_nodes_snapshot(db: Session):
 
             snapshot.append({
                 "id": node["id"],
+                "tenant_id": tenant_id,
                 "name": node["name"],
                 "type": node["type"],
                 "cpu_usage": latest_metric.cpu_usage,
@@ -131,6 +170,7 @@ def build_nodes_snapshot(db: Session):
 
             snapshot.append({
                 "id": node["id"],
+                "tenant_id": tenant_id,
                 "name": node["name"],
                 "type": node["type"],
                 "cpu_usage": 0,
@@ -147,11 +187,11 @@ def build_nodes_snapshot(db: Session):
 # METRIC GENERATOR
 # ---------------------------------------------------
 
-
 async def metric_generator(
     SessionLocal,
-    sio
+    sio,
 ):
+
     print("Metric generator started")
 
     while True:
@@ -160,13 +200,35 @@ async def metric_generator(
 
         try:
 
-            selected_node = random.choice(NODES)
+            selected_node = random.choice(
+                NODES
+            )
 
             metric = Metric(
+                tenant_id=DEFAULT_TENANT_ID,
                 node_id=selected_node["id"],
-                cpu_usage=round(random.uniform(10, 95), 1),
-                memory_usage=round(random.uniform(20, 95), 1),
-                disk_usage=round(random.uniform(5, 95), 1),
+                cpu_usage=round(
+                    random.uniform(
+                        20,
+                        85,
+                    ),
+                    1,
+                ),
+        
+                memory_usage=round(
+                    random.uniform(
+                        20,
+                        95,
+                    ),
+                    1,
+                ),
+                disk_usage=round(
+                    random.uniform(
+                        5,
+                        95,
+                    ),
+                    1,
+                ),
                 timestamp=datetime.utcnow(),
             )
 
@@ -176,13 +238,22 @@ async def metric_generator(
 
             db.refresh(metric)
 
+            update_node_metrics(
+                db,
+                DEFAULT_TENANT_ID,
+                metric.node_id,
+                metric.cpu_usage,
+                metric.memory_usage,
+                metric.disk_usage,
+            )
+
             # -----------------------------------------
             # ALERTS
             # -----------------------------------------
 
             evaluate_alerts(
                 db,
-                metric
+                metric,
             )
 
             # -----------------------------------------
@@ -191,6 +262,7 @@ async def metric_generator(
 
             metric_payload = {
                 "id": metric.id,
+                "tenant_id": metric.tenant_id,
                 "node_id": metric.node_id,
                 "cpu_usage": metric.cpu_usage,
                 "memory_usage": metric.memory_usage,
@@ -202,7 +274,10 @@ async def metric_generator(
             # NODE SNAPSHOT
             # -----------------------------------------
 
-            nodes_payload = build_nodes_snapshot(db)
+            nodes_payload = build_nodes_snapshot(
+                db,
+                DEFAULT_TENANT_ID,
+            )
 
             # -----------------------------------------
             # WEBSOCKET EVENTS
@@ -210,12 +285,12 @@ async def metric_generator(
 
             await sio.emit(
                 "metrics_update",
-                metric_payload
+                metric_payload,
             )
 
             await sio.emit(
                 "nodes_update",
-                nodes_payload
+                nodes_payload,
             )
 
             print(
@@ -223,12 +298,14 @@ async def metric_generator(
             )
 
         except Exception as e:
+
             print(
                 "Metric generator error:",
-                e
+                e,
             )
 
         finally:
+
             db.close()
 
         await asyncio.sleep(2)

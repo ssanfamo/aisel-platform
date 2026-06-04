@@ -29,6 +29,16 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://localhost:8000";
 
+  const getToken = () => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+
+    return localStorage.getItem(
+      "access_token"
+    );
+  };
+
 const socket = io(API_URL, {
   transports: ["websocket"],
 });
@@ -48,6 +58,13 @@ export default function DashboardPage() {
   // ---------------------------------------------------
 
   useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
     loadNodes();
 
     loadAlerts();
@@ -55,10 +72,30 @@ export default function DashboardPage() {
 
   const loadNodes = async () => {
     try {
-      const response =
-        await fetch(
-          `${API_URL}/api/nodes`
+      const token = getToken();
+
+      if (!token) {
+        window.location.href = "/login";
+        return;
+      }
+
+      const response = await fetch(
+        `${API_URL}/api/nodes`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 401) {
+        localStorage.removeItem(
+          "access_token"
         );
+
+        window.location.href = "/login";
+        return;
+      }
 
       const data = await response.json();
 
@@ -73,10 +110,29 @@ export default function DashboardPage() {
 
   const loadAlerts = async () => {
     try {
-      const response =
-        await fetch(
-          `${API_URL}/api/alerts`
+      const token = getToken();
+
+      if (!token) {
+        return;
+      }
+
+      const response = await fetch(
+        `${API_URL}/api/alerts`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 401) {
+        localStorage.removeItem(
+          "access_token"
         );
+
+        window.location.href = "/login";
+        return;
+      }
 
       const data = await response.json();
 

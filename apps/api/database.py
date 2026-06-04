@@ -1,11 +1,30 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-
-DATABASE_URL = (
-    "postgresql://aisel:Ibilola1976*@localhost:5432/observability"
+from sqlalchemy.orm import (
+    sessionmaker,
+    declarative_base,
 )
 
-engine = create_engine(DATABASE_URL)
+from dotenv import load_dotenv
+
+import os
+
+
+load_dotenv()
+
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL"
+)
+
+if not DATABASE_URL:
+    raise Exception(
+        "DATABASE_URL not configured"
+    )
+
+
+engine = create_engine(
+    DATABASE_URL
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,

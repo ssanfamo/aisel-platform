@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -30,6 +31,8 @@ export default function InfrastructureTopology({
 
       return {
         id: node.id,
+
+        status: node.status,
 
         position: {
           x: 250 * (index % 3),
@@ -70,6 +73,10 @@ export default function InfrastructureTopology({
                   Disk: {node.disk_usage}%
                 </div>
 
+                <div className="pt-2 text-[11px] uppercase tracking-wide text-slate-500">
+                  {node.status}
+                </div>
+
               </div>
 
             </div>
@@ -90,6 +97,9 @@ export default function InfrastructureTopology({
       source: "node-5",
       target: "node-1",
       animated: true,
+      style: {
+        stroke: "#38bdf8",
+      },
     },
 
     {
@@ -97,6 +107,9 @@ export default function InfrastructureTopology({
       source: "node-1",
       target: "node-2",
       animated: true,
+      style: {
+        stroke: "#38bdf8",
+      },
     },
 
     {
@@ -104,6 +117,9 @@ export default function InfrastructureTopology({
       source: "node-1",
       target: "node-4",
       animated: true,
+      style: {
+        stroke: "#38bdf8",
+      },
     },
 
     {
@@ -111,11 +127,14 @@ export default function InfrastructureTopology({
       source: "node-2",
       target: "node-3",
       animated: true,
+      style: {
+        stroke: "#38bdf8",
+      },
     },
   ];
 
   return (
-    <div className="h-[700px] w-full rounded-2xl border border-white/10 bg-[#020817]">
+    <div className="h-[700px] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#020817]">
 
       <ReactFlow
         nodes={topologyNodes}
@@ -123,7 +142,25 @@ export default function InfrastructureTopology({
         fitView
       >
 
-        <MiniMap />
+        <MiniMap
+          nodeColor={(node) => {
+
+            switch (node.status) {
+
+              case "critical":
+                return "#ef4444";
+
+              case "warning":
+                return "#eab308";
+
+              case "healthy":
+                return "#22c55e";
+
+              default:
+                return "#64748b";
+            }
+          }}
+        />
 
         <Controls />
 

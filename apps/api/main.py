@@ -1,12 +1,43 @@
 import asyncio
 
-from fastapi import FastAPI
+from fastapi import (
+    FastAPI,
+    Depends,
+)
+
 from fastapi.middleware.cors import CORSMiddleware
+
 import socketio
 
-from database import engine, SessionLocal
-from models.metric import Base as MetricBase
-from models.alert import Base as AlertBase
+from database import (
+    engine,
+    SessionLocal,
+)
+
+# ---------------------------------------------------
+# MODELS
+# ---------------------------------------------------
+
+from models.metric import Metric
+from models.alert import Alert
+from models.node import Node
+from models.user import User
+from models.tenant import Tenant
+from models.tenant_user import TenantUser
+
+# ---------------------------------------------------
+# AUTH
+# ---------------------------------------------------
+
+from auth.routes import router as auth_router
+
+from auth.dependencies import (
+    get_current_user,
+)
+
+# ---------------------------------------------------
+# SERVICES
+# ---------------------------------------------------
 
 from services.metrics_service import (
     metric_generator,
@@ -15,16 +46,7 @@ from services.metrics_service import (
     build_nodes_snapshot,
 )
 
-from services.nodes_service import (
-    get_nodes,
-)
-
 from services.alerts_service import (
-    get_active_alerts,
-)
-
-from services.alerts_service import (
-    evaluate_alerts,
     get_active_alerts,
 )
 
@@ -32,8 +54,9 @@ from services.alerts_service import (
 # DATABASE
 # ---------------------------------------------------
 
-MetricBase.metadata.create_all(bind=engine)
-AlertBase.metadata.create_all(bind=engine)
+from database import Base
+
+Base.metadata.create_all(bind=engine)
 
 # ---------------------------------------------------
 # SOCKET.IO
@@ -64,19 +87,37 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/socket.io", socket_app)
+# ---------------------------------------------------
+# ROUTERS
+# ---------------------------------------------------
+
+app.include_router(auth_router)
+
+# ---------------------------------------------------
+# SOCKET.IO MOUNT
+# ---------------------------------------------------
+
+app.mount(
+    "/socket.io",
+    socket_app,
+)
 
 # ---------------------------------------------------
 # SOCKET EVENTS
 # ---------------------------------------------------
 
 @sio.event
-async def connect(sid, environ):
+async def connect(
+    sid,
+    environ,
+):
     print(f"Client connected: {sid}")
 
 
 @sio.event
-async def disconnect(sid):
+async def disconnect(
+    sid,
+):
     print(f"Client disconnected: {sid}")
 
 # ---------------------------------------------------
@@ -85,10 +126,11 @@ async def disconnect(sid):
 
 @app.on_event("startup")
 async def startup_event():
+
     asyncio.create_task(
         metric_generator(
             SessionLocal,
-            sio
+            sio,
         )
     )
 
@@ -98,8 +140,26 @@ async def startup_event():
 
 @app.get("/")
 async def root():
+
     return {
-        "status": "running"
+        "status": "running",
+        "service": "AISEL Infrastructure API",
+    }
+
+# ---------------------------------------------------
+# AUTH TEST
+# ---------------------------------------------------
+
+@app.get("/api/profile")
+async def profile(
+    current_user=Depends(
+        get_current_user
+    )
+):
+    return {
+        "id": current_user.id,
+        "email": current_user.email,
+        "full_name": current_user.full_name,
     }
 
 # ---------------------------------------------------
@@ -107,12 +167,20 @@ async def root():
 # ---------------------------------------------------
 
 @app.get("/api/nodes")
-async def get_nodes():
+async def api_nodes(
+    current_user=Depends(
+        get_current_user
+    )
+):
 
     db = SessionLocal()
 
     try:
-        return build_nodes_snapshot(db)
+
+        return build_nodes_snapshot(
+                    db,
+                    current_user.tenant_id,
+                )
 
     finally:
         db.close()
@@ -122,13 +190,21 @@ async def get_nodes():
 # ---------------------------------------------------
 
 @app.get("/api/metrics")
-async def api_metrics(limit: int = 50):
+async def api_metrics(
+    limit: int = 50,
+    current_user=Depends(
+        get_current_user
+    ),
+):
+
     db = SessionLocal()
 
     try:
+
         metrics = get_latest_metrics(
             db,
-            limit
+            current_user.tenant_id,
+            limit,
         )
 
         return [
@@ -138,6 +214,7 @@ async def api_metrics(limit: int = 50):
                 "cpu_usage": metric.cpu_usage,
                 "memory_usage": metric.memory_usage,
                 "disk_usage": metric.disk_usage,
+                "tenant_id": metric.tenant_id,
                 "timestamp": metric.timestamp.isoformat(),
             }
             for metric in metrics
@@ -146,19 +223,28 @@ async def api_metrics(limit: int = 50):
     finally:
         db.close()
 
+# ---------------------------------------------------
+# NODE METRICS
+# ---------------------------------------------------
 
 @app.get("/api/metrics/{node_id}")
 async def api_node_metrics(
     node_id: str,
-    limit: int = 100
+    limit: int = 100,
+    current_user=Depends(
+        get_current_user
+    ),
 ):
+
     db = SessionLocal()
 
     try:
+
         metrics = get_metrics_by_node(
             db,
+            current_user.tenant_id,
             node_id,
-            limit
+            limit,
         )
 
         return [
@@ -168,6 +254,7 @@ async def api_node_metrics(
                 "cpu_usage": metric.cpu_usage,
                 "memory_usage": metric.memory_usage,
                 "disk_usage": metric.disk_usage,
+                "tenant_id": metric.tenant_id,
                 "timestamp": metric.timestamp.isoformat(),
             }
             for metric in metrics
@@ -179,23 +266,33 @@ async def api_node_metrics(
 # ---------------------------------------------------
 # ALERTS
 # ---------------------------------------------------
+
 @app.get("/api/alerts")
-async def alerts():
+async def api_alerts(
+    current_user=Depends(
+        get_current_user
+    )
+):
 
     db = SessionLocal()
 
     try:
 
-        alerts = get_active_alerts(db)
+        alerts = get_active_alerts(
+            db,
+            current_user.tenant_id,
+        )
 
         return [
             {
                 "id": alert.id,
+                "tenant_id": alert.tenant_id,
                 "node_id": alert.node_id,
                 "severity": alert.severity,
                 "metric_type": alert.metric_type,
                 "metric_value": alert.metric_value,
                 "message": alert.message,
+                "active": alert.active,
                 "created_at": alert.created_at.isoformat(),
             }
             for alert in alerts

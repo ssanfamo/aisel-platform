@@ -5,6 +5,7 @@ from sqlalchemy import (
     Float,
     Boolean,
     DateTime,
+    ForeignKey,
 )
 
 from datetime import datetime
@@ -12,21 +13,55 @@ from datetime import datetime
 from database import Base
 
 
+
 class Alert(Base):
+
     __tablename__ = "alerts"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True,
+    )
 
-    node_id = Column(String, nullable=False)
+    tenant_id = Column(Integer, default=1)
 
-    severity = Column(String, nullable=False)
+    node_id = Column(
+        String,
+        nullable=False,
+    )
 
-    metric_type = Column(String, nullable=False)
+    severity = Column(
+        String,
+        nullable=False,
+    )
 
-    metric_value = Column(Float, nullable=False)
+    metric_type = Column(
+        String,
+        nullable=False,
+    )
 
-    message = Column(String, nullable=False)
+    metric_value = Column(
+        Float,
+        nullable=False,
+    )
 
-    active = Column(Boolean, default=True)
+    message = Column(
+        String,
+        nullable=False,
+    )
 
-    created_at = Column(DateTime, default=datetime.utcnow)
+    active = Column(
+        Boolean,
+        default=True,
+    )
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+    )
+    last_notification_sent = Column(
+    DateTime,
+    nullable=True,
+)   
+    
