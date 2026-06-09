@@ -24,6 +24,8 @@ from models.node import Node
 from models.user import User
 from models.tenant import Tenant
 from models.tenant_user import TenantUser
+from routes.public import router as public_router
+
 
 # ---------------------------------------------------
 # AUTH
@@ -92,6 +94,7 @@ app.add_middleware(
 # ---------------------------------------------------
 
 app.include_router(auth_router)
+app.include_router(public_router)
 
 # ---------------------------------------------------
 # SOCKET.IO MOUNT

@@ -9,8 +9,8 @@ services:
       POSTGRES_PASSWORD: Ibilola1976*
       POSTGRES_DB: observability
 
-    ports:
-      - "5432:5432"
+    #ports:
+    # - "5432:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
