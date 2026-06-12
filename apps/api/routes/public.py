@@ -27,11 +27,15 @@ def dashboard_summary():
             .first()
         )
 
+        metrics_count = db.query(Metric).count()
+
         return {
             "nodes": node_count,
             "alerts": alert_count,
-            "cpu_usage": latest_metric.cpu_usage if latest_metric else 0,
-            "memory_usage": latest_metric.memory_usage if latest_metric else 0
+            "metrics": metrics_count,
+            "cpu_usage": round(latest_metric.cpu_usage, 1) if latest_metric else 0,
+            "memory_usage": round(latest_metric.memory_usage, 1) if latest_metric else 0,
+            "status": "Healthy" if alert_count < 10 else "Attention Required"
         }
 
     finally:

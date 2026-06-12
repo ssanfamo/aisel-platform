@@ -24,14 +24,12 @@ from models.node import Node
 from models.user import User
 from models.tenant import Tenant
 from models.tenant_user import TenantUser
-from routes.public import router as public_router
+
 
 
 # ---------------------------------------------------
 # AUTH
 # ---------------------------------------------------
-
-from auth.routes import router as auth_router
 
 from auth.dependencies import (
     get_current_user,
@@ -92,6 +90,8 @@ app.add_middleware(
 # ---------------------------------------------------
 # ROUTERS
 # ---------------------------------------------------
+from routes.public import router as public_router
+from auth.routes import router as auth_router
 
 app.include_router(auth_router)
 app.include_router(public_router)

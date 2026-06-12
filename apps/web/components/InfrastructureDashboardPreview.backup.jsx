@@ -4,21 +4,23 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function InfrastructureDashboardPreview() {
+
 const [stats, setStats] = useState({
 nodes: 0,
 alerts: 0,
 metrics: 0,
-cpu_usage: 0,
-memory_usage: 0,
-status: "Loading...",
+status: "Loading..."
 });
 
 useEffect(() => {
+
+
 const loadStats = async () => {
-try {
-const response = await fetch(
-`${process.env.NEXT_PUBLIC_API_URL}/api/public/dashboard-summary`
-);
+  try {
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/public/dashboard-summary`
+    );
 
     const data = await response.json();
 
@@ -26,21 +28,20 @@ const response = await fetch(
       nodes: data.nodes || 0,
       alerts: data.alerts || 0,
       metrics: data.metrics || 0,
-      cpu_usage: data.cpu_usage || 0,
-      memory_usage: data.memory_usage || 0,
-      status: data.status || "Healthy",
+      status: data.status || "Healthy"
     });
+
   } catch (error) {
+
     console.error("Failed to load dashboard summary:", error);
 
     setStats({
       nodes: 0,
       alerts: 0,
       metrics: 0,
-      cpu_usage: 0,
-      memory_usage: 0,
-      status: "Unavailable",
+      status: "Unavailable"
     });
+
   }
 };
 
@@ -50,9 +51,11 @@ const interval = setInterval(loadStats, 60000);
 
 return () => clearInterval(interval);
 
+
 }, []);
 
 return ( <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0B1120] p-6 shadow-2xl">
+
 
   {/* TOP BAR */}
   <div className="flex items-center justify-between border-b border-white/10 pb-4">
@@ -91,7 +94,7 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
         },
         {
           label: "Metrics Collected",
-          value: stats.metrics.toLocaleString(),
+          value: stats.metrics,
         },
       ].map((item) => (
         <div
@@ -200,26 +203,8 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
             </p>
 
             <h5 className="mt-2 text-3xl font-bold text-emerald-400">
-              {stats.metrics.toLocaleString()}
+              {stats.metrics}
             </h5>
-          </div>
-
-        </div>
-
-        <div className="mt-6 rounded-xl border border-white/5 bg-white/5 px-4 py-4">
-
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-400">CPU Usage</span>
-            <span className="font-medium text-white">
-              {stats.cpu_usage}%
-            </span>
-          </div>
-
-          <div className="mt-3 flex justify-between text-sm">
-            <span className="text-gray-400">Memory Usage</span>
-            <span className="font-medium text-white">
-              {stats.memory_usage}%
-            </span>
           </div>
 
         </div>
