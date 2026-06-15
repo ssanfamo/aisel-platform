@@ -13,6 +13,10 @@ memory_usage: 0,
 status: "Loading...",
 });
 
+const [nodes, setNodes] = useState([]);
+
+const [alerts, setAlerts] = useState([]);
+
 useEffect(() => {
 const loadStats = async () => {
 try {
@@ -30,6 +34,23 @@ const response = await fetch(
       memory_usage: data.memory_usage || 0,
       status: data.status || "Healthy",
     });
+
+    const alertsResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/public/recent-alerts`
+    );
+
+    const alertsData = await alertsResponse.json();
+
+    setAlerts(alertsData || []);
+
+    const nodeResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/public/node-status`
+    );
+
+    const nodeData = await nodeResponse.json();
+
+    setNodes(nodeData || []);
+
   } catch (error) {
     console.error("Failed to load dashboard summary:", error);
 
@@ -243,6 +264,65 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
         </div>
 
       </Link>
+
+    </div>
+
+  </div>
+
+  <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
+
+    <div className="flex items-center justify-between">
+
+      <h4 className="text-lg font-semibold text-white">
+        Recent Platform Activity
+      </h4>
+
+      <span className="text-xs text-emerald-400">
+        LIVE
+      </span>
+
+    </div>
+
+    <div className="mt-4 space-y-3">
+
+      {alerts.slice(0, 5).map((alert) => (
+
+        <div
+          key={alert.id}
+          className="rounded-xl border border-white/5 bg-white/5 p-3"
+        >
+
+          <div className="flex items-center justify-between">
+
+            <span className={`text-xs font-medium ${
+              alert.severity === "critical"
+                ? "text-red-400"
+                : alert.severity === "warning"
+                ? "text-amber-400"
+                : "text-emerald-400"
+            }`}>
+              {alert.severity.toUpperCase()}
+            </span>
+
+            <span className="text-xs text-gray-500">
+              {alert.node_id}
+            </span>
+
+          </div>
+
+          <p className="mt-2 text-sm text-gray-300">
+            {alert.message}
+          </p>
+
+        </div>
+
+      ))}
+
+      {alerts.length === 0 && (
+        <div className="rounded-xl border border-white/5 bg-white/5 p-4 text-sm text-gray-400">
+          No recent alerts available.
+        </div>
+      )}
 
     </div>
 
