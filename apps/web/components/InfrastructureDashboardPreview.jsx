@@ -269,6 +269,7 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
 
   </div>
 
+
   <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
 
     <div className="flex items-center justify-between">
@@ -297,9 +298,7 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
             <span className={`text-xs font-medium ${
               alert.severity === "critical"
                 ? "text-red-400"
-                : alert.severity === "warning"
-                ? "text-amber-400"
-                : "text-emerald-400"
+                : "text-amber-400"
             }`}>
               {alert.severity.toUpperCase()}
             </span>
@@ -317,12 +316,6 @@ return ( <div className="relative overflow-hidden rounded-3xl border border-whit
         </div>
 
       ))}
-
-      {alerts.length === 0 && (
-        <div className="rounded-xl border border-white/5 bg-white/5 p-4 text-sm text-gray-400">
-          No recent alerts available.
-        </div>
-      )}
 
     </div>
 
