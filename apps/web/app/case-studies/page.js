@@ -18,17 +18,17 @@ import FadeIn from "../../components/FadeIn";
 export default function CaseStudiesPage() {
   const caseStudies = [
     {
-      title: "Infrastructure Monitoring Modernization",
+      title: "Reducing Operational Blind Spots Through Unified Monitoring",
       category: "Monitoring & Observability",
       challenge:
         "Operational visibility was fragmented across infrastructure environments, making incident detection and performance analysis difficult.",
       solution:
         "Implemented centralized monitoring and observability systems using modern dashboarding, infrastructure metrics collection, and operational alerting workflows.",
       results: [
-        "Centralized operational visibility",
-        "Improved infrastructure awareness",
-        "Faster operational diagnostics",
-        "Standardized monitoring workflows",
+        "operational visibility",
+        "Faster incident detection",
+        "Centralized infrastructure monitoring",
+        "Improved operational awareness",
       ],
       technologies: [
         "Grafana",
@@ -40,17 +40,17 @@ export default function CaseStudiesPage() {
     },
 
     {
-      title: "Automation-Driven Deployment Pipeline",
+      title: "Improving Deployment Reliability Through Automation",
       category: "Systems Automation",
       challenge:
         "Manual deployment workflows created operational inconsistencies and increased deployment risk across environments.",
       solution:
         "Designed automation-driven CI/CD workflows with containerized deployment pipelines, operational validation, and deployment standardization.",
       results: [
-        "Improved deployment consistency",
-        "Reduced operational overhead",
-        "Standardized release workflows",
+        "Reduced manual deployment effort",
+        "Consistent release processes",
         "Improved deployment reliability",
+        "Faster operational delivery",
       ],
       technologies: [
         "Docker",
@@ -62,17 +62,17 @@ export default function CaseStudiesPage() {
     },
 
     {
-      title: "Infrastructure Standardization Initiative",
+      title: "Building Scalable Infrastructure Foundations",
       category: "Infrastructure Engineering",
       challenge:
         "Infrastructure environments lacked standardization, scalability planning, and operational consistency.",
       solution:
         "Implemented scalable infrastructure baselines, operational standards, monitoring integration, and containerized operational environments.",
       results: [
-        "Improved infrastructure scalability",
-        "Operational standardization",
-        "Enhanced infrastructure reliability",
-        "Improved environment consistency",
+        "Infrastructure standardization",
+        "Improved scalability readiness",
+        "Operational consistency",
+        "Enhanced platform reliability",
       ],
       technologies: [
         "Docker",
@@ -117,6 +117,57 @@ export default function CaseStudiesPage() {
         </Container>
 
       </section>
+
+      {/* WHAT THESE INITIATIVES DEMONSTRATE */}
+
+      <Section className="bg-white py-20">
+
+        <Container>
+
+          <FadeIn>
+
+            <div className="mx-auto max-w-4xl text-center">
+
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                What These Initiatives Demonstrate
+              </p>
+
+              <h2 className="mt-6 text-4xl font-semibold tracking-tight">
+                Infrastructure Capabilities Built For Reliability
+              </h2>
+
+              <p className="mt-8 text-lg leading-8 text-gray-600">
+                These case studies represent real-world infrastructure engineering,
+                monitoring, observability and automation capabilities delivered by
+                AISEL Technologies. While project environments differ, the focus
+                remains consistent.
+              </p>
+
+              <div className="mt-12 flex flex-wrap justify-center gap-4">
+
+                {[
+                  "Reliability",
+                  "Visibility",
+                  "Scalability",
+                  "Operational Excellence",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-full bg-brand-light px-6 py-3 text-sm font-medium"
+                  >
+                    {item}
+                  </div>
+                ))}
+
+              </div>
+
+            </div>
+
+          </FadeIn>
+
+        </Container>
+
+      </Section>
 
       {/* METRICS */}
       <Section className="bg-white py-24">
@@ -186,6 +237,46 @@ export default function CaseStudiesPage() {
           <FadeIn>
 
             <div className="mx-auto max-w-4xl text-center">
+
+              <div className="mb-20">
+
+                <FadeIn>
+
+                  <div className="mx-auto max-w-5xl rounded-3xl bg-white p-10 shadow-sm">
+
+                    <p className="text-sm uppercase tracking-[0.25em] text-brand-primary text-center">
+                      Core Competencies
+                    </p>
+
+                    <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+                      {[
+                        "Infrastructure Engineering",
+                        "Monitoring & Observability",
+                        "Systems Automation",
+                        "Cloud Operations",
+                        "Operational Excellence",
+                        "Managed Infrastructure Services",
+                      ].map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-5 py-4"
+                        >
+
+                          <ShieldCheck className="h-5 w-5 text-brand-primary" />
+
+                          <span>{item}</span>
+
+                        </div>
+                      ))}
+
+                    </div>
+
+                  </div>
+
+                </FadeIn>
+
+              </div>
 
               <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
                 Featured Initiatives
