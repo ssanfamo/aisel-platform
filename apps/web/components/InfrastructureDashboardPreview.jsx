@@ -192,8 +192,8 @@ export default function InfrastructureDashboardPreview() {
             </div>
 
             <div className="mt-6 flex items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-4">
+
               <div>
-                
                 <p className="text-sm font-medium text-white">
                   View Dashboard
                 </p>
@@ -201,12 +201,12 @@ export default function InfrastructureDashboardPreview() {
                 <p className="text-xs text-gray-400">
                   Real-time infrastructure visibility
                 </p>
-
               </div>
 
-              <div className="text-sm font-medium text-emerald-400">
-                Open Dashboard →
+              <div className="rounded-full bg-emerald-500/10 px-3 py-2 text-xs font-medium text-emerald-400">
+                OPEN →
               </div>
+
             </div>
           </Link>
         </div>
