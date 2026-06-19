@@ -23,6 +23,7 @@ export async function POST(request) {
       name,
       company,
       email,
+      service,
       environment,
       challenges,
       goals,
@@ -71,7 +72,7 @@ export async function POST(request) {
         replyTo: email,
 
         subject:
-          "New Infrastructure Assessment Request",
+          `New ${service || "Infrastructure"} Inquiry`,
 
         html: `
           <div style="font-family: Arial, sans-serif; padding: 20px;">
@@ -79,6 +80,11 @@ export async function POST(request) {
             <h2>
               Infrastructure Assessment Request
             </h2>
+
+            <p>
+              <strong>Submitted:</strong>
+              ${new Date().toISOString()}
+            </p>
 
             <hr />
 
@@ -97,6 +103,11 @@ export async function POST(request) {
             <p>
               <strong>Email:</strong><br />
               ${email}
+            </p>
+
+            <p>
+              <strong>Service Interest:</strong><br />
+              ${service || "Not specified"}
             </p>
 
             <p>

@@ -26,6 +26,7 @@ export default function ContactPage() {
     name: "",
     company: "",
     email: "",
+    service: "",
     environment: "",
     challenges: "",
     goals: "",
@@ -78,6 +79,7 @@ export default function ContactPage() {
           name: "",
           company: "",
           email: "",
+          service: "",
           environment: "",
           challenges: "",
           goals: "",
@@ -301,6 +303,71 @@ export default function ContactPage() {
 
             </div>
 
+            {/* WHAT YOU'LL RECEIVE */}
+
+            <div className="mt-8 rounded-3xl bg-brand-light p-8">
+
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                What You'll Receive
+              </p>
+
+              <h3 className="mt-4 text-2xl font-semibold">
+                Outcomes From The Discovery Discussion
+              </h3>
+
+              <p className="mt-4 text-gray-600 leading-7">
+                Every engagement begins with understanding your current
+                infrastructure environment, operational challenges and
+                business objectives. Following the discussion, we identify
+                practical opportunities for improvement and provide guidance
+                on next steps.
+              </p>
+
+              <div className="mt-8 space-y-4">
+
+                <div className="mt-8 rounded-xl border border-brand-primary/20 bg-white px-5 py-4">
+
+                  <p className="text-sm text-gray-700">
+
+                    <span className="font-semibold text-brand-primary">
+                      No obligation consultation.
+                    </span>
+
+                    {" "}The objective of the discussion is to understand your
+                    environment and identify opportunities to improve reliability,
+                    visibility, scalability and operational efficiency.
+
+                  </p>
+
+                </div>
+
+                {[
+                  "Infrastructure Discussion",
+                  "Assessment Recommendations",
+                  "Operational Visibility Review",
+                  "Automation Opportunities",
+                  "Implementation Roadmap",
+                ].map((item) => (
+
+                  <div
+                    key={item}
+                    className="flex items-start gap-4"
+                  >
+
+                    <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                    <span className="text-gray-700">
+                      {item}
+                    </span>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
             <div className="mt-8 flex flex-wrap gap-3">
 
               {[
@@ -325,14 +392,37 @@ export default function ContactPage() {
               <div className="rounded-3xl bg-brand-light p-10 shadow-sm">
 
                 <h2 className="text-3xl font-semibold">
-                  Request Infrastructure Assessment
+                  Schedule a Discovery Discussion
                 </h2>
 
                 <p className="mt-4 leading-8 text-gray-600">
-                  Share information about your operational environment and goals.
+                  Share information about your infrastructure environment,
+                  operational challenges and business goals.
 
-                  We typically respond within one business day to schedule an initial discovery discussion.
+                  <span className="mt-3 block font-medium text-brand-primary">
+                    We typically respond within one business day.
+                  </span>
                 </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+
+                  {[
+                    "Infrastructure Engineering",
+                    "Monitoring & Observability",
+                    "Systems Automation",
+                    "Cloud Operations",
+                  ].map((item) => (
+
+                    <span
+                      key={item}
+                      className="rounded-full bg-white px-4 py-2 text-sm text-gray-700 shadow-sm"
+                    >
+                      {item}
+                    </span>
+
+                  ))}
+
+                </div>
 
                 <form
                   onSubmit={handleSubmit}
@@ -395,6 +485,54 @@ export default function ContactPage() {
 
                   </div>
 
+                  {/* SERVICE INTEREST */}
+
+                  <div>
+
+                    <label className="mb-3 block text-sm font-medium text-gray-700">
+                      How Can We Help?
+                    </label>
+
+                    <select
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      required
+                      className="w-full rounded-xl border border-gray-200 bg-white px-5 py-4 outline-none transition focus:border-brand-primary"
+                    >
+
+                      <option value="">
+                        Select a Service
+                      </option>
+
+                      <option value="Infrastructure Engineering">
+                        Infrastructure Engineering
+                      </option>
+
+                      <option value="Monitoring & Observability">
+                        Monitoring & Observability
+                      </option>
+
+                      <option value="Systems Automation">
+                        Systems Automation
+                      </option>
+
+                      <option value="Managed Services">
+                        Managed Services
+                      </option>
+
+                      <option value="Cloud Migration">
+                        Cloud Migration
+                      </option>
+
+                      <option value="Other">
+                        Other
+                      </option>
+
+                    </select>
+
+                  </div>
+
                   {/* ENVIRONMENT */}
                   <div>
 
@@ -454,7 +592,7 @@ export default function ContactPage() {
                   <div>
 
                     <button
-                      type="Schedule Discovery Call"
+                      type="submit"
                       disabled={loading}
                       className="inline-flex items-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg disabled:opacity-50"
                     >
@@ -472,7 +610,11 @@ export default function ContactPage() {
                   {/* SUCCESS */}
                   {success && (
                     <div className="rounded-xl bg-green-50 p-5 text-green-700">
-                      Infrastructure assessment request submitted successfully.
+                      Thank you for contacting AISEL Technologies.
+
+                      Your request has been received and a member of our team will contact you within one business day to arrange an initial discovery discussion.
+
+                      We look forward to learning more about your infrastructure environment and operational goals.
                     </div>
                   )}
 
