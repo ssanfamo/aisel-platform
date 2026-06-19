@@ -121,13 +121,13 @@ export default function ContactPage() {
               </p>
 
               <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
-                Schedule an Infrastructure Assessment
+                Discuss Your Infrastructure Challenges With AISEL Technologies
               </h1>
 
               <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-300">
-                Discuss your infrastructure environment, operational
-                challenges, scalability goals, monitoring requirements,
-                and automation opportunities.
+                Whether you're improving visibility, scaling infrastructure,
+                implementing automation, or modernizing operations,
+                AISEL can help identify practical next steps.
               </p>
 
             </div>
@@ -262,6 +262,63 @@ export default function ContactPage() {
 
             </FadeIn>
 
+            {/* ENGAGEMENT PROCESS */}
+
+            <div className="mt-16 rounded-3xl border border-gray-200 bg-white p-8">
+
+              <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                Engagement Process
+              </p>
+
+              <h3 className="mt-4 text-2xl font-semibold">
+                What Happens Next
+              </h3>
+
+              <div className="mt-8 space-y-5">
+
+                {[
+                  "Discovery Call",
+                  "Infrastructure Assessment",
+                  "Solution Design",
+                  "Implementation Roadmap",
+                  "Delivery & Operational Support",
+                ].map((step, index) => (
+                  <div
+                    key={step}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-sm font-semibold text-white">
+                      {index + 1}
+                    </div>
+
+                    <span className="text-gray-700">
+                      {step}
+                    </span>
+                  </div>
+                ))}
+
+              </div>
+
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+
+              {[
+                "Infrastructure Engineering",
+                "Monitoring & Observability",
+                "Systems Automation",
+                "Managed Services",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full bg-white px-4 py-2 text-sm text-gray-700 shadow-sm"
+                >
+                  {item}
+                </span>
+              ))}
+
+            </div>
+
             {/* FORM */}
             <FadeIn>
 
@@ -273,6 +330,8 @@ export default function ContactPage() {
 
                 <p className="mt-4 leading-8 text-gray-600">
                   Share information about your operational environment and goals.
+
+                  We typically respond within one business day to schedule an initial discovery discussion.
                 </p>
 
                 <form
@@ -395,7 +454,7 @@ export default function ContactPage() {
                   <div>
 
                     <button
-                      type="submit"
+                      type="Schedule Discovery Call"
                       disabled={loading}
                       className="inline-flex items-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg disabled:opacity-50"
                     >
