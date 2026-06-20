@@ -260,9 +260,6 @@ export default function ContactPage() {
 
                 </div>
 
-              </div>
-
-            </FadeIn>
 
             {/* ENGAGEMENT PROCESS */}
 
@@ -305,7 +302,7 @@ export default function ContactPage() {
 
             {/* WHAT YOU'LL RECEIVE */}
 
-            <div className="mt-8 rounded-3xl bg-brand-light p-8">
+            <div className="mt-16 rounded-3xl bg-brand-light p-8">
 
               <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
                 What You'll Receive
@@ -315,31 +312,30 @@ export default function ContactPage() {
                 Outcomes From The Discovery Discussion
               </h3>
 
-              <p className="mt-4 text-gray-600 leading-7">
-                Every engagement begins with understanding your current
-                infrastructure environment, operational challenges and
-                business objectives. Following the discussion, we identify
-                practical opportunities for improvement and provide guidance
-                on next steps.
+              <p className="mt-4 leading-7 text-gray-600">
+                Our initial discussion focuses on understanding your infrastructure,
+                operational challenges and business objectives. Following the
+                discussion, we identify practical opportunities for improvement and
+                provide guidance on the next steps.
               </p>
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 rounded-2xl border border-brand-primary/20 bg-white p-5">
 
-                <div className="mt-8 rounded-xl border border-brand-primary/20 bg-white px-5 py-4">
+                <p className="text-sm text-gray-700">
 
-                  <p className="text-sm text-gray-700">
+                  <span className="font-semibold text-brand-primary">
+                    No obligation consultation.
+                  </span>{" "}
 
-                    <span className="font-semibold text-brand-primary">
-                      No obligation consultation.
-                    </span>
+                  The purpose of the discussion is to understand your environment and
+                  identify opportunities to improve reliability, visibility,
+                  scalability and operational efficiency.
 
-                    {" "}The objective of the discussion is to understand your
-                    environment and identify opportunities to improve reliability,
-                    visibility, scalability and operational efficiency.
+                </p>
 
-                  </p>
+              </div>
 
-                </div>
+              <div className="mt-8 grid gap-4">
 
                 {[
                   "Infrastructure Discussion",
@@ -348,43 +344,27 @@ export default function ContactPage() {
                   "Automation Opportunities",
                   "Implementation Roadmap",
                 ].map((item) => (
-
                   <div
                     key={item}
-                    className="flex items-start gap-4"
+                    className="flex items-center gap-3 rounded-xl bg-white px-4 py-4 shadow-sm"
                   >
 
-                    <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+                    <CheckCircle2 className="h-5 w-5 text-brand-primary" />
 
                     <span className="text-gray-700">
                       {item}
                     </span>
 
                   </div>
-
                 ))}
 
               </div>
 
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-
-              {[
-                "Infrastructure Engineering",
-                "Monitoring & Observability",
-                "Systems Automation",
-                "Managed Services",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full bg-white px-4 py-2 text-sm text-gray-700 shadow-sm"
-                >
-                  {item}
-                </span>
-              ))}
-
-            </div>
+          </div>
+          
+          </FadeIn>
 
             {/* FORM */}
             <FadeIn>
@@ -599,7 +579,7 @@ export default function ContactPage() {
 
                       {loading
                         ? "Sending..."
-                        : "Schedule Infrastructure Assessment"}
+                        : "Schedule Discovery Discussion"}
 
                       <ArrowRight className="h-5 w-5" />
 
