@@ -140,6 +140,54 @@ export default function HomePage() {
 
       </section>
 
+      {/* TRUSTED BY */}
+
+      <section className="bg-white py-16">
+
+        <Container>
+
+          <div className="text-center">
+
+            <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+              Organizations We Support
+            </p>
+
+            <h2 className="mt-4 text-3xl font-semibold">
+              Trusted by Organizations Across Logistics and Engineering
+            </h2>
+
+            <p className="mt-6 text-lg text-gray-600">
+              AISEL Technologies provides infrastructure engineering,
+              monitoring, observability and automation services to
+              organizations operating in logistics and engineering sectors.
+            </p>
+
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-6">
+
+            {[
+              "KTI Logistics",
+              "RejiRoma Engineering",
+            ].map((client) => (
+
+              <div
+                key={client}
+                className="rounded-2xl border border-gray-200 bg-white px-8 py-5 shadow-sm"
+              >
+                <span className="text-lg font-semibold">
+                  {client}
+                </span>
+              </div>
+
+            ))}
+
+          </div>
+
+        </Container>
+
+      </section>
+
       {/* CORE SERVICES */}
       <Section className="bg-white py-32">
 
