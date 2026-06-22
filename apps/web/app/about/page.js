@@ -319,9 +319,15 @@ export default function About() {
 
           <div className="mt-16 grid gap-8 md:grid-cols-2">
 
-            <div className="rounded-3xl bg-white p-10 shadow-sm">
+            <div className="rounded-3xl bg-white p-10 shadow-sm text-center">
 
-              <h3 className="text-2xl font-semibold">
+              <img
+                src="/images/clients/kti-logistics.png"
+                alt="KTI Logistics"
+                className="mx-auto h-24 w-auto object-contain"
+              />
+
+              <h3 className="mt-6 text-2xl font-semibold">
                 KTI Logistics
               </h3>
 
@@ -331,9 +337,15 @@ export default function About() {
 
             </div>
 
-            <div className="rounded-3xl bg-white p-10 shadow-sm">
+            <div className="rounded-3xl bg-white p-10 shadow-sm text-center">
 
-              <h3 className="text-2xl font-semibold">
+              <img
+                src="/images/clients/rejiroma-engineering.png"
+                alt="RejiRoma Engineering"
+                className="mx-auto h-24 w-auto object-contain"
+              />
+
+              <h3 className="mt-6 text-2xl font-semibold">
                 RejiRoma Engineering
               </h3>
 
