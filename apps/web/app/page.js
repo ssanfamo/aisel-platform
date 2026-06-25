@@ -123,7 +123,7 @@ export default function HomePage() {
               <div className="relative h-[500px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl lg:h-[520px]">
 
                 <img
-                  src="/images/hero-infrastructure.jpg"
+                  src="/images/hero.jpg"
                   alt="Infrastructure Operations"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
@@ -402,20 +402,8 @@ export default function HomePage() {
 
                   </div>
 
-                </div>
-
-                {/* IMAGE */}
-                <div className="relative h-[500px] overflow-hidden rounded-3xl shadow-2xl lg:h-[650px]">
-
-                  <img
-                    src="/images/managed-services.jpg"
-                    alt="Managed Infrastructure Services"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-black/20" />
-
-                </div>
+                </div>               
+                
 
               </div>
 
@@ -600,7 +588,3 @@ export default function HomePage() {
     </main>
   );
 }
-
-<div className="hidden lg:block text-red-500">
-  DESKTOP ACTIVE
-</div>
