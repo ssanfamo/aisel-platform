@@ -9,6 +9,7 @@ import {
   Workflow,
   ShieldCheck,
   BarChart3,
+  CheckCircle2,
 } from "lucide-react";
 
 import Container from "../../components/Container";
@@ -36,7 +37,7 @@ export default function CaseStudiesPage() {
         "Docker",
         "Linux",
       ],
-      image: "/images/case-monitoring.jpg",
+      
     },
 
     {
@@ -58,7 +59,7 @@ export default function CaseStudiesPage() {
         "Nginx",
         "Linux",
       ],
-      image: "/images/case-automation.jpg",
+      
     },
 
     {
@@ -80,7 +81,7 @@ export default function CaseStudiesPage() {
         "Cloud Infrastructure",
         "Monitoring Stack",
       ],
-      image: "/images/case-infrastructure.jpg",
+      
     },
   ];
 
@@ -297,28 +298,63 @@ export default function CaseStudiesPage() {
 
                 <div className="grid items-center gap-16 lg:grid-cols-2">
 
-                  {/* IMAGE */}
                   <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
 
-                    <div className="relative h-[420px] overflow-hidden rounded-3xl shadow-2xl lg:h-[520px]">
+                    <div className="rounded-3xl border border-gray-200 bg-white p-10 shadow-sm h-full">
 
-                      <img
-                        src={study.image}
-                        alt={study.title}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
+                      <div className="inline-flex rounded-full bg-brand-light px-4 py-2 text-sm text-brand-primary">
+                        {study.category}
+                      </div>
 
-                      <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/20 to-transparent" />
+                      <h3 className="mt-6 text-3xl font-semibold">
+                        {study.title}
+                      </h3>
 
-                      <div className="absolute bottom-8 left-8 right-8">
+                      <p className="mt-6 text-gray-600">
+                        Key capabilities demonstrated during this initiative:
+                      </p>
 
-                        <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-md">
-                          {study.category}
+                      <div className="mt-8 space-y-4">
+
+                        {study.results.map((result) => (
+
+                          <div
+                            key={result}
+                            className="flex items-start gap-4"
+                          >
+
+                            <CheckCircle2 className="mt-1 h-5 w-5 text-brand-primary" />
+
+                            <span className="text-gray-700">
+                              {result}
+                            </span>
+
+                          </div>
+
+                        ))}
+
+                      </div>
+
+                      <div className="mt-10">
+
+                        <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
+                          Technologies
+                        </p>
+
+                        <div className="mt-5 flex flex-wrap gap-3">
+
+                          {study.technologies.map((tech) => (
+
+                            <span
+                              key={tech}
+                              className="rounded-full bg-brand-light px-4 py-2 text-sm text-gray-700"
+                            >
+                              {tech}
+                            </span>
+
+                          ))}
+
                         </div>
-
-                        <h3 className="mt-5 text-3xl font-semibold text-white">
-                          {study.title}
-                        </h3>
 
                       </div>
 
@@ -378,28 +414,7 @@ export default function CaseStudiesPage() {
 
                       </div>
 
-                    </div>
-
-                    <div className="mt-12">
-
-                      <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
-                        Technology Stack
-                      </p>
-
-                      <div className="mt-6 flex flex-wrap gap-3">
-
-                        {study.technologies.map((tech) => (
-                          <div
-                            key={tech}
-                            className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm"
-                          >
-                            {tech}
-                          </div>
-                        ))}
-
-                      </div>
-
-                    </div>
+                    </div>                   
 
                   </div>
 

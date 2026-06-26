@@ -36,19 +36,25 @@ export default function HomePage() {
               <div className="max-w-3xl">
 
                 <p className="text-sm uppercase tracking-[0.25em] text-brand-primary">
-                  Infrastructure Engineering & Operational Systems
+                  AISEL Technologies
+                </p>
+
+                <p className="mt-4 text-xl font-semibold text-brand-primary">
+                  Engineering Reliable Infrastructure.
+                  <span className="block font-normal text-gray-300">
+                    Powering Operational Excellence.
+                  </span>
                 </p>
 
                 <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
-                  Scalable Infrastructure Engineering & Operational Excellence
+                  Infrastructure Engineering,
+                  Monitoring & Automation
                 </h1>
 
                 <p className="mt-8 text-lg leading-8 text-gray-300">
-                  AISEL Technologies delivers infrastructure engineering,
-                  monitoring & observability, systems automation,
-                  and managed infrastructure services focused on
-                  reliability, scalability, operational visibility,
-                  and automation.
+                  We help organizations design, modernize and operate resilient infrastructure platforms that improve 
+                  reliability, observability, automation and operational performance across cloud, hybrid and on-premises 
+                  environments.
                 </p>
 
                 {/* CTA */}
@@ -58,7 +64,7 @@ export default function HomePage() {
                     href="/contact"
                     className="inline-flex items-center justify-center gap-3 rounded-md bg-brand-primary px-8 py-4 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                   >
-                    Schedule Infrastructure Assessment
+                    Talk to an Infrastructure Expert
 
                     <ArrowRight className="h-5 w-5" />
                   </Link>
